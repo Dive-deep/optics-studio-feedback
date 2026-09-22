@@ -4,9 +4,9 @@ Date: 2026-09-22. Scope: separate Windows source preview and static user guide.
 
 ## Completed locally
 
-- Python 3.12 / PySide6 6.11.2 on the Mac development host: 132 unit checks passed: existing 114, launcher 11, source-only release builder 7.
+- Python 3.12 / PySide6 6.11.2 on the Mac development host: 133 unit checks passed: existing 114, launcher 11, source-only release builder 8.
 - JavaScript domain/controller/session/ray checks: 133 passed.
-- New launcher and release builder tests were written first and failed before implementation. The builder tests cover required files, runtime exclusion, path/symlink boundaries, ZIP CRC and repeatable hashes.
+- New launcher and release builder tests were written first and failed before implementation. The builder tests cover required files, runtime exclusion, path/symlink boundaries, ZIP CRC, repeatable hashes and identical CRLF CMD bytes/ZIP hashes from LF or CRLF source files.
 - Static guide checks passed: every local link/anchor and all five screenshots resolve; JavaScript syntax passes. No personal filesystem paths were found in the guide.
 - Actual Qt app loaded the bundled synthetic report and target, captured Workspace / 2D / Add Zemax Sim / Update model, and exited successfully. Local asset requests: 16; JavaScript errors: 0; external requests: 0. File dialogs used explicit test paths.
 - Guide is plain HTML/CSS/JS with relative assets and no external runtime, tracking or submission code. Navigation does not execute optical workflows.

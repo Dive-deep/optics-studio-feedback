@@ -108,6 +108,20 @@ class FeedbackReleaseTests(unittest.TestCase):
         second = build_release(self.root)
         self.assertEqual(first["sha256"], second["sha256"])
 
+    def test_cmd_newlines_are_crlf_and_identical_for_lf_or_crlf_source(self):
+        command = self.root / "run_windows.cmd"
+        lf = b"@echo off\npy -3.12 launch.py %*\n"
+        crlf = lf.replace(b"\n", b"\r\n")
+        command.write_bytes(lf)
+        first = build_release(self.root)
+        with zipfile.ZipFile(first["archive"]) as archive:
+            self.assertEqual(archive.read(PREFIX + "/run_windows.cmd"), crlf)
+        command.write_bytes(crlf)
+        second = build_release(self.root)
+        with zipfile.ZipFile(second["archive"]) as archive:
+            self.assertEqual(archive.read(PREFIX + "/run_windows.cmd"), crlf)
+        self.assertEqual(first["sha256"], second["sha256"])
+
 
 if __name__ == "__main__":
     unittest.main()

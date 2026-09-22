@@ -114,7 +114,12 @@ def build_release(root: Path = ROOT, output_dir: Path | None = None) -> dict:
                 member.create_system = 3
                 member.external_attr = 0o100644 << 16
                 member.compress_type = zipfile.ZIP_DEFLATED
-                archive.writestr(member, path.read_bytes(), compresslevel=9)
+                content = path.read_bytes()
+                if relative.suffix.casefold() == ".cmd":
+                    # Source ZIPs bypass Git's .gitattributes checkout conversion.
+                    # Produce Windows command-file bytes consistently on every host.
+                    content = content.replace(b"\r\n", b"\n").replace(b"\r", b"\n").replace(b"\n", b"\r\n")
+                archive.writestr(member, content, compresslevel=9)
         with zipfile.ZipFile(temporary) as archive:
             bad_file = archive.testzip()
             if bad_file is not None:

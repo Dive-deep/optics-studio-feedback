@@ -3,7 +3,7 @@
   "date": "2026-09-22",
   "host": "macOS arm64 / Python 3.12.14 / PySide6 6.11.2",
   "unit_tests": {
-    "python_passed": 132,
+    "python_passed": 133,
     "javascript_passed": 133
   },
   "extracted_zip_smoke": {
