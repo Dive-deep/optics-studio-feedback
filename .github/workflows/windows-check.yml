@@ -35,24 +35,7 @@ jobs:
       - name: Headless launcher preflight
         run: python launch.py --check
       - name: CMD launcher from a different directory with Unicode and spaces
-        shell: pwsh
-        run: |
-          $preview = Join-Path $env:RUNNER_TEMP 'Optics 사용자 preview'
-          New-Item -ItemType Directory -Path $preview -Force | Out-Null
-          foreach ($name in @('optics_ui', 'launch.py', 'run_windows.cmd', 'requirements.txt')) {
-            Copy-Item $name $preview -Recurse -Force
-          }
-          # Hosted runners contain several Pythons; use setup-python's selected one.
-          $env:OPTICS_PYTHON = (Get-Command python).Source
-          Push-Location $env:RUNNER_TEMP
-          try {
-            # Closed stdin prevents an unexpected failure pause from hanging CI.
-            $command = '""' + (Join-Path $preview 'run_windows.cmd') + '" --check < nul"'
-            cmd /d /c $command
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          } finally {
-            Pop-Location
-          }
+        run: python scripts/check_windows_launcher.py
       - name: Python unit tests
         run: python -m unittest discover -s tests -v
       - name: JavaScript unit tests
