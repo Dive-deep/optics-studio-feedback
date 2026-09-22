@@ -1,0 +1,112 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Optics Studio</title><link rel="stylesheet" href="style.css"></head><body><div id="optics-review" aria-label="Optics Studio 화면 구성안">
+  
+  <div class="o-top">
+    <span class="o-brand"><i data-lucide="aperture" aria-hidden="true"></i> Optics Studio</span>
+    <span class="o-small">Triplet exploration</span><span class="o-spacer"></span>
+    <button class="o-quiet" data-action="open"><i data-lucide="folder-open" aria-hidden="true"></i> Open</button>
+    <button class="o-quiet" data-action="save"><i data-lucide="save" aria-hidden="true"></i> Save</button>
+    <button class="o-quiet" data-action="export">Export</button>
+  </div>
+  <div class="o-toolbar">
+    <span class="o-small">Pred model</span>
+    <button class="o-report" data-action="model"><i data-lucide="file-json" aria-hidden="true"></i> Select model report…</button>
+    <span class="o-spacer"></span>
+    <button class="o-primary" data-action="workspace" id="o-workspace-nav" aria-current="page">Workspace</button>
+    <button data-action="update">Update model</button>
+    <button class="o-primary" data-action="sim"><i data-lucide="plus" aria-hidden="true"></i> Add Zemax Sim</button>
+    <button data-action="auto">Auto design</button>
+    <button data-action="llm"><i data-lucide="message-square" aria-hidden="true"></i> LLM extension</button>
+  </div>
+  <div class="o-context">
+    <span class="o-tag" id="o-data-kind">UI concept · Sample data</span>
+    <span class="o-small" id="o-reference-label">Reference D057_2</span><button class="o-quiet" id="o-conditions" data-action="conditions"></button>
+    <span class="o-spacer"></span>
+    <button class="o-quiet" data-action="targets"><i data-lucide="crosshair" aria-hidden="true"></i> Targets · Read only</button>
+    <button data-action="candidates">Best candidates</button>
+  </div>
+  <div class="o-notice" id="o-file-notice" role="status" hidden></div>
+  <div class="o-workspace">
+    <aside class="o-panel o-parameters" aria-label="Global active parameters">
+      <div class="o-head"><strong>Active parameters</strong><button data-action="configure">Configure</button></div>
+      <div class="o-inner">
+        <details id="o-system-overview"><summary class="o-small">Optical system · 3 lenses</summary><div id="o-lens-overview" aria-label="Optical system configuration"></div></details>
+        <div class="o-workbench-labels"><span id="o-active-count">6 active</span><span>Min / range / Max</span></div>
+        <div id="o-parameter-rows"></div>
+        <div class="o-legend"><span><span class="o-swatch"></span>학습 구간 예시</span><span><span class="o-swatch" style="background:var(--o-gray)"></span>범위 밖</span></div>
+        <p class="o-small" style="margin-bottom:0">고정된 변수는 Configure에서 다시 활성화할 수 있습니다.</p>
+      </div>
+    </aside>
+    <main class="o-stack o-main">
+      <section class="o-panel" aria-label="Optical geometry">
+        <div class="o-head"><strong>Optical layout</strong><button id="o-view-toggle">2D section view</button></div>
+        <div class="o-view" id="o-view">
+          <canvas id="o-canvas" aria-label="Three lens 3D model. Drag to rotate, right-drag to pan, scroll to zoom."></canvas>
+          <svg class="o-section" id="o-section" aria-label="Optical system 2D section" hidden></svg>
+          <button id="o-stop-handle" class="o-stop-handle" type="button" hidden aria-label="Stop 위치: 좌우로 드래그하거나 화살표 키로 이동">Stop ↔</button>
+          <span class="o-view-note" id="o-view-note">Geometry preview</span>
+          <div class="o-view-label"><span id="o-view-help">Drag to rotate · Right-drag to pan</span><span id="o-coordinates">mm</span></div>
+        </div>
+        <div class="o-ray-tools" id="o-ray-tools" hidden>
+          <label><input id="o-ray-chief" type="checkbox" checked><span class="o-ray-line o-chief"></span>Chief</label>
+          <label><input id="o-ray-marginal" type="checkbox" checked><span class="o-ray-line"></span>Marginal</label>
+          <span id="o-ray-conditions"></span>
+          <span id="o-ray-status" class="o-ray-status" role="status"></span>
+        </div>
+        <div class="o-metrics">
+          <div class="o-metric"><span>NA</span><strong class="o-num" id="o-na-value">0.439</strong></div>
+          <div class="o-metric"><span>FOV · H / V</span><strong class="o-num" id="o-fov-value">22.10° / 5.59°</strong></div>
+          <!-- TODO(backend): Bind relative illumination when supplied; keep the display blank and value null meanwhile. -->
+          <div class="o-metric"><span>Rel. illumination</span><strong class="o-blank" id="o-ri-value" aria-label="Relative illumination"></strong></div>
+          <div class="o-metric"><span>Distortion</span><strong class="o-num" id="o-distortion-value">1.022%</strong></div>
+        </div>
+      </section>
+      <div class="o-charts">
+        <section class="o-panel" aria-label="MTF">
+          <div class="o-head"><strong>MTF</strong><button class="o-quiet" data-action="mtf"><i data-lucide="expand" aria-hidden="true"></i> Pop up</button></div>
+          <div class="o-chart-legend"><span><span class="o-swatch"></span>0F</span><span><span class="o-swatch" style="background:var(--o-purple)"></span>0.8F</span><span>S — &nbsp; T - -</span></div>
+          <div class="o-chart-wrap"><svg class="o-chart" data-chart="mtf" role="img" aria-label="MTF curves at 0 and 0.8 normalized field"></svg></div>
+          <div class="o-chart-caption">전체 곡선 · DB의 저장 결과</div>
+        </section>
+        <section class="o-panel" aria-label="Spot">
+          <div class="o-head"><strong>Spot · 1.0F</strong><button class="o-quiet" data-action="spot"><i data-lucide="expand" aria-hidden="true"></i> Pop up</button></div>
+          <div class="o-chart-legend">RMS diameter <span class="o-num" id="o-rms-value">48.71 μm</span></div>
+          <div class="o-chart-wrap"><svg class="o-chart" data-chart="spot" role="img" aria-label="Spot points at normalized field 1.0"></svg></div>
+          <div class="o-chart-caption" id="o-spot-target">Target 1.60 μm</div>
+        </section>
+      </div>
+    </main>
+    <aside class="o-panel o-side" aria-label="Design space and prediction reliability">
+      <div>
+        <div class="o-head"><strong>Design space</strong><button id="o-pareto-open">Explore</button></div>
+        <div class="o-chart-wrap"><svg class="o-pareto-chart" id="o-pareto-mini" role="img" aria-label="DB Pareto candidates"></svg></div>
+        <div class="o-chart-caption" id="o-pareto-summary">리포트와 DB를 연결하세요.</div>
+        <div class="o-inner"><button id="o-pareto-undo" hidden>후보 적용 되돌리기</button></div>
+      </div>
+      <div class="o-confidence">
+        <h4>Prediction reliability</h4>
+        <div class="o-status-row"><span>학습 데이터 지원</span><span>미연결</span></div>
+        <div class="o-score">— <span class="o-small">/ 100</span></div>
+        <p>선택 모델의 학습 이력이 필요합니다.</p>
+        <div class="o-status-row"><span>MTF 예상 오차</span><span>—</span></div>
+        <div class="o-status-row"><span>Spot 예상 오차</span><span>—</span></div>
+        <div class="o-status-row"><span>FOV 예상 오차</span><span>—</span></div>
+        <p>예측 오차 정보 미제공</p>
+      </div>
+    </aside>
+  </div>
+  <div class="o-modal-host" id="o-modal-host" aria-live="polite">
+    <section class="o-modal" role="region" aria-label="확대 작업 화면">
+      <div class="o-modal-top"><span class="o-modal-title" id="o-modal-title"></span></div>
+      <div class="o-modal-body" id="o-modal-body"></div>
+    </section>
+  </div>
+  <div class="o-footer"><span><span class="o-dot"></span>Backend not connected</span><span id="o-result-source">결과: 합성 DB · 20°C · 다중 파장 · 편집값 예측 아님</span></div>
+  
+  
+  
+  
+  
+  
+</div>
+
+<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>

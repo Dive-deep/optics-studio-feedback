@@ -1,0 +1,96 @@
+{
+  "profile_id": "local-ui-demo-targets-v1",
+  "profile_version": 1,
+  "read_only": true,
+  "is_ui_example": true,
+  "category_weights": {
+    "mtf": 1,
+    "spot": 1,
+    "horizontal_fov": 1
+  },
+  "relative_tolerance": 0.05,
+  "conditions_policy": {
+    "prefer": "current_database_analysis_metadata",
+    "display_defaults": {
+      "temperature_c": 25,
+      "wavelength_nm": 560
+    },
+    "fallback_does_not_recalculate_results": true
+  },
+  "targets": [
+    {
+      "id": "mtf-0-sagittal",
+      "category": "mtf",
+      "metric": "mtf",
+      "frequency_lp_per_mm": 6,
+      "field_norm": 0.0,
+      "orientation": "SAGITTAL",
+      "comparator": ">=",
+      "value": 0.4,
+      "unit": "fraction",
+      "required": true
+    },
+    {
+      "id": "mtf-0-tangential",
+      "category": "mtf",
+      "metric": "mtf",
+      "frequency_lp_per_mm": 6,
+      "field_norm": 0.0,
+      "orientation": "TANGENTIAL",
+      "comparator": ">=",
+      "value": 0.4,
+      "unit": "fraction",
+      "required": true
+    },
+    {
+      "id": "mtf-0.8-sagittal",
+      "category": "mtf",
+      "metric": "mtf",
+      "frequency_lp_per_mm": 6,
+      "field_norm": 0.8,
+      "orientation": "SAGITTAL",
+      "comparator": ">=",
+      "value": 0.3,
+      "unit": "fraction",
+      "required": true
+    },
+    {
+      "id": "mtf-0.8-tangential",
+      "category": "mtf",
+      "metric": "mtf",
+      "frequency_lp_per_mm": 6,
+      "field_norm": 0.8,
+      "orientation": "TANGENTIAL",
+      "comparator": ">=",
+      "value": 0.3,
+      "unit": "fraction",
+      "required": true
+    },
+    {
+      "id": "spot-1f-rms-diameter",
+      "category": "spot",
+      "metric": "spot_rms_diameter",
+      "field_norm": 1.0,
+      "comparator": "close_to",
+      "value": 1.6,
+      "unit": "um",
+      "required": true
+    },
+    {
+      "id": "horizontal-full-fov",
+      "category": "horizontal_fov",
+      "metric": "horizontal_fov_full",
+      "comparator": "close_to",
+      "value": 24,
+      "unit": "deg",
+      "required": true
+    }
+  ],
+  "notes": [
+    "UI example JSON only; not a finalized backend target schema.",
+    "MTF conditions share one category weight; four conditions do not make MTF four times heavier.",
+    "Spot is RMS diameter near 1.6 um at normalized field 1.0.",
+    "Horizontal FOV is the full 24 degree angle (plus/minus 12 degrees).",
+    "Reference case D057_2 is not declared to pass these targets or be the current best candidate."
+  ]
+}

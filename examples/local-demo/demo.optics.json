@@ -1,0 +1,41 @@
+{
+  "format": "optics-ui-session",
+  "schema_version": 1,
+  "saved_at_utc": "2026-09-07T13:52:30.811383+00:00",
+  "state": {
+    "selected_case_id": "D057_2",
+    "demo_only": true,
+    "analysis_conditions": {
+      "temperature_c": 20.0,
+      "wavelengths_nm": [
+        450.0,
+        486.1327,
+        546.074,
+        587.5618,
+        656.2725
+      ],
+      "primary_wavelength_nm": 546.074,
+      "wavelength_mode": "multiple",
+      "temperature_source": "analysis_metadata",
+      "wavelength_source": "analysis_metadata",
+      "assumed_fields": [],
+      "recalculation_performed": false,
+      "spot_field_norm": 1.0,
+      "wavelength_weights": [
+        0.1,
+        0.15,
+        0.35,
+        0.25,
+        0.15
+      ]
+    },
+    "llm_draft": "",
+    "view_mode": "3d"
+  },
+  "references": {
+    "report_path": "training-report.json",
+    "database_path": "demo-cases.sqlite",
+    "target_path": "target.json"
+  },
+  "resume_jobs": false
+}

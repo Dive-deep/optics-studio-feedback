@@ -1,0 +1,43 @@
+{
+  "format": "optics-ui-demo-manifest",
+  "schema_version": 1,
+  "generator_version": 1,
+  "source_database_sha256": "3fda79d2cb0805a451428e98312c0ba2e34cd444e5ad5c8ed93f9215c24f92d9",
+  "source_catalog_sha256": "8131a9878578720ca7849cc2d38b75577d1c8c8435da912e29d34131a0beb2c2",
+  "model_is_trained_weights": false,
+  "training_membership": "absent",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c6ab424d53c5d1817fa6af02d60c494839af56654b3272faf395ce1e33a60eac"
+    },
+    {
+      "path": "demo-bundle.zip",
+      "sha256": "057eecaf972a6f5e8b3823ad10113995ccf6559c6aa56b04047b32cdbf116f7a"
+    },
+    {
+      "path": "demo-cases.sqlite",
+      "sha256": "33ffc7278bbf2ff4ec4598b7a26da5889e36d4f05b5a66f4003d160cdd6d5f77"
+    },
+    {
+      "path": "demo-model.pth",
+      "sha256": "1dc9256257fefcd8aeaa1b1b5ffd337e0a87e7751700cbabb53b57b72a91bb0a"
+    },
+    {
+      "path": "demo.optics.json",
+      "sha256": "4877b7def696893da7ecaaf3ee7701e24ffe8de028959cb5c9e2faf1ef8f75b1"
+    },
+    {
+      "path": "materials/material_catalog.sqlite",
+      "sha256": "111efdeb5753f57e8cde67df847130903dd6210399b5004a3d913a52bf43d40c"
+    },
+    {
+      "path": "target.json",
+      "sha256": "92d22ff1e4a45302f3a259be073119c80dd3f4a76dfdc64746496bfdf62e71e5"
+    },
+    {
+      "path": "training-report.json",
+      "sha256": "a7b581895901f0f1011ab29d34417c0c4d223d6b0181798a0bb4188a2cdf9027"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+html,body{margin:0;padding:0;background:#f3f5f8;color-scheme:light dark}body{min-width:320px}
+
+    #optics-review { --o-bg:light-dark(#f3f5f8,#171b22);--o-panel:light-dark(#ffffff,#202630);--o-soft:light-dark(#f5f7fa,#2a313d);--o-ink:light-dark(#1e2a3b,#e9edf5);--o-muted:light-dark(#596879,#b0bdcf);--o-line:light-dark(#dce3eb,#404b5c);--o-blue:light-dark(#2268cb,#87b8ff);--o-purple:light-dark(#7954b3,#c0a2ef);--o-teal:light-dark(#167d82,#77cccd);--o-gray:light-dark(#cbd3de,#647183);--o-warn:light-dark(#94611d,#f0c47b);--o-glass:light-dark(#afd4e4,#729fb7); color:var(--o-ink);background:var(--o-bg);font:400 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;border:1px solid var(--o-line);border-radius:12px;overflow:clip;color-scheme:light dark;text-align:left;min-width:0}
+    #optics-review * {box-sizing:border-box} #optics-review button,#optics-review input,#optics-review select {font:inherit;color:inherit}
+    #optics-review button {cursor:pointer;border:1px solid var(--o-line);border-radius:7px;background:var(--o-panel);padding:5px 10px;min-height:31px;display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:normal}
+    #optics-review button:hover {background:var(--o-soft)} #optics-review button:disabled {opacity:.5;cursor:default}
+    #optics-review button.o-primary {background:var(--o-blue);color:light-dark(#fff,#14243b);border-color:var(--o-blue)}
+    #optics-review .o-quiet {background:transparent;border-color:transparent;padding-left:5px;padding-right:5px}
+    #optics-review .o-top {display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--o-panel);flex-wrap:wrap}
+    #optics-review .o-brand {display:flex;align-items:center;gap:7px;font-weight:500;letter-spacing:-.02em}
+    #optics-review .o-brand i {color:var(--o-blue)} #optics-review .o-spacer {flex:1}
+    #optics-review .o-small {font-size:12px;color:var(--o-muted)} #optics-review .o-num {font-variant-numeric:tabular-nums}
+    #optics-review .o-toolbar {display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--o-line);border-bottom:1px solid var(--o-line);background:var(--o-panel)}
+    #optics-review .o-report {max-width:260px;min-width:0;overflow-wrap:anywhere;justify-content:flex-start}
+    #optics-review .o-dot {width:6px;height:6px;border-radius:50%;background:var(--o-gray);display:inline-block;margin-right:5px}
+    #optics-review .o-context {padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    #optics-review .o-tag {font-size:12px;padding:3px 7px;border-radius:5px;background:var(--o-soft);color:var(--o-muted)}
+    #optics-review .o-workspace {padding:0 12px 12px;display:grid;grid-template-columns:360px minmax(0,1fr) 230px;gap:12px;align-items:start}
+    #optics-review .o-panel {background:var(--o-panel);border:1px solid var(--o-line);border-radius:9px;min-width:0}
+    #optics-review .o-head {display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 8px;flex-wrap:wrap}
+    #optics-review .o-head strong {font-weight:500}
+    #optics-review .o-inner {padding:0 14px 14px} #optics-review .o-stack {display:grid;gap:12px;min-width:0}
+    #optics-review .o-tabs {display:flex;gap:3px;padding:3px;background:var(--o-soft);border-radius:7px;margin:8px 0}
+    #optics-review .o-tabs button {flex:1;background:transparent;border-color:transparent;padding:4px 5px}
+    #optics-review .o-tabs button[aria-pressed=true] {background:var(--o-panel);border-color:var(--o-line)}
+    #optics-review .o-field {display:grid;gap:4px;min-width:0;margin:9px 0}
+    #optics-review .o-field span {font-size:12px;color:var(--o-muted)}
+    #optics-review select,#optics-review input[type=number],#optics-review input[type=text] {width:100%;min-width:0;border:1px solid var(--o-line);background:var(--o-panel);border-radius:6px;padding:5px 6px;min-height:30px;font-variant-numeric:tabular-nums}
+    #optics-review .o-row2 {display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #optics-review .o-llm-input {width:100%;min-height:150px;resize:vertical;padding:12px;border:1px solid var(--o-line);border-radius:8px;background:var(--o-panel);color:var(--o-ink);font:inherit;line-height:1.6}
+    #optics-review .o-llm-status {display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0;flex-wrap:wrap}
+    #optics-review .o-compute-heading {display:flex;justify-content:space-between;align-items:center;gap:12px}
+    #optics-review .o-compute-heading button {min-height:25px;padding:2px 10px}
+    #optics-review .o-compute-message {font-size:12px;color:var(--o-muted);min-height:18px;margin-top:6px}
+    #optics-review .o-notice {padding:7px 16px;background:var(--o-soft);font-size:12px;color:var(--o-muted);overflow-wrap:anywhere}
+    #optics-review .o-param {border-top:1px solid var(--o-line);padding:5px 0}
+    #optics-review .o-param-path {display:inline;color:var(--o-muted);font-size:11px;margin-right:6px}
+    #optics-review .o-current-wrap {width:88px;flex:none;display:flex;align-items:center;gap:4px}
+    #optics-review .o-current-wrap input {text-align:right;padding:2px 4px;font-size:12px;min-height:24px}
+    #optics-review .o-current-wrap span {min-width:16px;font-size:11px}
+    #optics-review .o-slider-row {display:grid;grid-template-columns:65px minmax(20px,1fr) 65px;align-items:center;gap:10px;margin-top:3px}
+    #optics-review .o-slider-row input[type=number] {font-size:12px;padding:1px 3px;min-height:22px}
+    #optics-review .o-slider-row .o-range {margin:0}
+    #optics-review .o-parameters input[type=number]::-webkit-inner-spin-button,#optics-review .o-inspector-table input[type=number]::-webkit-inner-spin-button {appearance:none}
+    #optics-review .o-lens-summary {display:grid;grid-template-columns:25px minmax(0,1fr) 36px 22px;gap:6px;width:100%;text-align:left;justify-content:stretch;margin:4px 0;padding:5px 8px;border-color:transparent;background:var(--o-soft)}
+    #optics-review .o-lens-summary span {overflow-wrap:anywhere}
+    #optics-review .o-lens-count {font-size:11px;text-align:center;color:var(--o-blue)}
+    #optics-review .o-workbench-labels {display:flex;justify-content:space-between;align-items:center;margin:12px 0 4px;color:var(--o-muted);font-size:11px}
+    #optics-review .o-inspector-table {width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+    #optics-review .o-inspector-table th,#optics-review .o-inspector-table td {padding:7px 6px;border-bottom:1px solid var(--o-line);text-align:left;font-weight:400}
+    #optics-review .o-inspector-table th:first-child {width:38%;overflow-wrap:anywhere}
+    #optics-review .o-inspector-table thead th {color:var(--o-muted)}
+    #optics-review .o-inspect-cell {display:flex;gap:7px;align-items:center;min-width:0}
+    #optics-review .o-inspect-cell input[type=number] {min-width:0;font-size:12px}
+    #optics-review .o-inspect-cell input:disabled {color:var(--o-muted);background:var(--o-soft)}
+    #optics-review .o-table-group {background:var(--o-soft);color:var(--o-muted)}
+    #optics-review .o-shared-thickness {display:grid;grid-template-columns:1fr 1fr;gap:15px;align-items:center;font-size:12px;padding:8px 0 14px}
+    #optics-review .o-blank {display:block;min-height:22px}
+    #optics-review .o-param-title {display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:0}
+    #optics-review .o-param-title label {display:flex;gap:6px;align-items:center;font-size:12px} #optics-review input[type=checkbox] {accent-color:var(--o-blue);margin:0}
+    #optics-review .o-range {appearance:none;width:100%;height:6px;border-radius:4px;display:block;margin:12px 0;background:var(--o-gray);accent-color:var(--o-blue)}
+    #optics-review .o-range::-webkit-slider-thumb {appearance:none;width:13px;height:13px;border-radius:50%;background:var(--o-panel);border:3px solid var(--o-blue);box-shadow:0 1px 4px #0002}
+    #optics-review .o-range::-moz-range-thumb {width:9px;height:9px;border-radius:50%;background:var(--o-panel);border:3px solid var(--o-blue)}
+    #optics-review .o-bounds {display:grid;grid-template-columns:1fr 1.14fr 1fr;gap:5px}
+    #optics-review .o-bounds label {font-size:11px;color:var(--o-muted);display:grid;gap:3px}
+    #optics-review .o-bounds input {font-size:12px;padding:4px 2px;-moz-appearance:textfield}
+    #optics-review .o-bounds input::-webkit-inner-spin-button,#optics-review .o-bounds input::-webkit-outer-spin-button {appearance:none;margin:0}
+    #optics-review .o-frozen {opacity:.55}
+    #optics-review .o-legend {display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--o-muted);margin-top:8px}
+    #optics-review .o-swatch {display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;background:var(--o-blue);margin-right:3px}
+    #optics-review .o-view {height:292px;position:relative;overflow:hidden;margin:0 8px;border-radius:7px;background:radial-gradient(ellipse at 50% 58%,var(--o-panel),var(--o-soft))}
+    #optics-review .o-view canvas {display:block;width:100%;height:100%;touch-action:none}
+    #optics-review .o-view-label {position:absolute;bottom:9px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;font-size:11px;color:var(--o-muted)}
+    #optics-review .o-view-note {position:absolute;top:8px;left:12px;right:12px;pointer-events:none;font-size:11px;color:var(--o-muted)}
+    #optics-review .o-section {position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+    #optics-review .o-stop-handle {position:absolute;z-index:2;cursor:ew-resize;touch-action:none;color:var(--o-purple);border-color:var(--o-purple);background:var(--o-panel);font-size:11px;user-select:none}
+    #optics-review .o-stop-handle[data-dragging] {background:var(--o-soft)}
+    #optics-review .o-ray-tools {display:flex;gap:7px 16px;align-items:center;flex-wrap:wrap;padding:8px 14px;font-size:12px;color:var(--o-muted)}
+    #optics-review .o-ray-tools label {display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:var(--o-ink)}
+    #optics-review .o-ray-line {width:18px;border-top:2px solid var(--o-warn);display:inline-block}
+    #optics-review .o-ray-line.o-chief {border-top-color:var(--o-blue)}
+    #optics-review .o-ray-status {flex-basis:100%;font-size:11px;overflow-wrap:anywhere}
+    #optics-review .o-metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));padding:12px 14px;gap:10px;border-top:1px solid var(--o-line);margin-top:8px}
+    #optics-review .o-metric {min-width:0} #optics-review .o-metric span {display:block;font-size:11px;color:var(--o-muted)} #optics-review .o-metric strong {font-weight:500;white-space:nowrap}
+    #optics-review .o-charts {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    #optics-review .o-chart {width:100%;height:218px;display:block;overflow:visible} #optics-review .o-scatter {height:175px}
+    #optics-review .o-chart-wrap {position:relative;min-width:0;padding:0 8px}
+    #optics-review .o-chart-caption {padding:0 14px 12px;font-size:11px;color:var(--o-muted)}
+    #optics-review .o-chart text {fill:var(--o-muted);font-size:11px} #optics-review .o-chart .domain,#optics-review .o-chart .tick line {stroke:var(--o-line)}
+    #optics-review .o-chart-legend {padding:0 14px 4px;display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--o-muted)}
+    #optics-review .o-confidence {padding:12px 14px;border-top:1px solid var(--o-line)}
+    #optics-review .o-confidence h4 {font-size:12px;font-weight:500;margin:0 0 8px}
+    #optics-review .o-confidence p {font-size:12px;color:var(--o-muted);margin:6px 0}
+    #optics-review .o-confidence .o-score {font-size:22px;font-weight:400;line-height:1.3;color:var(--o-ink)}
+    #optics-review .o-status-row {display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0;font-size:12px}
+    #optics-review .o-status-row span:last-child {color:var(--o-muted)}
+    #optics-review .o-footer {border-top:1px solid var(--o-line);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--o-muted);background:var(--o-panel)}
+    #optics-review .o-analysis .o-workspace {grid-template-columns:250px minmax(0,1fr)}
+    #optics-review.o-analysis .o-workspace {grid-template-columns:360px minmax(0,1fr)}
+    #optics-review.o-analysis .o-side {grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}
+    #optics-review.o-analysis .o-side .o-confidence {border-top:0;border-left:1px solid var(--o-line)}
+    #optics-review.o-analysis .o-main {display:flex;flex-direction:column}
+    #optics-review.o-analysis .o-charts {order:-1}
+    #optics-review .o-modal-host {display:none;padding:0 12px 12px}
+    #optics-review .o-modal-host.o-open {display:block}
+    #optics-review .o-modal {max-width:850px;margin:0 auto;background:var(--o-panel);border:1px solid var(--o-line);border-radius:10px;padding:18px}
+    #optics-review .o-modal-top {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    #optics-review .o-modal-title {font-size:17px;font-weight:500}
+    #optics-review .o-modal-body {min-width:0}
+    #optics-review .o-modal p {color:var(--o-muted);font-size:12px}
+    #optics-review .o-modal .o-chart {height:340px}
+    #optics-review .o-callout {padding:10px 12px;border-radius:7px;background:var(--o-soft);font-size:12px;color:var(--o-muted);margin:10px 0}
+    #optics-review .o-error {color:light-dark(#a72a31,#ffa8aa);font-size:12px}
+    #optics-review .o-request {font:12px/1.5 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--o-soft);padding:12px;border-radius:7px;max-height:none}
+    #optics-review .o-target-table {width:100%;border-collapse:collapse;font-size:12px}
+    #optics-review .o-target-table td,#optics-review .o-target-table th {padding:9px 5px;border-bottom:1px solid var(--o-line);text-align:left;font-weight:400;overflow-wrap:anywhere}
+    #optics-review .o-target-table th {color:var(--o-muted)}
+    #optics-review .o-busy {height:10px;background:var(--o-gray);border-radius:6px;overflow:hidden}
+    #optics-review .o-busy span {display:block;height:100%;background:var(--o-blue)}
+    #optics-review .o-demo-list {display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+    #optics-review .o-chart-tip {position:absolute;pointer-events:none;z-index:3;display:none;background:var(--o-panel);border:1px solid var(--o-line);border-radius:6px;padding:7px 9px;font-size:11px;box-shadow:0 4px 16px #0002;white-space:pre-line;max-width:210px}
+    #optics-review [hidden] {display:none!important}
+    @media(max-width:1400px) {#optics-review .o-workspace,#optics-review.o-analysis .o-workspace {grid-template-columns:340px minmax(0,1fr)}#optics-review .o-side {grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}#optics-review .o-side .o-confidence {border-top:0;border-left:1px solid var(--o-line)}#optics-review .o-view {height:265px}}
+    @media(max-width:900px) {#optics-review .o-workspace,#optics-review.o-analysis .o-workspace {display:flex;flex-direction:column}#optics-review .o-workspace>* {width:100%}}
+    @media(max-width:650px) {#optics-review .o-inspect-cell {flex-direction:column;align-items:stretch;gap:3px}#optics-review .o-select-variable {align-self:flex-start}#optics-review .o-inspector-table input[type=number] {padding:3px;font-size:11px}}
+    @media(max-width:650px) {#optics-review .o-workspace,#optics-review.o-analysis .o-workspace {display:flex;flex-direction:column}#optics-review .o-workspace>* {width:100%}#optics-review .o-side,#optics-review.o-analysis .o-side {display:block}#optics-review .o-side .o-confidence,#optics-review.o-analysis .o-side .o-confidence {border-left:0;border-top:1px solid var(--o-line)}#optics-review .o-charts {grid-template-columns:1fr}#optics-review .o-report {max-width:100%}#optics-review .o-top,#optics-review .o-toolbar {padding:10px}#optics-review .o-modal {padding:12px}#optics-review .o-row2 {grid-template-columns:1fr}#optics-review .o-metrics {grid-template-columns:1fr 1fr}}
+
+    #optics-review .o-pareto-controls {display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+    #optics-review .o-pareto-chart {display:block;width:100%;height:auto;min-height:185px}
+    #optics-review #o-pareto-large {height:320px;min-height:320px}
+    #optics-review .o-pareto-chart text {fill:var(--o-muted);font-size:11px}
+    #optics-review .o-pareto-chart .domain,#optics-review .o-pareto-chart .tick line {stroke:var(--o-line)}
+    #optics-review .o-pareto-metadata {margin-top:12px;font-size:12px}
+    #optics-review #o-pareto-detail {padding:10px 0;border-top:1px solid var(--o-line)}
+    #optics-review #o-pareto-detail .o-target-table {table-layout:fixed}
+    @media(max-width:650px){#optics-review .o-pareto-controls{grid-template-columns:1fr}#optics-review #o-pareto-detail .o-target-table{font-size:11px}}
+  
+#optics-review{border-radius:0;border:0;min-height:100vh}

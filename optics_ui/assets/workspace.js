@@ -1,0 +1,613 @@
+
+  (function(){
+    const root=document.getElementById('optics-review');
+    let data={"id":"D057_2","origin":"SYNTHETIC_PROXY","temperature_c":20,"primary_wavelength_nm":546.074,"design":[{"design_id":"D057_2","family_id":"FAM_057","parent_design_id":"D057_1","family_split":"train","trajectory_step":2,"seed_regime":"zero_base_plane","maturity_label":"INTERMEDIATE","optimizer_stage":"PARAXIAL_POWER","generator_seed":434173,"generator_seed_scope":"STEP_JITTER_WITH_FAMILY_CONTEXT","family_generator_seed":318335,"prescription_hash":"d5daa225d1187841bf5969023e429d3b6189c5615b44d7414187e0321b87c57f","benchmark_spec_id":"SPEC_HEADLAMP_3L_V1","source_distance_mm":9.734331497902176,"geometry_valid":1,"trace_success":1,"overall_status":"SUCCESS","primary_failure_code":null,"objective_score_proxy":95.52321541319078,"target_pass_all_proxy":0,"target_pass_nominal_only_proxy":0,"material_snapshot_status":"COMPLETE","data_origin":"SYNTHETIC_MATH_PROXY","zemax_executed":0,"created_at_utc":"2026-08-22T00:00:00Z","notes":"Test oracle only; Zemax was not executed. Commercial polymer identities are linked to generic optical proxies."}],"lenses":[{"design_id":"D057_2","lens_index":1,"material_id":"SCHOTT_N_SF6HTULTRA","material_category":"GLASS","center_thickness_mm":6.8621267816347356,"clear_semi_diameter_mm":15.5,"front_surface_index":1,"back_surface_index":2,"element_power_1_per_mm_proxy":0.02291050338724159,"material_property_complete":1},{"design_id":"D057_2","lens_index":2,"material_id":"SCHOTT_N_BK7","material_category":"GLASS","center_thickness_mm":3.9880494571022296,"clear_semi_diameter_mm":15.5,"front_surface_index":3,"back_surface_index":4,"element_power_1_per_mm_proxy":-0.005259021825726996,"material_property_complete":1},{"design_id":"D057_2","lens_index":3,"material_id":"SCHOTT_N_SF6HTULTRA","material_category":"GLASS","center_thickness_mm":4.650428505550736,"clear_semi_diameter_mm":15.5,"front_surface_index":5,"back_surface_index":6,"element_power_1_per_mm_proxy":0.02011239453956893,"material_property_complete":1}],"surfaces":[{"design_id":"D057_2","surface_index":1,"lens_index":1,"side":"FRONT","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":57.00034361550432,"curvature_1_per_mm":0.01754375388937122,"conic":-0.5087771658585712,"clear_semi_diameter_mm":15.5,"vertex_z_mm":0.0,"sag_edge_mm_proxy":2.1269365007249768,"max_abs_sag_mm_proxy":2.1269365007249768,"max_abs_slope_proxy":0.274761257308171,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":-0.5087771658585712,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":57.00034361550432,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"},{"design_id":"D057_2","surface_index":2,"lens_index":1,"side":"BACK","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":-88.84330626327119,"curvature_1_per_mm":-0.01125577201096816,"conic":-0.5208413736325884,"clear_semi_diameter_mm":15.5,"vertex_z_mm":6.8621267816347356,"sag_edge_mm_proxy":-1.357065838362093,"max_abs_sag_mm_proxy":1.357065838362093,"max_abs_slope_proxy":0.17435774343644447,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":-0.5208413736325884,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":-88.84330626327119,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"},{"design_id":"D057_2","surface_index":3,"lens_index":2,"side":"FRONT","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":-184.83080815934582,"curvature_1_per_mm":-0.005410353446801373,"conic":-0.07635199615071797,"clear_semi_diameter_mm":15.5,"vertex_z_mm":11.59729869095416,"sag_edge_mm_proxy":-0.6509775571373578,"max_abs_sag_mm_proxy":0.6509775571373578,"max_abs_slope_proxy":0.08347264736293834,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":-0.07635199615071797,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":-184.83080815934582,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"},{"design_id":"D057_2","surface_index":4,"lens_index":2,"side":"BACK","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":213.0615786431288,"curvature_1_per_mm":0.004693478788472545,"conic":0.011620114085181436,"clear_semi_diameter_mm":15.5,"vertex_z_mm":15.58534814805639,"sag_edge_mm_proxy":0.5645608046754699,"max_abs_sag_mm_proxy":0.5645608046754699,"max_abs_slope_proxy":0.07237155404351965,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":0.011620114085181436,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":213.0615786431288,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"},{"design_id":"D057_2","surface_index":5,"lens_index":3,"side":"FRONT","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":56.10724572864495,"curvature_1_per_mm":0.017823009969806108,"conic":-0.5494094605683355,"clear_semi_diameter_mm":15.5,"vertex_z_mm":19.797099653917915,"sag_edge_mm_proxy":2.159718628177796,"max_abs_sag_mm_proxy":2.159718628177796,"max_abs_slope_proxy":0.2788594370294042,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":-0.5494094605683355,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":56.10724572864495,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"},{"design_id":"D057_2","surface_index":6,"lens_index":3,"side":"BACK","surface_type":"STANDARD","zemax_surface_type_hint":"Standard","is_plane":0,"radius_mm":-139.02111250122607,"curvature_1_per_mm":-0.007193152047255993,"conic":-0.5296541381861356,"clear_semi_diameter_mm":15.5,"vertex_z_mm":24.44752815946865,"sag_edge_mm_proxy":-0.8653441202901492,"max_abs_sag_mm_proxy":0.8653441202901491,"max_abs_slope_proxy":0.11094257408205105,"active_parameter_count":2,"raw_surface_json":"{\"a10\":0.0,\"a4\":0.0,\"a6\":0.0,\"a8\":0.0,\"conic\":-0.5296541381861356,\"odd3\":0.0,\"odd5\":0.0,\"odd7\":0.0,\"odd9\":0.0,\"radius_mm\":-139.02111250122607,\"semi_diameter_mm\":15.5,\"surface_type\":\"STANDARD\",\"z11_mm\":0.0,\"z4_mm\":0.0,\"z5_mm\":0.0,\"zernike_norm_radius_mm\":15.5}"}],"mtf":[{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":0.0,"mtf":1.0},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":1.0,"mtf":0.9966102546953194},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":2.0,"mtf":0.9880981212237612},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":3.0,"mtf":0.9745950005851035},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":4.0,"mtf":0.9563077825470179},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":5.0,"mtf":0.9335135706252655},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":6.0,"mtf":0.906552695699538},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":8.0,"mtf":0.841756535819007},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":10.0,"mtf":0.7655586762169417},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":15.0,"mtf":0.5515453947550002},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":20.0,"mtf":0.3490934594066728},{"field_norm":0.0,"orientation":"SAGITTAL","frequency_lp_per_mm":30.0,"mtf":0.09484432339597995},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":0.0,"mtf":1.0},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":1.0,"mtf":0.9966102546953194},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":2.0,"mtf":0.9880981212237612},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":3.0,"mtf":0.9745950005851035},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":4.0,"mtf":0.9563077825470179},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":5.0,"mtf":0.9335135706252655},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":6.0,"mtf":0.906552695699538},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":8.0,"mtf":0.841756535819007},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":10.0,"mtf":0.7655586762169417},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":15.0,"mtf":0.5515453947550002},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":20.0,"mtf":0.3490934594066728},{"field_norm":0.0,"orientation":"TANGENTIAL","frequency_lp_per_mm":30.0,"mtf":0.09484432339597995},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":0.0,"mtf":1.0},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":1.0,"mtf":0.9946615936012356},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":2.0,"mtf":0.9803926955831634},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":3.0,"mtf":0.9575780368335273},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":4.0,"mtf":0.9268249469336283},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":5.0,"mtf":0.8889364897240606},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":6.0,"mtf":0.8448766321942258},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":8.0,"mtf":0.7426554937909322},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":10.0,"mtf":0.6294783835635844},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":15.0,"mtf":0.3550943374524604},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":20.0,"mtf":0.1595812174798801},{"field_norm":0.8,"orientation":"SAGITTAL","frequency_lp_per_mm":30.0,"mtf":0.016301042482810755},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":0.0,"mtf":1.0},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":1.0,"mtf":0.9934452975871944},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":2.0,"mtf":0.9756060983008811},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":3.0,"mtf":0.9470909195970841},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":4.0,"mtf":0.9088568914948422},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":5.0,"mtf":0.8621564208930066},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":6.0,"mtf":0.8084691315210641},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":8.0,"mtf":0.6867189870538035},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":10.0,"mtf":0.556984827514652},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":15.0,"mtf":0.2696428901343809},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":20.0,"mtf":0.09782527867856824},{"field_norm":0.8,"orientation":"TANGENTIAL","frequency_lp_per_mm":30.0,"mtf":0.005421160932234294}],"spot":[{"x":16.290345083135524,"y":-16.159417100161214,"wavelength_nm":450.0},{"x":-39.0710435525813,"y":1.1714766400625687,"wavelength_nm":486.1327},{"x":-4.750747776903578,"y":24.168622179292573,"wavelength_nm":546.074},{"x":-38.14940691789675,"y":-15.85477577794397,"wavelength_nm":587.5618},{"x":9.52371361891705,"y":7.135213297507483,"wavelength_nm":656.2725},{"x":-20.359630897056956,"y":4.688514845974535,"wavelength_nm":450.0},{"x":-37.22742436606349,"y":35.551444309980255,"wavelength_nm":486.1327},{"x":13.131463680305801,"y":21.911635374897106,"wavelength_nm":546.074},{"x":-0.7844918716801837,"y":37.83447415100176,"wavelength_nm":587.5618},{"x":-20.029936131150215,"y":17.299206487527186,"wavelength_nm":656.2725},{"x":-10.290710266651772,"y":22.1244446258372,"wavelength_nm":450.0},{"x":0.8275697449481944,"y":-3.4737659188948875,"wavelength_nm":486.1327},{"x":2.259475089292708,"y":-8.333725428526192,"wavelength_nm":546.074},{"x":0.203031046439313,"y":17.98208455447189,"wavelength_nm":587.5618},{"x":28.551366665209784,"y":-26.093406149298243,"wavelength_nm":656.2725},{"x":-11.37357836407973,"y":14.965330388851777,"wavelength_nm":450.0},{"x":20.175775941099793,"y":10.217240298483306,"wavelength_nm":486.1327},{"x":17.190270951542903,"y":8.343680568415378,"wavelength_nm":546.074},{"x":-32.992136996918084,"y":2.972232286395565,"wavelength_nm":587.5618},{"x":-14.736681701764981,"y":0.8358353139095704,"wavelength_nm":656.2725},{"x":-4.845201915079226,"y":-6.090097051863832,"wavelength_nm":450.0},{"x":-12.907411825019203,"y":-15.65990899263195,"wavelength_nm":486.1327},{"x":-9.350383169927815,"y":25.949397433940106,"wavelength_nm":546.074},{"x":5.533058918048651,"y":-15.259603293645464,"wavelength_nm":587.5618},{"x":5.241972008865349,"y":-22.056767917722347,"wavelength_nm":656.2725},{"x":-6.316136625768603,"y":-13.603502371377465,"wavelength_nm":450.0},{"x":20.544925776267032,"y":-10.845484301560914,"wavelength_nm":486.1327},{"x":-9.48888229851608,"y":-2.3394200920678765,"wavelength_nm":546.074},{"x":-22.297268992079957,"y":-6.730657363247695,"wavelength_nm":587.5618},{"x":-3.2197135428992296,"y":0.08625291233805449,"wavelength_nm":656.2725},{"x":1.391474778051838,"y":0.43564786220360535,"wavelength_nm":450.0},{"x":4.461452740070014,"y":-18.970521788414608,"wavelength_nm":486.1327},{"x":7.366439340662016,"y":13.715637992669611,"wavelength_nm":546.074},{"x":-17.41535507937167,"y":12.361815345381713,"wavelength_nm":587.5618},{"x":-11.710661610025829,"y":-32.20437252487232,"wavelength_nm":656.2725},{"x":-2.7336635743995,"y":33.50815759914521,"wavelength_nm":450.0},{"x":-24.040212525323703,"y":-2.382912355256406,"wavelength_nm":486.1327},{"x":12.919915903258198,"y":10.107502689852916,"wavelength_nm":546.074},{"x":15.22182604218918,"y":-9.057753381555562,"wavelength_nm":587.5618},{"x":6.323469430249332,"y":5.900611069871583,"wavelength_nm":656.2725},{"x":1.1196781861540746,"y":37.560862780438256,"wavelength_nm":450.0},{"x":-12.643374358097581,"y":-13.786906858871218,"wavelength_nm":486.1327},{"x":35.86503492717329,"y":31.53109531620976,"wavelength_nm":546.074},{"x":-29.37046261049312,"y":-25.319313278876407,"wavelength_nm":587.5618},{"x":-1.1858179563913083,"y":-13.702493672832261,"wavelength_nm":656.2725},{"x":-4.282247287024638,"y":7.1780544588368675,"wavelength_nm":450.0},{"x":10.84937378711356,"y":-7.8591189668159,"wavelength_nm":486.1327},{"x":2.2575974549140274,"y":7.639495015976002,"wavelength_nm":546.074},{"x":-1.6992792636301457,"y":-8.92163351066974,"wavelength_nm":587.5618},{"x":-15.010997466558457,"y":-8.012560083062356,"wavelength_nm":656.2725},{"x":26.727976496335966,"y":-7.653510713890578,"wavelength_nm":450.0},{"x":-36.58031350776037,"y":-13.667366227118885,"wavelength_nm":486.1327},{"x":55.61530584180171,"y":-7.209777937425472,"wavelength_nm":546.074},{"x":2.9614305012857804,"y":-7.36365956911276,"wavelength_nm":587.5618},{"x":11.864889214359142,"y":1.4585388298899111,"wavelength_nm":656.2725},{"x":13.970264469732141,"y":-4.179882670855473,"wavelength_nm":450.0},{"x":26.2303998671419,"y":-0.1327084426918409,"wavelength_nm":486.1327},{"x":-8.091032221835968,"y":3.349278792511669,"wavelength_nm":546.074},{"x":10.774095722209415,"y":2.9758936347564204,"wavelength_nm":587.5618},{"x":-13.719389295234537,"y":-10.488530486911245,"wavelength_nm":656.2725},{"x":7.732789729332244,"y":-9.853669516408187,"wavelength_nm":450.0},{"x":15.803678146734164,"y":13.516717379124687,"wavelength_nm":486.1327},{"x":17.349731728655925,"y":9.996969676932471,"wavelength_nm":546.074},{"x":-4.908927538234948,"y":-10.946599314997762,"wavelength_nm":587.5618}],"spot_summary":[{"design_id":"D057_2","analysis_id":"AN_D057_2_SPOT","temperature_c":20.0,"field_norm":1.0,"rms_radius_mm_proxy":0.024353118694524167,"geometric_radius_mm_proxy":0.057087124678651915,"centroid_x_mm_proxy":-0.0008641051355456702,"centroid_y_mm_proxy":0.0010978053289547804,"ray_count":64,"reference":"CENTROID"}],"metrics":[{"design_id":"D057_2","analysis_id":"AN_D057_2_FO","temperature_c":20.0,"efl_mm":30.720347249253603,"ffl_mm":21.318154574814287,"bfl_mm":19.38282690242302,"image_space_na":0.43876538127250997,"horizontal_fov_deg":22.102670362490247,"vertical_fov_deg":5.5907874843607415,"distortion_percent_proxy":1.0215695482134233,"group_track_mm":24.44752815946865,"abcd_a":0.6309442645669949,"abcd_b_mm":17.269779889121896,"abcd_c_per_mm":-0.03255171537894307,"abcd_d":0.6939425001236679,"focus_valid":1}],"scatter":[{"id":"D004_0","x":43.657770448509574,"y":67.07133531480181},{"id":"D004_1","x":43.555868161015034,"y":59.60602258245185},{"id":"D004_2","x":43.498920544777256,"y":59.71365200777633},{"id":"D004_3","x":43.96099442876713,"y":56.23007436962314},{"id":"D004_4","x":43.905416877798764,"y":54.13481296184147},{"id":"D008_0","x":43.55978935747985,"y":58.52650920847011},{"id":"D008_4","x":44.08734572765441,"y":58.668419277011985},{"id":"D009_0","x":44.084997658893414,"y":62.13692893109435},{"id":"D009_2","x":44.63241336677606,"y":61.36192608617335},{"id":"D009_3","x":44.53011182390123,"y":60.07563615082008},{"id":"D010_0","x":43.77064123351576,"y":54.26192128879122},{"id":"D010_1","x":44.223783529480116,"y":56.3889839282654},{"id":"D010_3","x":44.40901396520413,"y":56.87536842759205},{"id":"D010_4","x":44.413098850953936,"y":60.40123283381011},{"id":"D011_0","x":45.79440507359755,"y":57.86053320792062},{"id":"D011_1","x":46.07086365997148,"y":57.86425510768726},{"id":"D011_2","x":46.338887023606325,"y":59.07070189921642},{"id":"D015_0","x":44.67002660641028,"y":61.49897247220069},{"id":"D015_2","x":44.720195898532715,"y":52.4331200606077},{"id":"D017_0","x":46.180105165654766,"y":64.02219593031522},{"id":"D017_1","x":46.48919139150828,"y":60.212424816142004},{"id":"D017_3","x":46.760154925713884,"y":63.53969815994544},{"id":"D020_0","x":44.303229374953666,"y":55.63410117132415},{"id":"D020_2","x":44.55182927013301,"y":56.92709449835703},{"id":"D020_3","x":45.17133413631077,"y":48.80769060960429},{"id":"D020_4","x":45.232795468530135,"y":63.91049832878996},{"id":"D021_3","x":49.14096170505521,"y":60.50883612424421},{"id":"D022_0","x":44.58197927176326,"y":56.64283245225651},{"id":"D022_1","x":44.48374077134677,"y":59.63052278904974},{"id":"D022_2","x":44.77163099161419,"y":61.23812439778496},{"id":"D022_3","x":45.28334287475387,"y":59.14368145103137},{"id":"D022_4","x":45.010141582214814,"y":59.85474437686236},{"id":"D023_3","x":46.310484104688385,"y":68.48893754516047},{"id":"D023_4","x":46.2925690727367,"y":57.43213814974645},{"id":"D027_4","x":41.91711090374735,"y":75.05444286331208},{"id":"D030_0","x":3.2466979568188825,"y":973.270002934043},{"id":"D030_2","x":24.650395096985157,"y":55.82374339679012},{"id":"D031_2","x":4.288916574323023,"y":74.44235689401951},{"id":"D032_4","x":42.581383779714095,"y":68.20349855103873},{"id":"D034_1","x":19.45982689717558,"y":55.78324046822698},{"id":"D034_2","x":28.28226566282104,"y":63.20880128521128},{"id":"D036_3","x":30.902879510466562,"y":52.0149813757776},{"id":"D036_4","x":40.21646680014726,"y":60.334810714042156},{"id":"D037_4","x":43.15773070733651,"y":65.53433350886579},{"id":"D040_1","x":12.858087835967979,"y":56.61254019835952},{"id":"D040_2","x":17.782206280608097,"y":50.14503019390292},{"id":"D041_2","x":16.504215927334798,"y":54.988346442000825},{"id":"D042_2","x":13.094699862414888,"y":56.50169365300787},{"id":"D046_0","x":24.598617196869732,"y":64.96269424963968},{"id":"D046_1","x":30.479660919241063,"y":60.57958334456469},{"id":"D046_3","x":40.220395824169536,"y":57.004631312831876},{"id":"D046_4","x":44.92787317057236,"y":55.308167058314496},{"id":"D049_0","x":2.8773469189645335,"y":102.46711639412538},{"id":"D050_3","x":29.05351212297743,"y":48.730497214559946},{"id":"D050_4","x":39.456584926830324,"y":57.92566360545975},{"id":"D052_2","x":24.95286865582579,"y":55.12305253813639},{"id":"D052_4","x":44.512269206434844,"y":65.20742733052217},{"id":"D055_1","x":11.402871782942956,"y":53.758541854859004},{"id":"D055_3","x":34.734035332195404,"y":53.37568091809872},{"id":"D056_1","x":7.568841277085937,"y":60.88550140772721},{"id":"D056_2","x":15.908159367380312,"y":54.10465028243941},{"id":"D057_2","x":22.102670362490247,"y":48.70623738904833},{"id":"D057_3","x":33.08732396003495,"y":46.59748655814317},{"id":"D057_4","x":41.70239302213032,"y":58.285470999159806},{"id":"D058_2","x":24.876559045776833,"y":49.470933613352166},{"id":"D059_3","x":33.66908620779979,"y":53.63678691323356},{"id":"D059_4","x":41.23536544184899,"y":55.35035035756445},{"id":"D061_1","x":8.342695172000418,"y":54.546368862904444},{"id":"D061_3","x":35.83271297071246,"y":56.56723573051255},{"id":"D062_2","x":23.821232568519605,"y":53.84436866289179},{"id":"D062_3","x":34.79616443509352,"y":49.10439247337704},{"id":"D062_4","x":42.7804019050269,"y":58.61625130995555},{"id":"D063_1","x":11.27898207659963,"y":55.68474715861825},{"id":"D063_2","x":22.792912033824525,"y":55.08190431914971},{"id":"D064_1","x":8.036444948358625,"y":55.67037039174315},{"id":"D064_2","x":16.56483900332706,"y":57.114442416182264},{"id":"D066_1","x":5.345163366239667,"y":52.84291775686387},{"id":"D066_4","x":40.01097980978181,"y":51.04269270982787},{"id":"D067_1","x":5.909083596992295,"y":49.42863759150601},{"id":"D067_2","x":12.313856773100735,"y":51.29294969659299},{"id":"D067_3","x":34.15511007280694,"y":53.51707502185112},{"id":"D069_1","x":8.314667000201638,"y":54.76560094444583},{"id":"D070_2","x":13.335243025529433,"y":49.635991089670696},{"id":"D071_1","x":25.47723330223891,"y":61.31210053973102},{"id":"D071_4","x":44.555454733972915,"y":63.304213652606826},{"id":"D073_0","x":15.394547492626554,"y":51.25450032135046},{"id":"D073_2","x":33.25866237018534,"y":57.56485737470172},{"id":"D074_1","x":26.91328064745819,"y":57.59262918369681},{"id":"D075_0","x":16.487835504638547,"y":55.436022866497275},{"id":"D075_2","x":35.690090127602375,"y":56.28507580022288},{"id":"D076_0","x":14.649119901327255,"y":57.53988134127416},{"id":"D076_2","x":35.21487716479733,"y":64.59442217197922},{"id":"D077_2","x":31.971984406411483,"y":59.79482190613283},{"id":"D077_3","x":38.33966524470925,"y":64.39963045327328},{"id":"D077_4","x":42.505396820422604,"y":63.89727467532226},{"id":"D078_3","x":41.161649831921366,"y":62.27278456585749},{"id":"D078_4","x":45.09397032651221,"y":61.13014409168606},{"id":"D079_0","x":12.974648101438591,"y":55.553312039942675},{"id":"D079_1","x":23.88740233935244,"y":54.36369177263971},{"id":"D080_0","x":17.972000059340292,"y":60.3292660546565},{"id":"D080_1","x":27.991211017916374,"y":58.21153967457787},{"id":"D081_1","x":23.817612537473337,"y":49.160500377056344},{"id":"D082_1","x":26.34740875216743,"y":53.74447798231769},{"id":"D082_2","x":34.48848835878855,"y":59.74001673582092},{"id":"D083_0","x":15.16207498268614,"y":51.08645542814491},{"id":"D083_1","x":26.941845440526073,"y":50.339101422319004},{"id":"D083_2","x":35.158770169638714,"y":58.14802452020377},{"id":"D084_1","x":25.18419661503011,"y":56.13494212807361},{"id":"D084_2","x":33.01685086531347,"y":53.7623264995849},{"id":"D085_0","x":17.16231669274076,"y":64.81121553221776},{"id":"D085_1","x":28.533115908374697,"y":53.16895231537611},{"id":"D085_2","x":36.027739985313104,"y":62.6280181064225},{"id":"D085_4","x":46.133807951225535,"y":64.59829866883112},{"id":"D091_3","x":48.73183626224281,"y":62.517948341866244},{"id":"D095_4","x":40.22634997480737,"y":54.0435737580391},{"id":"D096_3","x":44.86373629898688,"y":57.49983727062321},{"id":"D098_3","x":43.31644228765783,"y":53.64133687676517},{"id":"D099_4","x":42.87302976621614,"y":62.450803602193396},{"id":"D100_3","x":44.67629858484026,"y":66.41599935816032}],"analysis_conditions":{"temperature_c":20,"wavelengths_nm":[450.0,486.1327,546.074,587.5618,656.2725],"primary_wavelength_nm":546.074}};
+    const byId=function(id){return root.querySelector('#'+id)};
+    /* BEGIN RAY INDEX SNAPSHOT */
+    data.ray_indices={"status":"available","wavelength_nm":546.074,"temperature_c":20.0,"indices":{"PC_LEXAN_OQ3820_PROXY":1.595537564,"PC_MAKROLON_LED2245_PROXY":1.5897533225135922,"PMMA_DELPET_80NH_PROXY":1.4926111347569782,"PMMA_PLEXIGLAS_8N_PROXY":1.4926111347569782,"SCHOTT_N_BK7":1.5187219714708264,"SCHOTT_N_SF6HTULTRA":1.8126590955276354},"missing_material_ids":[],"provenance":{"lookup":"exact_sample","catalog_reference":"materials/material_catalog.sqlite","catalog_path":"examples/local-demo/materials/material_catalog.sqlite","condition_sources":{"wavelength":"primary_wavelength_nm","temperature":"analysis_metadata"},"catalog_metadata":{"dataset_name":"AI Imaging Optics Sample Material Catalog","dataset_version":"1.0.0","created_at_utc":"2026-08-22T00:00:00Z","synthetic_warning":"Polymer non-dispersion properties and all custom AGF polymer thermal fields are test-only proxies.","target_zemax_version":"OpticStudio 2025 R2"},"materials":{"PC_LEXAN_OQ3820_PROXY":{"n_model_id":"PC_ZHANG_2020","n_is_proxy":1,"is_extrapolated":0,"source_quality":"generic_polymer_n_proxy"},"PC_MAKROLON_LED2245_PROXY":{"n_model_id":"PC_SULTANOVA_2009","n_is_proxy":1,"is_extrapolated":0,"source_quality":"generic_polymer_n_proxy"},"PMMA_DELPET_80NH_PROXY":{"n_model_id":"PMMA_SZCZUROWSKI_2013_SHARED_PROXY","n_is_proxy":1,"is_extrapolated":0,"source_quality":"generic_polymer_n_proxy"},"PMMA_PLEXIGLAS_8N_PROXY":{"n_model_id":"PMMA_SZCZUROWSKI_2013","n_is_proxy":1,"is_extrapolated":0,"source_quality":"generic_polymer_n_proxy"},"SCHOTT_N_BK7":{"n_model_id":"SCHOTT_N_BK7_MANUFACTURER","n_is_proxy":0,"is_extrapolated":0,"source_quality":"manufacturer_n"},"SCHOTT_N_SF6HTULTRA":{"n_model_id":"SCHOTT_N_SF6HTULTRA_MANUFACTURER","n_is_proxy":0,"is_extrapolated":0,"source_quality":"manufacturer_n"}},"fixture_source":{"case_id":"D057_2","database":"examples/local-demo/demo-cases.sqlite","catalog_sha256":"111efdeb5753f57e8cde67df847130903dd6210399b5004a3d913a52bf43d40c","extracted_with":"FileDataService.load_case","model_predictions":false}},"warnings":[]};
+    /* END RAY INDEX SNAPSHOT */
+    const state={ray_visibility:{chief:true,marginal:true},lens:0,side:0,section:false,layout:'studio',coverageExample:true,stop:{position_mode:'surface',surface_index:6,z_mm:null}, gaps:{gap12:data.surfaces[2].vertex_z_mm-data.surfaces[1].vertex_z_mm,gap23:data.surfaces[4].vertex_z_mm-data.surfaces[3].vertex_z_mm}, source:data.design[0].source_distance_mm,
+      lenses:data.lenses.map(function(l,i){return {material:l.material_id.replace('SCHOTT_','').replaceAll('_','-'),type:'STANDARD',thickness:l.center_thickness_mm,surfaces:data.surfaces.slice(i*2,i*2+2).map(function(s){return {radius:s.radius_mm,conic:s.conic,aperture:s.clear_semi_diameter_mm,a4:0,a6:0,a8:0,a10:0,a12:null}})}})};
+    // TODO(backend): Resolve conditions for live model predictions when that adapter is connected.
+    // Fallbacks affect display conditions only; they do not recalculate stored results.
+    function resolveConditions(metadata){
+      const hasTemp=Number.isFinite(metadata.temperature_c),temperature=hasTemp?metadata.temperature_c:25;
+      const explicit=Array.isArray(metadata.wavelengths_nm)?metadata.wavelengths_nm.filter(function(x){return Number.isFinite(x)&&x>0}):[];
+      const single=Number.isFinite(metadata.wavelength_nm)&&metadata.wavelength_nm>0;
+      const primary=Number.isFinite(metadata.primary_wavelength_nm)&&metadata.primary_wavelength_nm>0;
+      const wavelengths=explicit.length?explicit:[single?metadata.wavelength_nm:primary?metadata.primary_wavelength_nm:560];
+      const assumed=Array.isArray(metadata.assumed_fields)?metadata.assumed_fields:[];
+      const tempDefault=['display_default','display-default'].includes(metadata.temperature_source)||assumed.includes('temperature_c');
+      const waveDefault=['display_default','display-default'].includes(metadata.wavelength_source)||assumed.some(function(k){return ['wavelengths_nm','wavelength_nm','primary_wavelength_nm'].includes(k)});
+      return {temperature:temperature,wavelengths:wavelengths,kind:explicit.length>1?'multiple':explicit.length||single?'single':primary?'primary':'default',
+        temperatureSource:hasTemp&&!tempDefault?'db':'display-default',wavelengthSource:(explicit.length||single||primary)&&!waveDefault?'db':'display-default'};
+    }
+    const conditions=resolveConditions(data.analysis_conditions||{});
+    function conditionLabel(){return conditions.temperature+'°C · '+(conditions.wavelengths.length===1?(conditions.kind==='primary'?'Primary ':'')+conditions.wavelengths[0]+' nm':conditions.wavelengths.length+' wavelengths')}
+    byId('o-conditions').textContent=conditionLabel();
+    byId('o-result-source').textContent='합성 DB · '+conditionLabel()+' · 저장된 참조 결과';
+    const settings=Object.create(null);
+    const initiallyActive=new Set(['L0thickness','L0S0radius','L1S0radius','L2S1radius','source','gap12']);
+    root.__opticsState=state;root.__referenceData=data;
+    const fmt=function(v){if(v===null||v===undefined)return '';if(Math.abs(v)>0&&Math.abs(v)<.001)return v.toExponential(2);return +v.toFixed(3)};
+    function selected(){return state.lenses[state.lens]}
+    function allDescriptors(){
+      const list=[];
+      state.lenses.forEach(function(l,i){
+        const lens='L'+(i+1),base='L'+i;
+        list.push({key:base+'thickness',label:'Thickness',path:lens,unit:'mm',obj:l,prop:'thickness',min:Math.min(1,data.lenses[i].center_thickness_mm),max:Math.max(12,data.lenses[i].center_thickness_mm),available:true,lens:i,side:null});
+        l.surfaces.forEach(function(s,j){
+          const key=base+'S'+j,path=lens+' / '+(j===0?'Front':'Rear'),r=data.surfaces[i*2+j].radius_mm;
+          list.push({key:key+'radius',label:'Radius R',path:path,unit:'mm',obj:s,prop:'radius',min:r<0?Math.min(-160,r*1.3):r>0?16:-160,max:r<0?-16:r>0?Math.max(160,r*1.3):160,available:true,lens:i,side:j});
+          list.push({key:key+'conic',label:'Conic k',path:path,unit:'',obj:s,prop:'conic',min:Math.min(-1.5,data.surfaces[i*2+j].conic),max:Math.max(.5,data.surfaces[i*2+j].conic),available:true,lens:i,side:j});
+          list.push({key:key+'aperture',label:'Clear semi-diameter',path:path,unit:'mm',obj:s,prop:'aperture',min:Math.min(8,data.surfaces[i*2+j].clear_semi_diameter_mm),max:Math.max(18,data.surfaces[i*2+j].clear_semi_diameter_mm),available:true,lens:i,side:j});
+          ['a4','a6','a8','a10','a12'].forEach(function(k,n){
+            // TODO(backend-A12): Use metadata availability when A12 is supplied; keep null/blank until then.
+            const placeholder=k==='a12';
+            list.push({key:key+k,label:k.toUpperCase(),path:path,unit:'mm^'+(1-Number(k.slice(1))),obj:s,prop:k,
+              min:placeholder?null:-Math.pow(10,-5-n*2),max:placeholder?null:Math.pow(10,-5-n*2),
+              available:l.type==='EVEN_ASPHERE'&&!placeholder,placeholder:placeholder,lens:i,side:j});
+          });
+        });
+      });
+      list.push({key:'source',label:'Image plane → L1',path:'System',unit:'mm',obj:state,prop:'source',min:1,max:35,available:true,lens:null,side:null});
+      list.push({key:'gap12',label:'L1 → L2 gap',path:'System',unit:'mm',obj:state.gaps,prop:'gap12',min:.2,max:12,available:true,lens:null,side:null});
+      list.push({key:'gap23',label:'L2 → L3 gap',path:'System',unit:'mm',obj:state.gaps,prop:'gap23',min:.2,max:12,available:true,lens:null,side:null});
+      return list;
+    }
+    function config(d){
+      if(!settings[d.key]){const v=d.obj[d.prop],numeric=Number.isFinite(v)&&d.min!==null;settings[d.key]={min:numeric?Math.min(d.min,v):d.min,max:numeric?Math.max(d.max,v):d.max,active:d.available&&initiallyActive.has(d.key)}}
+      return settings[d.key];
+    }
+    function activeDescriptors(){return allDescriptors().filter(function(d){return d.available&&config(d).active})}
+    const coverageBaselines={};
+    function support(d,c){
+      if(!state.coverageExample||!d.available)return [];
+      // UI fixture only. TODO(backend): Connect the conditional-support provider.
+      // Choosing a lens never changes this condition; only other physical values do.
+      let delta=0;
+      allDescriptors().filter(function(f){return f.available&&f.key!==d.key}).forEach(function(f){if(!(f.key in coverageBaselines))coverageBaselines[f.key]=f.obj[f.prop];delta+=(f.obj[f.prop]-coverageBaselines[f.key])/(f.max-f.min)});
+      const shift=Math.max(-.1,Math.min(.1,delta*.12)),span=d.max-d.min;
+      return [[d.min+span*(.15+shift),d.min+span*(.43+shift)],[d.min+span*(.56+shift),d.min+span*(.83+shift)]];
+    }
+    function rangeFill(d,c){
+      const stops=['var(--o-gray) 0%'];
+      support(d,c).forEach(function(seg){const a=Math.max(0,Math.min(100,(seg[0]-c.min)/(c.max-c.min)*100)),b=Math.max(0,Math.min(100,(seg[1]-c.min)/(c.max-c.min)*100));if(b>a)stops.push('var(--o-gray) '+a+'%','var(--o-blue) '+a+'%','var(--o-blue) '+b+'%','var(--o-gray) '+b+'%')});
+      stops.push('var(--o-gray) 100%');return 'linear-gradient(to right,'+stops.join(',')+')';
+    }
+    function field(label,value,cls){return '<label>'+label+'<input class="'+cls+'" type="number" step="any" value="'+value+'" aria-label="'+label+'"></label>'}
+    function renderParams(){
+      const ds=activeDescriptors();
+      byId('o-active-count').textContent=ds.length+' active';
+      byId('o-lens-overview').innerHTML=state.lenses.map(function(l,i){const count=ds.filter(function(d){return d.lens===i}).length;return '<button type="button" class="o-lens-summary" data-inspect="'+i+'" aria-label="Configure lens '+(i+1)+'"><span>L'+(i+1)+'</span><span class="o-small">'+escapeText(shortMaterial(l.material))+'</span><span class="o-small">'+(l.type==='STANDARD'?'STD':'ASP')+'</span><span class="o-lens-count">'+count+'</span></button>'}).join('');
+      byId('o-lens-overview').innerHTML+='<button class="o-lens-summary" data-inspect="system"><span>Sys</span><span class="o-small">Gaps & reference plane</span><span></span><span class="o-lens-count">'+ds.filter(function(d){return d.lens===null}).length+'</span></button>';
+      byId('o-lens-overview').querySelectorAll('[data-inspect]').forEach(function(b){b.onclick=function(){if(b.dataset.inspect==='system')configure('system');else{state.lens=+b.dataset.inspect;configure()}};});
+      byId('o-parameter-rows').innerHTML=ds.map(function(d){const c=config(d);return '<div class="o-param" data-key="'+d.key+'"><div class="o-param-title"><label><input type="checkbox" class="o-active" checked aria-label="Activate '+d.path+' '+d.label+'"><span><span class="o-param-path">'+d.path+(d.unit?' · '+d.unit:'')+'</span>'+d.label+'</span></label><label class="o-current-wrap"><input type="number" step="any" class="o-current" aria-label="'+d.path+' '+d.label+' current" value="'+fmt(d.obj[d.prop])+'"></label></div><div class="o-slider-row"><input class="o-min" type="number" step="any" aria-label="'+d.path+' '+d.label+' minimum" value="'+fmt(c.min)+'"><input type="range" class="o-range" min="'+c.min+'" max="'+c.max+'" step="any" value="'+d.obj[d.prop]+'" aria-label="'+d.path+' '+d.label+' slider" style="background:'+rangeFill(d,c)+'"><input class="o-max" type="number" step="any" aria-label="'+d.path+' '+d.label+' maximum" value="'+fmt(c.max)+'"></div></div>'}).join('')||'<div class="o-callout">활성 변수가 없습니다. Configure에서 조절할 항목을 선택하세요.</div>';
+      byId('o-parameter-rows').querySelectorAll('.o-param').forEach(function(el){
+        const d=ds.find(function(x){return x.key===el.dataset.key}),c=config(d);
+        el.querySelector('.o-active').onchange=function(e){c.active=e.target.checked;renderParams()};
+        el.querySelector('.o-range').oninput=function(e){d.obj[d.prop]=+e.target.value;el.querySelector('.o-current').value=fmt(d.obj[d.prop]);refreshCoverage();updated()};
+        ['min','max','current'].forEach(function(k){const input=el.querySelector('.o-'+k);input.onchange=function(e){
+          const v=Number(e.target.value);
+          if(!Number.isFinite(v)||e.target.value===''){renderParams();return}
+          if(k==='min'&&v<c.max)c.min=v;else if(k==='max'&&v>c.min)c.max=v;else if(k==='current')d.obj[d.prop]=v;
+          d.obj[d.prop]=Math.max(c.min,Math.min(c.max,d.obj[d.prop]));renderParams();updated();
+        }});
+      });
+    }
+    function refreshCoverage(){activeDescriptors().forEach(function(d){const el=root.querySelector('[data-key="'+d.key+'"] .o-range');if(el)el.style.background=rangeFill(d,config(d))})}
+    function updated(){root.dispatchEvent(new CustomEvent('optics-update'));if(state.section)drawSection();updateReadouts()}
+    function configure(initialGroup){
+      let group=initialGroup==='system'?'system':state.lens;
+      show('Configure parameters','<div class="o-small">전체 값을 확인하고, 작업대에서 조절할 변수에 체크하세요.</div><div class="o-tabs" id="o-inspect-tabs"><button data-group="system">System</button><button data-group="0">Lens 1</button><button data-group="1">Lens 2</button><button data-group="2">Lens 3</button></div><div id="o-inspector-content"></div><div class="o-callout" id="o-inspector-count"></div>');
+      function cell(d){
+        const c=config(d),active=d.available&&c.active,disabled=!active;
+        return '<div class="o-inspect-cell" data-variable="'+d.key+'"><input type="checkbox" class="o-select-variable" aria-label="Activate '+d.path+' '+d.label+'" '+(active?'checked':'')+' '+(d.available?'':'disabled')+'><input class="o-inspect-value" type="number" step="any" value="'+fmt(d.obj[d.prop])+'" aria-label="'+d.path+' '+d.label+' value" '+(disabled?'disabled':'')+'></div>';
+      }
+      function draw(){
+        const ds=allDescriptors();
+        byId('o-inspect-tabs').querySelectorAll('[data-group]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.group===String(group))});
+        let html='';
+        if(group==='system'){
+          html='<table class="o-inspector-table"><thead><tr><th>System parameter</th><th>Current · mm</th></tr></thead><tbody>'+ds.filter(function(d){return d.lens===null}).map(function(d){return '<tr><th>'+d.label+'</th><td>'+cell(d)+'</td></tr>'}).join('')+'</tbody></table>';
+        }else{
+          const l=state.lenses[group],thick=ds.find(function(d){return d.key==='L'+group+'thickness'});
+          html='<div class="o-row2"><label class="o-field"><span>Material · Lens '+(group+1)+'</span><select id="o-inspector-material">'+materialOptions(l.material)+'</select></label><label class="o-field"><span>Surface type · Both faces</span><select id="o-inspector-type"><option value="STANDARD">Standard</option><option value="EVEN_ASPHERE">Even Asphere</option></select></label></div><div class="o-shared-thickness"><span>Lens thickness · mm</span>'+cell(thick)+'</div><table class="o-inspector-table"><thead><tr><th>Surface parameter</th><th>Front</th><th>Rear</th></tr></thead><tbody>';
+          ['radius','conic','aperture','a4','a6','a8','a10','a12'].forEach(function(prop){
+            const a=ds.find(function(d){return d.key==='L'+group+'S0'+prop}),b=ds.find(function(d){return d.key==='L'+group+'S1'+prop});
+            if(prop==='a4')html+='<tr class="o-table-group"><th colspan="3">Even Asphere coefficients</th></tr>';
+            html+='<tr><th>'+a.label+(a.unit?'<span class="o-small"> · '+a.unit+'</span>':'')+'</th><td>'+cell(a)+'</td><td>'+cell(b)+'</td></tr>';
+          });
+          html+='</tbody></table>';
+        }
+        byId('o-inspector-content').innerHTML=html;
+        byId('o-inspector-count').textContent=activeDescriptors().length+' active · 렌즈를 바꿔도 활성 변수 목록은 유지됩니다.';
+        if(group!=='system'){
+          byId('o-inspector-material').value=state.lenses[group].material;
+          byId('o-inspector-type').value=state.lenses[group].type;
+          byId('o-inspector-material').onchange=function(e){state.lenses[group].material=e.target.value;renderParams();updated()};
+          byId('o-inspector-type').onchange=function(e){state.lenses[group].type=e.target.value;draw();renderParams();updated()};
+        }
+        byId('o-inspector-content').querySelectorAll('[data-variable]').forEach(function(el){
+          const d=ds.find(function(x){return x.key===el.dataset.variable}),c=config(d);
+          el.querySelector('.o-select-variable').onchange=function(e){if(!d.available)return;c.active=e.target.checked;draw();renderParams()};
+          el.querySelector('.o-inspect-value').onchange=function(e){if(!d.available||!c.active)return;const value=Number(e.target.value);if(Number.isFinite(value)&&e.target.value!=='')d.obj[d.prop]=Math.max(c.min,Math.min(c.max,value));draw();renderParams();updated()};
+        });
+      }
+      byId('o-inspect-tabs').querySelectorAll('[data-group]').forEach(function(b){b.onclick=function(){group=b.dataset.group==='system'?'system':+b.dataset.group;if(group!=='system'){state.lens=group;root.dispatchEvent(new CustomEvent('optics-update'))}draw()}});
+      draw();
+    }
+    // TODO(backend): A12 remains null. The preview omits its term; requests never convert it to 0.
+    function sag(s,r){const c=s.radius===0?0:1/s.radius,q=1-(1+s.conic)*c*c*r*r;if(q<0)return NaN;const aspheric=state.lenses.some(function(l){return l.type==='EVEN_ASPHERE'&&l.surfaces.includes(s)});return c*r*r/(1+Math.sqrt(q))+(aspheric?((s.a4||0)*r**4+(s.a6||0)*r**6+(s.a8||0)*r**8+(s.a10||0)*r**10+(s.a12||0)*r**12):0)}
+    root.__sag=sag;
+    function zPositions(){let z=state.source;return state.lenses.map(function(l,i){const pair=[z,z+l.thickness];z+=l.thickness+(i===0?state.gaps.gap12:i===1?state.gaps.gap23:0);return pair})}
+    root.__zPositions=zPositions;
+    function resolveRayInputs(reference,display){
+      const choices=[reference.analysis_conditions?.primary_wavelength_nm,reference.primary_wavelength_nm,display.wavelengths?.[0]];
+      const wavelength=choices.find(function(n){return Number.isFinite(n)&&n>0})||560;
+      const raw=reference.ray_indices,indices=Object.create(null);
+      const matches=raw&&raw.wavelength_nm===wavelength&&raw.temperature_c===display.temperature;
+      if(matches&&raw.indices&&typeof raw.indices==='object'&&!Array.isArray(raw.indices)){
+        for(const [material,n] of Object.entries(raw.indices))if(Number.isFinite(n)&&n>0)indices[material]=n;
+      }
+      return {indices:indices,wavelength_nm:wavelength,temperature_c:display.temperature,status:matches?raw.status:'unavailable'};
+    }
+    let rayCache={key:null,result:null};
+    function sectionRays(){
+      const input=resolveRayInputs(data,conditions),prescription={source:state.source,gaps:state.gaps,lenses:state.lenses,stop:state.stop};
+      const key=JSON.stringify({prescription:prescription,input:input});
+      if(key!==rayCache.key){
+        let result;
+        try{result=globalThis.OpticsRays?OpticsRays.traceSection(prescription,input.indices):{status:'unavailable',rays:[],diagnostics:[]}}
+        catch{result={status:'invalid_geometry',rays:[],diagnostics:[]}}
+        rayCache={key:key,result:{...result,wavelength_nm:input.wavelength_nm,temperature_c:input.temperature_c}};
+      }
+      root.__rayPreview=rayCache.result;
+      return rayCache.result;
+    }
+    function rayPaths(result,frame){
+      const {scale,ox,oy,width:w,height:h}=frame,visibility=state.ray_visibility;
+      let paths='<defs><clipPath id="o-ray-clip"><rect x="0" y="28" width="'+w+'" height="'+(h-53)+'"/></clipPath></defs><g clip-path="url(#o-ray-clip)" fill="none" pointer-events="none">';
+      for(const ray of result.rays||[]){
+        if(!['chief','marginal'].includes(ray.kind)||!visibility[ray.kind])continue;
+        const points=(ray.points||[]).filter(function(p){return Number.isFinite(p.z)&&Number.isFinite(p.y)}).map(function(p){return {z:p.z,y:p.y}});
+        if(points.length<2)continue;
+        // Far-field rays are parallel on entry: extend only that known straight
+        // incident segment to the viewport boundary, never a refracted segment.
+        if(Math.abs(points[0].y-points[1].y)<1e-8)points[0].z=Math.max(points[0].z,(w-24-ox)/scale);
+        const color=ray.kind==='chief'?'var(--o-blue)':'var(--o-warn)';
+        paths+='<path data-ray-kind="'+ray.kind+'" data-ray-status="'+ray.status+'" d="M'+points.map(function(p){return (ox+p.z*scale)+','+(oy-p.y*scale)}).join('L')+'" stroke="'+color+'" stroke-width="'+(ray.kind==='chief'?2:1.7)+'"/>';
+        const last=points[points.length-1];
+        if(Number.isFinite(ray.image_height_mm))paths+='<circle data-image-intercept="'+ray.kind+'" cx="'+(ox+last.z*scale)+'" cy="'+(oy-last.y*scale)+'" r="2.4" fill="'+color+'"/>';
+        else paths+='<path data-ray-termination="true" d="M'+(ox+last.z*scale-3)+','+(oy-last.y*scale-3)+'l6,6m-6,0l6,-6" stroke="'+color+'" stroke-width="1.5"/>';
+      }
+      paths+='</g><text x="'+(w-20)+'" y="44" text-anchor="end" fill="var(--o-muted)" font-size="11">Far field · 0F ←</text>';
+      byId('o-ray-tools').hidden=!state.section;
+      byId('o-ray-chief').checked=visibility.chief;byId('o-ray-marginal').checked=visibility.marginal;
+      byId('o-ray-conditions').textContent=result.wavelength_nm+' nm · '+result.temperature_c+'°C';
+      const marginal=(result.rays||[]).filter(function(r){return r.kind==='marginal'}),reached=marginal.filter(function(r){return Number.isFinite(r.image_height_mm)}).length;
+      const messages={missing_index:'현재 파장·온도의 굴절률이 없는 재질이 있어 광선을 계산할 수 없습니다.',invalid_stop_position:'Stop이 렌즈 내부 또는 곡면 영역과 겹칩니다. 공기 구간으로 이동하세요.',invalid_geometry:'현재 렌즈 형상으로 광선을 추적할 수 없습니다.',unavailable:'광선 계산 모듈을 사용할 수 없습니다.'};
+      const aimUnresolved=(result.diagnostics||[]).some(function(d){return d.code==='STOP_UNREACHABLE'});
+      const approximate=(result.rays||[]).some(function(r){return ['chief','marginal'].includes(r.kind)&&r.approximate_failure_endpoint});
+      byId('o-ray-status').textContent=messages[result.status]||('0F Chief = 광축 · Marginal → image '+reached+'/2'+(aimUnresolved?' · Stop 경계 광선을 찾지 못했습니다.':reached<2?' · 차단되거나 도달하지 못한 광선은 종료 지점까지만 표시합니다.':' · Local geometric preview')+(approximate?' ×는 차단 위치의 근사 표시입니다.':''));
+      byId('o-ray-status').dataset.status=result.status;
+      return paths;
+    }
+    // Independent stop-position policy; no ray tracing or backend dispatch.
+    function resolveStop(optics){
+      const stop=optics.stop||{position_mode:'surface',surface_index:optics.lenses.length*2,z_mm:null};
+      const index=stop.surface_index,lensIndex=Math.floor((index-1)/2),side=(index-1)%2;
+      if(!Number.isInteger(index)||index<1||index>optics.lenses.length*2)throw new Error('Stop 면 번호가 올바르지 않습니다.');
+      let z=optics.source;
+      for(let i=0;i<lensIndex;i++)z+=optics.lenses[i].thickness+(i===0?optics.gaps.gap12:optics.gaps.gap23);
+      if(side===1)z+=optics.lenses[lensIndex].thickness;
+      return {position_mode:stop.position_mode,surface_index:index,z_mm:stop.position_mode==='absolute'?stop.z_mm:z,semi_diameter_mm:optics.lenses[lensIndex].surfaces[side].aperture,surface_label:'L'+(lensIndex+1)+' '+(side===0?'Front':'Rear')};
+    }
+    function moveStop(z,surfaceIndex=6){
+      if(!Number.isFinite(z)||z<0)throw new Error('Stop 위치는 0 이상의 유한한 mm 값이어야 합니다.');
+      if(!Number.isInteger(surfaceIndex)||surfaceIndex<1||surfaceIndex>6)throw new Error('Stop 면 번호가 올바르지 않습니다.');
+      return {position_mode:'absolute',surface_index:surfaceIndex,z_mm:z};
+    }
+    function stopZFromDrag(startZ,deltaPixels,scale){
+      if(![startZ,deltaPixels,scale].every(Number.isFinite)||scale<=0)throw new Error('Stop 이동 좌표가 올바르지 않습니다.');
+      return Math.max(0,startZ+deltaPixels/scale);
+    }
+    let sectionZoom=1;
+    let sectionFrame=null,stopDrag=null;
+    function drawSection(){
+      const svg=byId('o-section'),w=svg.clientWidth||500,h=svg.clientHeight||290;svg.setAttribute('viewBox','0 0 '+w+' '+h);
+      const pos=zPositions(),stop=resolveStop(state),end=Math.max(pos[2][1],stop.z_mm),scale=stopDrag?stopDrag.scale:Math.min((w-96)/(end+7),(h-94)/Math.max(38,2*stop.semi_diameter_mm+6))*sectionZoom,ox=48,oy=h/2+7;
+      sectionFrame={scale:scale,ox:ox,oy:oy,width:w,height:h};
+      svg.dataset.pixelsPerMm=scale;
+      let html='<rect width="100%" height="100%" fill="transparent"/><line x1="20" y1="'+oy+'" x2="'+(w-20)+'" y2="'+oy+'" stroke="var(--o-gray)" stroke-dasharray="4 5"/><line data-image-plane="true" x1="'+ox+'" y1="'+(oy-20*scale)+'" x2="'+ox+'" y2="'+(oy+20*scale)+'" stroke="var(--o-teal)" stroke-width="2"/><text x="'+(ox+4)+'" y="'+(h-35)+'" fill="var(--o-muted)" font-size="11">Image plane · (0,0)</text>';
+      let valid=true;
+      state.lenses.forEach(function(l,i){const a=Math.min(l.surfaces[0].aperture,l.surfaces[1].aperture),pts=[];for(let j=0;j<=70;j++){const r=-a+2*a*j/70;pts.push([ox+(pos[i][0]+sag(l.surfaces[0],r))*scale,oy-r*scale])}for(let j=70;j>=0;j--){const r=-a+2*a*j/70;pts.push([ox+(pos[i][1]+sag(l.surfaces[1],r))*scale,oy-r*scale])}if(pts.some(function(p){return !Number.isFinite(p[0])})){valid=false;return}html+='<path d="M'+pts.map(function(p){return p.join(',')}).join('L')+'Z" fill="var(--o-glass)" fill-opacity=".45" stroke="var(--o-blue)" stroke-width="1"/><text x="'+(ox+(pos[i][0]+l.thickness/2)*scale)+'" y="'+(h-48)+'" text-anchor="middle" fill="var(--o-muted)" font-size="11">L'+(i+1)+'</text>'});
+      const rayResult=sectionRays();html+=rayPaths(rayResult,sectionFrame);
+      const sx=ox+stop.z_mm*scale,ap=stop.semi_diameter_mm*scale,top=oy-ap,bottom=oy+ap;
+      const edgeZ=stop.position_mode==='surface'&&Number.isFinite(rayResult.stop?.edge_z_mm)?rayResult.stop.edge_z_mm:stop.z_mm,edgeX=ox+edgeZ*scale;
+      html+='<g data-stop-plane="true" data-z-mm="'+stop.z_mm+'" data-edge-z-mm="'+edgeZ+'" stroke="var(--o-purple)" fill="none"><path d="M'+sx+','+(top-13)+'V'+top+'H'+edgeX+'h8M'+sx+','+(bottom+13)+'V'+bottom+'H'+edgeX+'h8" stroke-width="3"/><path d="M'+sx+','+top+'V'+bottom+'" stroke-width="1" stroke-dasharray="2 4" opacity=".5"/><path data-stop-drag-target="true" d="M'+sx+','+(top-15)+'V'+(bottom+15)+'" stroke="transparent" stroke-width="28" style="cursor:ew-resize;pointer-events:stroke"/></g>';
+      svg.innerHTML=html;
+      const handle=byId('o-stop-handle');handle.hidden=!state.section;handle.textContent='Stop ↔ '+fmt(stop.z_mm)+' mm';
+      handle.style.left=Math.max(8,Math.min(w-145,sx-12))+'px';handle.style.top=Math.max(31,top-44)+'px';
+      handle.setAttribute('aria-label','Stop '+stop.z_mm.toFixed(3)+' mm. 좌우 드래그 또는 화살표 키로 이동');
+      byId('o-view-note').textContent=valid?'Stop CSD '+fmt(stop.semi_diameter_mm)+' mm · '+stop.surface_label+(stop.position_mode==='surface'?' · Follows surface':' · Custom position'):'형상을 만들 수 없는 파라미터';
+      svg.onpointermove=function(e){const r=svg.getBoundingClientRect();byId('o-coordinates').textContent='('+((e.clientX-r.left-ox)/scale).toFixed(2)+', '+((oy-e.clientY+r.top)/scale).toFixed(2)+') mm'};
+      svg.onclick=svg.onpointermove;
+      svg.onwheel=function(e){e.preventDefault();if(stopDrag)return;sectionZoom=Math.min(3,Math.max(.5,sectionZoom*(e.deltaY>0?.92:1.08)));drawSection()};
+    }
+    const stopHandle=byId('o-stop-handle'),sectionElement=byId('o-section');
+    ['chief','marginal'].forEach(function(kind){byId('o-ray-'+kind).onchange=function(e){state.ray_visibility[kind]=e.target.checked;drawSection()}});
+    function startStopDrag(e){
+      if(e.button!==0||!state.section||!sectionFrame)return;
+      e.preventDefault();stopDrag={pointer:e.pointerId,startX:e.clientX,z:resolveStop(state).z_mm,scale:sectionFrame.scale,original:JSON.parse(JSON.stringify(state.stop))};
+      stopHandle.setAttribute('data-dragging','');stopHandle.setPointerCapture(e.pointerId);
+    }
+    stopHandle.onpointerdown=startStopDrag;
+    sectionElement.onpointerdown=function(e){if(e.target.closest('[data-stop-drag-target]'))startStopDrag(e)};
+    stopHandle.onpointermove=function(e){
+      if(!stopDrag||e.pointerId!==stopDrag.pointer)return;
+      const delta=e.clientX-stopDrag.startX;if(Math.abs(delta)<2&&state.stop.position_mode==='surface')return;
+      state.stop=moveStop(stopZFromDrag(stopDrag.z,delta,stopDrag.scale),stopDrag.original.surface_index);drawSection();
+    };
+    function endStopDrag(e){
+      if(!stopDrag||e.pointerId!==stopDrag.pointer)return;
+      if(e.type==='pointercancel')state.stop=stopDrag.original;
+      stopDrag=null;stopHandle.removeAttribute('data-dragging');
+      if(stopHandle.hasPointerCapture(e.pointerId))stopHandle.releasePointerCapture(e.pointerId);
+      drawSection();
+    }
+    stopHandle.onpointerup=endStopDrag;stopHandle.onpointercancel=endStopDrag;stopHandle.onlostpointercapture=endStopDrag;
+    stopHandle.onkeydown=function(e){
+      if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();
+      state.stop=moveStop(Math.max(0,resolveStop(state).z_mm+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1)),state.stop.surface_index);drawSection();
+    };
+    byId('o-view-toggle').onclick=function(){state.section=!state.section;byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;this.textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';byId('o-coordinates').textContent='mm';if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'))};
+    let activeView='workspace';
+    let computeRevision=0;
+    let fileController=null;
+    let paretoPanel=null;
+    const trainingSettings={learning_rate:0.001,epochs:100,gpu_location:'local',new_version:'new-model'};
+    const autoSettings={hours:24,iterations:1000,window:100,improvement:0.5};
+    const chartViews=Object.create(null);
+    function show(title,html){
+      const routes={'Configure parameters':'configure','Targets · Read only':'targets','Analysis conditions':'conditions','Best candidates':'candidates','Update surrogate model':'update','Select model report':'model','Auto design · Settings':'auto','LLM extension':'llm','Project settings':'project','MTF · Full curve':'mtf','Spot · 1.0F':'spot','Add Zemax Sim':'sim'};
+      activeView=routes[title]||'workspace';computeRevision++;
+      byId('o-workspace-nav').removeAttribute('aria-current');
+      byId('o-modal-title').textContent=title;byId('o-modal-body').innerHTML=html;root.querySelector('.o-workspace').hidden=true;byId('o-modal-host').classList.add('o-open');
+      if(globalThis.lucide)lucide.createIcons();requestAnimationFrame(renderCharts);
+    }
+    function workspace(){
+      computeRevision++;activeView='workspace';byId('o-workspace-nav').setAttribute('aria-current','page');
+      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
+      byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
+      byId('o-modal-host').classList.remove('o-open');root.querySelector('.o-workspace').hidden=false;byId('o-modal-body').innerHTML='';
+      requestAnimationFrame(function(){renderCharts();if(state.section)drawSection();root.dispatchEvent(new CustomEvent('optics-update'))});
+    }
+    function targets(){const target=fileContext().target;if(target){show('Targets · Read only','<button id="o-target-browse">Load target JSON</button><div class="o-callout">'+escapeText(basename(fileContext().references.target_path)||'Saved target snapshot')+' · Read only</div><pre class="o-request" id="o-target-json"></pre>');byId('o-target-json').textContent=JSON.stringify(target.profile,null,2);byId('o-target-browse').onclick=function(){fileAction('openTarget')};return}show('Targets · Read only','<button id="o-target-browse">Load target JSON</button><div class="o-callout">target-spec.json · '+conditionLabel()+' · weights 1 : 1 : 1</div><table class="o-target-table"><tr><th>Metric</th><th>Target</th><th>5% candidate allowance</th></tr><tr><td>MTF · 6 lp/mm · 0F · S/T</td><td>≥40%</td><td>≥38%</td></tr><tr><td>MTF · 6 lp/mm · 0.8F · S/T</td><td>≥30%</td><td>≥28.5%</td></tr><tr><td>Spot · RMS diameter · 1.0F</td><td>Closest to 1.60 μm</td><td>1.52–1.68 μm</td></tr><tr><td>FOV · Horizontal, full</td><td>Closest to 24°</td><td>22.8–25.2°</td></tr></table><p>목표는 JSON에서 불러오며 화면에서는 변경하지 않습니다. 온도·파장은 DB 조건을 우선하며, 명시되지 않은 항목에는 지정한 기본 표시값을 사용합니다.</p>');byId('o-target-browse').onclick=function(){fileAction('openTarget')}}
+    function candidates(){paretoPanel?.open()}
+    function escapeText(value){return String(value??'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+    function basename(path){return String(path||'').split(/[\\/]/).pop()||''}
+    function clone(value){return JSON.parse(JSON.stringify(value))}
+    function sourceLabel(){return String(data.origin||'').includes('SYNTHETIC')?'합성 DB':'DB 결과'}
+    function numberText(value,digits){return Number.isFinite(value)?value.toFixed(digits):'—'}
+    function rmsDiameter(){const v=data.spot_summary?.[0]?.rms_radius_mm_proxy;return Number.isFinite(v)?v*2000:null}
+    function shortMaterial(value){return String(value).replace('SCHOTT_','').replaceAll('_','-')}
+    function materialOptions(current){
+      const values=Array.from(new Set([...(data.materials||[]),...state.lenses.map(function(l){return l.material}),current]));
+      return values.map(function(v){return '<option value="'+escapeText(v)+'">'+escapeText(shortMaterial(v))+'</option>'}).join('');
+    }
+    function normalizeCase(value){
+      const next=clone(value);
+      if(!next||typeof next!=='object'||typeof next.id!=='string'||!next.id)throw new Error('참조 케이스 ID가 없습니다.');
+      if(!Array.isArray(next.lenses)||next.lenses.length!==3||!Array.isArray(next.surfaces)||next.surfaces.length!==6||!next.design?.[0])throw new Error('현재 UI는 3매·6면 광학계 데이터를 지원합니다.');
+      for(const key of ['mtf','spot','metrics','spot_summary','scatter','surface_parameters','air_gaps']){
+        if(next[key]===undefined)next[key]=[];
+        if(!Array.isArray(next[key])||next[key].some(function(row){return !row||typeof row!=='object'||Array.isArray(row)}))throw new Error(key+' 데이터 형식이 올바르지 않습니다.');
+      }
+      if(next.materials!==undefined&&(!Array.isArray(next.materials)||!next.materials.every(function(v){return typeof v==='string'})))throw new Error('재질 목록 형식이 올바르지 않습니다.');
+      if(next.analysis_conditions!==undefined&&(!next.analysis_conditions||typeof next.analysis_conditions!=='object'||Array.isArray(next.analysis_conditions)))throw new Error('분석 조건 형식이 올바르지 않습니다.');
+      next.lenses.sort(function(a,b){return a.lens_index-b.lens_index});next.surfaces.sort(function(a,b){return a.surface_index-b.surface_index});
+      next.mtf=(next.mtf||[]).filter(function(row){return (row.field_norm===0||row.field_norm===0.8)&&Number.isFinite(row.mtf)&&Number.isFinite(row.frequency_lp_per_mm)});
+      next.spot=(next.spot||[]).map(function(row){return {...row,x:Number.isFinite(row.x)?row.x:row.x_mm_proxy*1000,y:Number.isFinite(row.y)?row.y:row.y_mm_proxy*1000}}).filter(function(row){return Number.isFinite(row.x)&&Number.isFinite(row.y)});
+      next.metrics=next.metrics||[];next.spot_summary=next.spot_summary||[];next.relative_illumination=null;
+      const optics=stateFromCase(next);
+      return {data:next,optics:optics};
+    }
+    function stateFromCase(next){
+      const parameters=next.surface_parameters||[];
+      function numeric(value,label){if(!Number.isFinite(value))throw new Error(label+' 값이 없습니다.');return value}
+      const lenses=next.lenses.map(function(l,i){
+        const pair=next.surfaces.slice(i*2,i*2+2),type=pair[0].surface_type;if(typeof l.material_id!=='string'||!l.material_id)throw new Error('렌즈 재질 정보가 없습니다.');
+        if(!['STANDARD','EVEN_ASPHERE'].includes(type)||pair[1].surface_type!==type)throw new Error('렌즈 '+(i+1)+'의 양면은 같은 Standard 또는 Even Asphere여야 합니다.');
+        return {material:l.material_id,type:type,thickness:numeric(l.center_thickness_mm,'Thickness'),surfaces:pair.map(function(s){
+          let raw={};try{raw=JSON.parse(s.raw_surface_json||'{}');if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error()}catch{throw new Error('표면 파라미터 JSON이 올바르지 않습니다.')}
+          const result={radius:s.is_plane||s.radius_mm===null&&s.curvature_1_per_mm===0?0:numeric(s.radius_mm,'Radius'),conic:numeric(s.conic,'Conic'),aperture:numeric(s.clear_semi_diameter_mm,'Clear semi-diameter'),a12:null};
+          ['a4','a6','a8','a10'].forEach(function(name){const p=parameters.find(function(p){return p.surface_index===s.surface_index&&typeof p.parameter_name==='string'&&p.parameter_name.toLowerCase()===name&&p.is_defined!==0});const v=raw[name]??p?.value??s[name];result[name]=Number.isFinite(v)?v:type==='STANDARD'?0:numeric(v,name)});
+          return result;
+        })};
+      });
+      const gaps=next.air_gaps||[];
+      const gap12=gaps[0]?.nominal_vertex_gap_mm??(next.surfaces[2].vertex_z_mm-next.surfaces[1].vertex_z_mm);
+      const gap23=gaps[1]?.nominal_vertex_gap_mm??(next.surfaces[4].vertex_z_mm-next.surfaces[3].vertex_z_mm);
+      return {ray_visibility:{...state.ray_visibility},lens:0,side:0,section:false,layout:state.layout,coverageExample:state.coverageExample,stop:{position_mode:'surface',surface_index:6,z_mm:null},source:numeric(next.design[0].source_distance_mm,'Source distance'),gaps:{gap12:numeric(gap12,'Gap 1'),gap23:numeric(gap23,'Gap 2')},lenses:lenses};
+    }
+    function updateReadouts(){
+      const m=data.metrics[0]||{};
+      byId('o-reference-label').textContent='Reference '+data.id;
+      byId('o-na-value').textContent=numberText(m.image_space_na,3);
+      byId('o-fov-value').textContent=numberText(m.horizontal_fov_deg,2)+'° / '+numberText(m.vertical_fov_deg,2)+'°';
+      byId('o-distortion-value').textContent=numberText(m.distortion_percent_proxy,3)+(Number.isFinite(m.distortion_percent_proxy)?'%':'');
+      byId('o-rms-value').textContent=numberText(rmsDiameter(),2)+(rmsDiameter()!==null?' μm':'');
+      byId('o-ri-value').textContent='';
+      byId('o-conditions').textContent=conditionLabel();
+      byId('o-result-source').textContent=sourceLabel()+' · '+conditionLabel()+' · 저장된 참조 결과';
+      root.__referenceData=data;
+    }
+    function applyCase(value){
+      const next=normalizeCase(value);
+      data=next.data;Object.assign(state,next.optics);Object.assign(conditions,resolveConditions(data.analysis_conditions||{}));
+      for(const key of Object.keys(settings))delete settings[key];
+      for(const key of Object.keys(coverageBaselines))delete coverageBaselines[key];
+      for(const key of Object.keys(chartViews))delete chartViews[key];
+      sectionZoom=1;renderParams();updateReadouts();workspace();
+    }
+    function snapshotSession(){
+      const reference=clone(data);delete reference.database_path;
+      return {ui_version:1,optics:clone(state),parameters:clone(settings),reference_data:reference,
+        view:activeView==='sim'?'workspace':activeView,training:clone(trainingSettings),automation:clone(autoSettings),
+        llm_draft:llmDraft,section_zoom:sectionZoom,chart_views:clone(chartViews),camera:root.__getCameraSnapshot?.()||null,
+        ...(paretoPanel?{pareto_view:paretoPanel.snapshot()}: {})};
+    }
+    function validateSnapshot(snapshot){
+      if(!window.validateOpticsWorkspaceSnapshot)throw new Error('설정 파일은 데스크톱 앱에서 열어주세요.');
+      const clean=window.validateOpticsWorkspaceSnapshot(snapshot);
+      clean.reference_data=normalizeCase(clean.reference_data).data;
+      return clean;
+    }
+    function restoreSession(snapshot){
+      const clean=validateSnapshot(snapshot);
+      data=clean.reference_data;Object.assign(state,clean.optics);Object.assign(conditions,resolveConditions(data.analysis_conditions||{}));
+      for(const key of Object.keys(settings))delete settings[key];Object.assign(settings,clean.parameters);
+      for(const key of Object.keys(coverageBaselines))delete coverageBaselines[key];
+      Object.assign(trainingSettings,clean.training);Object.assign(autoSettings,clean.automation);
+      llmDraft=clean.llm_draft;sectionZoom=clean.section_zoom;
+      paretoPanel?.restore(clean.pareto_view);
+      for(const key of Object.keys(chartViews))delete chartViews[key];Object.assign(chartViews,clean.chart_views);
+      root.classList.toggle('o-analysis',state.layout==='analysis');
+      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';
+      renderParams();updateReadouts();workspace();
+      if(clean.camera){root.__pendingCamera=clean.camera;root.__restoreCamera?.(clean.camera)}
+      const allowed=['configure','conditions','targets','candidates','model','update','auto','llm','mtf','spot'];
+      if(allowed.includes(clean.view))actions[clean.view]();
+    }
+    function notice(message){const el=byId('o-file-notice');el.textContent=message;el.hidden=false}
+    function fileError(error){show('File / data message','<div class="o-error" role="alert">'+escapeText(error.message||error)+'</div>')}
+    function fileAction(method){
+      if(!fileController){show('Local desktop feature','<div class="o-callout">실제 파일 선택·저장·내보내기는 로컬 데스크톱 앱에서 사용할 수 있습니다.</div>');return Promise.resolve(null)}
+      return fileController[method]();
+    }
+    function fileContext(){return fileController?.getContext()||{report:null,target:null,cases:[],references:{}}}
+    function contextChanged(context){
+      const button=root.querySelector('[data-action="model"]');
+      button.textContent=context.report?basename(context.report.report_path)+' · '+basename(context.report.model_path):'Select model report…';
+      byId('o-spot-target').textContent=context.target?'목표 JSON 참조':'Target 1.60 μm';
+      if(activeView==='model'||activeView==='update')model(activeView==='update');
+      if(activeView==='targets')targets();
+      paretoPanel?.refresh();
+    }
+    async function testCompute(){
+      const select=byId('o-compute'),button=byId('o-compute-test'),status=byId('o-compute-status');
+      const target=select.value,ticket=++computeRevision;button.disabled=true;button.textContent='Testing…';status.textContent='CUDA 준비 상태를 확인하고 있습니다.';
+      try{
+        const result=fileController?await fileController.computeTest(target):{target:target,status:target==='server'?'not_configured':'desktop_required',ready:false,message:target==='server'?'서버 연결 정보가 없어 검사할 수 없습니다.':'로컬 데스크톱 앱에서 CUDA 준비 상태를 검사할 수 있습니다.'};
+        if(ticket===computeRevision&&byId('o-compute-status')===status&&select.value===target){status.textContent=result.message;status.dataset.result=result.status}
+      }catch(error){if(ticket===computeRevision&&byId('o-compute-status')===status){status.textContent=error.message;status.dataset.result='error'}}
+      finally{if(ticket===computeRevision&&byId('o-compute-test')===button){button.disabled=false;button.textContent='Test'}}
+    }
+    function model(update){
+      const context=fileContext(),report=context.report,summary=report?.training_summary;
+      const countText=summary&&summary.trained_count!==null?'새로 생성된 '+summary.new_case_count+'개의 데이터가 발견되었습니다 (현 모델 학습 데이터 수: '+summary.trained_count+'개)':'새 데이터 —개 · 현 모델 학습 —개 · 학습 이력 미제공';
+      let html='<div class="o-callout" id="o-report-drop">학습 리포트 JSON을 선택하거나 이 창에 드래그해 놓으세요.</div><button id="o-report-browse">Browse report</button><label class="o-field"><span>Training report</span><input type="text" value="'+escapeText(basename(report?.report_path))+'" readonly></label><div class="o-row2"><label class="o-field"><span>Model file</span><input type="text" value="'+escapeText(basename(report?.model_path))+'" readonly></label><label class="o-field"><span>Database</span><input type="text" value="'+escapeText(basename(report?.database_path))+'" readonly></label></div>';
+      if(context.cases.length){html+='<label class="o-field"><span>Reference case</span><select id="o-case-select">'+context.cases.map(function(c){return '<option value="'+escapeText(c.id)+'" '+(c.id===data.id?'selected':'')+' '+(c.ui_compatible===false?'disabled':'')+'>'+escapeText(c.id)+' · '+escapeText(c.status||'UNKNOWN')+(c.ui_compatible===false?' · 미지원 구성':'')+'</option>'}).join('')+'</select></label>'}
+      if(update)html+='<p>'+countText+'</p><div class="o-row2"><label class="o-field"><span>Learning rate</span><input id="o-learning-rate" type="number" value="'+trainingSettings.learning_rate+'" min="0.000000001" step="any"></label><label class="o-field"><span>Epochs</span><input id="o-epochs" type="number" value="'+trainingSettings.epochs+'" min="1"></label><div class="o-field"><div class="o-compute-heading"><label for="o-compute">Compute</label><button id="o-compute-test" type="button">Test</button></div><select id="o-compute"><option value="local">Local GPU</option><option value="server">Server GPU</option></select><div id="o-compute-status" class="o-compute-message" role="status">GPU 준비 상태를 확인하세요.</div></div><label class="o-field"><span>New model version</span><input id="o-new-version" type="text" maxlength="256" value="'+escapeText(trainingSettings.new_version)+'"></label></div><button disabled>Start update · Backend not connected</button>';
+      html+='<div class="o-demo-list"><button data-example="missing">파일 누락 예시</button><button data-example="progress">진행 예시</button></div><div id="o-example"></div>';
+      show(update?'Update surrogate model':'Select model report',html);
+      byId('o-report-browse').onclick=function(){fileAction('openReport')};
+      if(byId('o-case-select'))byId('o-case-select').onchange=function(e){fileController?.selectCase(e.target.value)};
+      if(update){
+        byId('o-compute').value=trainingSettings.gpu_location;byId('o-compute-test').onclick=testCompute;
+        byId('o-compute').onchange=function(e){trainingSettings.gpu_location=e.target.value;computeRevision++;byId('o-compute-status').textContent='GPU 준비 상태를 확인하세요.';byId('o-compute-status').removeAttribute('data-result');byId('o-compute-test').disabled=false;byId('o-compute-test').textContent='Test'};
+        byId('o-learning-rate').onchange=function(e){const v=Number(e.target.value);if(Number.isFinite(v)&&v>0)trainingSettings.learning_rate=v;else e.target.value=trainingSettings.learning_rate};
+        byId('o-epochs').onchange=function(e){const v=Number(e.target.value);if(Number.isInteger(v)&&v>0)trainingSettings.epochs=v;else e.target.value=trainingSettings.epochs};
+        byId('o-new-version').oninput=function(e){trainingSettings.new_version=e.target.value};
+      }
+      byId('o-modal-body').querySelectorAll('[data-example]').forEach(function(b){b.onclick=function(){byId('o-example').innerHTML=b.dataset.example==='missing'?'<div class="o-callout o-error" role="alert">예시: 리포트와 같은 폴더에 모델 .pth 파일이 없습니다.</div>':'<div class="o-callout">진행 화면 예시 · 실제 학습 아님<br>64%<div class="o-busy" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"><span style="width:64%"></span></div></div>'}})
+    }
+    function auto(){
+      show('Auto design · Settings','<div class="o-callout">목표 → 후보 예측 → Zemax → 데이터 저장 → 모델 업데이트 → 재평가</div><div class="o-row2"><label class="o-field"><span>Maximum time · hours</span><input id="o-max-hours" type="number" value="'+autoSettings.hours+'"></label><label class="o-field"><span>Maximum iterations</span><input id="o-max-iterations" type="number" value="'+autoSettings.iterations+'"></label><label class="o-field"><span>No-improvement window · iterations</span><input id="o-stagnation-window" type="number" value="'+autoSettings.window+'"></label><label class="o-field"><span>Minimum improvement · %</span><input id="o-min-improvement" type="number" value="'+autoSettings.improvement+'" step="0.1"></label></div><div class="o-demo-list"><button disabled>Start · Backend not connected</button><button disabled>Stop current job</button></div><p>중단 시 이미 확보한 데이터와 로그는 보존합니다.</p><div class="o-callout">Results · 연결 전<br>Iterations — &nbsp; Added cases — &nbsp; Best DB — &nbsp; Best prediction —</div>');
+      [['o-max-hours','hours',false],['o-max-iterations','iterations',true],['o-stagnation-window','window',true],['o-min-improvement','improvement',false]].forEach(function(entry){byId(entry[0]).onchange=function(e){const v=Number(e.target.value);if(Number.isFinite(v)&&v>0&&(!entry[2]||Number.isInteger(v)))autoSettings[entry[1]]=v;else e.target.value=autoSettings[entry[1]]}});
+    }
+    let llmDraft='';
+    function llmExtension(){
+      // TODO(claude-extension): Connect natural-language requests to the future
+      // Claude via GitHub Copilot Bearer adapter and registered Python workflows.
+      // Authentication and provider connectivity are intentionally on hold; no token is read or stored.
+      // This view keeps a local draft only; it never sends a request or executes code.
+      show('LLM extension', '<div class="o-llm-status"><strong>Claude · GitHub Copilot</strong><span class="o-tag"><span class="o-dot"></span>Not connected</span></div><label class="o-field"><span>설계 요청</span><textarea id="o-llm-prompt" maxlength="200000" class="o-llm-input" aria-label="Claude에게 전달할 설계 요청" placeholder="예: 현재 목표와 제약조건을 만족하는 후보를 찾고, 필요한 추가 시뮬레이션을 진행해줘."></textarea></label><p>연결 후 Claude가 요청을 이해하고 기존 Python 작업을 호출하여 설계를 진행합니다.</p><div class="o-demo-list"><button class="o-primary" id="o-llm-send" disabled>Send to Claude</button></div><div class="o-callout" role="status">연결 전 · 아직 요청을 보내거나 작업을 실행하지 않았습니다.</div>');
+      byId('o-llm-prompt').value=llmDraft;
+      byId('o-llm-prompt').oninput=function(e){llmDraft=e.target.value};
+    }
+    function sim(){
+      const popupLensIndex=state.lens;
+      const baseline={ray_context:{object_conjugate:'far_field',field_norm:0,direction:'negative_z',image_z_mm:0},aperture_stop:resolveStop(state),parameters:Object.fromEntries(allDescriptors().filter(function(d){return d.available&&Number.isFinite(d.obj[d.prop])}).map(function(d){return [d.key,d.obj[d.prop]]})),lenses:state.lenses.map(function(l,i){return {lens:i+1,material:l.material,type:l.type}})};
+      const original=activeDescriptors().map(function(d){const c=config(d);return {name:d.path+' · '+d.label,key:d.key,current:d.obj[d.prop],min:c.min,max:c.max,count:0,checked:false,trained:support(d,c)}});
+      show('Add Zemax Sim','<div class="o-small">팝업의 변경은 메인 설계에 영향을 주지 않습니다.</div><div class="o-tabs"><button id="o-manual" aria-pressed="true">Manual</button><button id="o-auto-sample" aria-pressed="false">Auto</button></div><div id="o-manual-fields"><div class="o-row2" id="o-sim-params"></div><div class="o-row2"><label class="o-field"><span>Combination</span><select id="o-combination"><option value="cartesian">All combinations</option><option value="ofat">One parameter at a time</option></select></label><label class="o-field"><span>Material · Lens '+(popupLensIndex+1)+'</span><select id="o-sim-material">'+materialOptions(selected().material)+'</select></label></div><label class="o-small"><input type="checkbox" id="o-exclude"> 기 구간 불포함</label></div><div id="o-auto-fields" hidden><div class="o-row2"><label class="o-field"><span>Additional cases</span><input id="o-auto-count" type="number" value="64" min="1"></label><label class="o-field"><span>Algorithm · proposal</span><select id="o-algorithm"><option>Space-filling / maximin</option><option>Sobol</option><option>Latin hypercube</option></select></label></div></div><div id="o-sim-summary" class="o-callout"></div><div class="o-demo-list"><button class="o-primary" id="o-prepare">추가 데이터 생성</button><button id="o-zemax-error">백엔드 오류 예시</button></div><div id="o-request-result"></div>');
+      byId('o-sim-params').innerHTML=original.map(function(d,i){return '<div class="o-param" data-sim="'+i+'"><div class="o-param-title">'+d.name+'</div><input type="range" class="o-range s-range" min="'+d.min+'" max="'+d.max+'" step="any" value="'+d.current+'" aria-label="'+d.name+' draft slider"><div class="o-bounds">'+field('Min',fmt(d.min),'s-min')+field('Current',fmt(d.current),'s-current')+field('Max',fmt(d.max),'s-max')+'</div><label class="o-field"><span><input type="checkbox" class="s-check"> 추가 학습</span><input type="number" class="s-count" min="1" step="1" placeholder="추가 학습 데이터 수" disabled></label></div>'}).join('');
+      let isAuto=false;
+      function setMode(v){isAuto=v;byId('o-manual-fields').hidden=v;byId('o-auto-fields').hidden=!v;byId('o-manual').setAttribute('aria-pressed',!v);byId('o-auto-sample').setAttribute('aria-pressed',v);summary()}
+      byId('o-manual').onclick=function(){setMode(false)};byId('o-auto-sample').onclick=function(){setMode(true)};
+      function collect(){
+        original.forEach(function(d,i){const el=byId('o-sim-params').children[i];d.min=el.querySelector('.s-min').value===''?NaN:Number(el.querySelector('.s-min').value);d.max=el.querySelector('.s-max').value===''?NaN:Number(el.querySelector('.s-max').value);d.current=el.querySelector('.s-current').value===''?NaN:Number(el.querySelector('.s-current').value);d.checked=el.querySelector('.s-check').checked;d.count=Number(el.querySelector('.s-count').value);el.querySelector('.s-count').disabled=!d.checked});
+        const active=original.filter(function(d){return d.checked}),invalid=original.some(function(d){return !Number.isFinite(d.min)||!Number.isFinite(d.max)||!Number.isFinite(d.current)||d.min>d.max})||active.some(function(d){return !Number.isInteger(d.count)||d.count<1||d.count>10000});
+        if(invalid)return {error:'추가 데이터 수는 1~10000의 정수여야 하며 Min ≤ Max여야 합니다. 10000은 시안의 미리보기 한도입니다.'};
+        original.forEach(function(d,i){d.current=Math.max(d.min,Math.min(d.max,d.current));const el=byId('o-sim-params').children[i];el.querySelector('.s-current').value=fmt(d.current);const bar=el.querySelector('.s-range');bar.min=d.min;bar.max=d.max;bar.value=d.current});
+        let zero=false;
+        const samples=active.map(function(d){let pts=Array.from({length:d.count},function(_,i){return d.count===1?(d.min+d.max)/2:d.min+(d.max-d.min)*i/(d.count-1)});const both=d.trained.length&&d.min<d.trained[0][0]&&d.max>d.trained[d.trained.length-1][1],excluded=byId('o-exclude').checked&&both;const before=pts.length;if(excluded)pts=pts.filter(function(x){return !d.trained.some(function(seg){return x>=seg[0]&&x<=seg[1]})});if(!pts.length)zero=true;return {parameter:d.key,points:pts,removed:before-pts.length,exclusion_applied:!!excluded}});
+        const cart=byId('o-combination').value==='cartesian',total=!active.length||(cart&&zero)?0:cart?samples.reduce(function(n,s){return n*s.points.length},1):samples.reduce(function(n,s){return n+s.points.length},0);
+        baseline.lenses[popupLensIndex].material=byId('o-sim-material').value;
+        const fixed={...baseline.parameters};original.forEach(function(d){fixed[d.key]=d.current});
+        return {mode:'manual',combination:cart?'cartesian':'ofat',baseline:{ray_context:baseline.ray_context,aperture_stop:baseline.aperture_stop,parameters:fixed,lenses:baseline.lenses},samples:samples,estimated_cases_before_deduplication:total};
+      }
+      function summary(){byId('o-request-result').innerHTML='';if(isAuto){byId('o-sim-summary').textContent='Auto 샘플링 설정 · 실행은 연결 전 상태';return}const p=collect();byId('o-sim-summary').textContent=p.error||('조합 수: '+p.estimated_cases_before_deduplication+' · 중복 제거 전 · 학습 구간은 동작 예시')}
+      byId('o-manual-fields').oninput=function(e){if(e.target.classList.contains('s-range'))e.target.closest('[data-sim]').querySelector('.s-current').value=e.target.value;summary()};byId('o-manual-fields').onchange=summary;byId('o-auto-fields').oninput=summary;byId('o-auto-fields').onchange=summary;
+      byId('o-prepare').onclick=function(){const p=isAuto?{mode:'auto',baseline:baseline,count:Number(byId('o-auto-count').value),algorithm:byId('o-algorithm').value}:collect();if(p.error||(!isAuto&&p.estimated_cases_before_deduplication===0)||(isAuto&&(!Number.isInteger(p.count)||p.count<1))){byId('o-request-result').innerHTML='<p class="o-error" role="alert">'+(p.error||'생성할 데이터가 없습니다. 파라미터와 데이터 수를 확인하세요.')+'</p>';return}byId('o-request-result').innerHTML='<div class="o-callout">연결 전 · 요청값 미리보기 · 실행하지 않음</div><pre class="o-request"></pre>';byId('o-request-result').querySelector('pre').textContent=JSON.stringify({type:'prepare_zemax_request',example_only:true,...p},null,2)};
+      byId('o-zemax-error').onclick=function(){byId('o-request-result').innerHTML='<div class="o-callout o-error" role="alert">오류 화면 예시<br>Zemax license is unavailable.<br>백엔드가 제공한 메시지를 표시합니다. 실제 요청은 전송되지 않았습니다.</div>'};summary();
+    }
+    const actions={workspace:workspace,open:function(){fileAction('open')},save:function(){fileAction('save')},export:function(){fileAction('exportBundle')},conditions:function(){show('Analysis conditions','<table class="o-target-table"><tr><th>Temperature</th><td>'+conditions.temperature+'°C</td></tr><tr><th>Wavelengths</th><td>'+conditions.wavelengths.join(', ')+' nm</td></tr></table>')},configure:configure,targets:targets,candidates:candidates,model:function(){model(false)},update:function(){model(true)},auto:auto,llm:llmExtension,sim:sim,mtf:function(){show('MTF · Full curve','<div class="o-small">'+sourceLabel()+' · '+conditionLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-legend"><span><span class="o-swatch"></span>0F</span><span><span class="o-swatch" style="background:var(--o-purple)"></span>0.8F</span><span>S — &nbsp; T - -</span></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="mtf" data-popup="true" role="img" aria-label="Expanded MTF curves"></svg></div>')},spot:function(){show('Spot · 1.0F','<div class="o-small">RMS diameter '+numberText(rmsDiameter(),2)+' μm · '+sourceLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="spot" data-popup="true" role="img" aria-label="Expanded Spot diagram"></svg></div>')}};
+    root.querySelectorAll('[data-action]').forEach(function(b){b.onclick=actions[b.dataset.action]});
+    let chartId=0;
+    function drawChart(node){
+      if(!globalThis.d3||!node.clientWidth)return;
+      const type=node.dataset.chart,popup=node.dataset.popup==='true',w=node.clientWidth,h=(popup&&type==='spot'?Math.max(210,Math.min(340,w-7)):node.clientHeight),margin={left:48,right:14,top:12,bottom:43},svg=d3.select(node);if(popup&&type==='spot')node.style.height=h+'px';if(type==='spot'){const side=Math.min(w-62,h-55);margin.left=(w-side)/2;margin.right=(w-side)/2;margin.bottom=h-margin.top-side}svg.selectAll('*').remove();svg.attr('viewBox','0 0 '+w+' '+h);
+      let points=type==='spot'?data.spot:data.scatter||[];
+      if(type==='mtf'?!data.mtf.length:!points.length){svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle').text('데이터 미제공');return}
+      const x0=d3.scaleLinear().range([margin.left,w-margin.right]),y0=d3.scaleLinear().range([h-margin.bottom,margin.top]);
+      if(type==='mtf'){x0.domain([0,d3.max(data.mtf,function(d){return d.frequency_lp_per_mm})]);y0.domain([0,100])}
+      else if(type==='spot'){const bound=d3.max(points,function(d){return Math.max(Math.abs(d.x),Math.abs(d.y))})*1.15;x0.domain([-bound,bound]);y0.domain([-bound,bound])}
+      else{x0.domain(d3.extent(points,function(d){return d.x})).nice();y0.domain(d3.extent(points,function(d){return d.y})).nice()}
+      let x=x0,y=y0;
+      const clip='o-chart-clip-'+(++chartId);svg.append('defs').append('clipPath').attr('id',clip).append('rect').attr('x',margin.left).attr('y',margin.top).attr('width',Math.max(1,w-margin.left-margin.right)).attr('height',h-margin.top-margin.bottom);
+      const gx=svg.append('g').attr('transform','translate(0,'+(h-margin.bottom)+')'),gy=svg.append('g').attr('transform','translate('+margin.left+',0)');
+      svg.append('text').attr('x',(margin.left+w-margin.right)/2).attr('y',h-7).attr('text-anchor','middle').text(type==='mtf'?'Spatial frequency · lp/mm':type==='spot'?'x · μm':'FOV H · °');
+      svg.append('text').attr('transform','rotate(-90)').attr('x',-(margin.top+h-margin.bottom)/2).attr('y',12).attr('text-anchor','middle').text(type==='mtf'?'MTF · %':type==='spot'?'y · μm':'RMS Ø · μm');
+      const marks=svg.append('g').attr('clip-path','url(#'+clip+')'),guide=svg.append('line').attr('stroke','var(--o-muted)').attr('stroke-dasharray','3 3').attr('y1',margin.top).attr('y2',h-margin.bottom).style('display','none');
+      const series=type==='mtf'?Array.from(d3.group(data.mtf,function(d){return d.field_norm+' '+d.orientation}),function(pair){return {key:pair[0],values:pair[1]}}):[];
+      function paint(){gx.call(d3.axisBottom(x).ticks(w<350?3:5));gy.call(d3.axisLeft(y).ticks(4));marks.selectAll('*').remove();
+        if(type==='mtf')series.forEach(function(s){marks.append('path').datum(s.values).attr('fill','none').attr('stroke',s.key.startsWith('0 ')?'var(--o-blue)':'var(--o-purple)').attr('stroke-width',1.7).attr('stroke-dasharray',s.key.includes('TANGENTIAL')?'5 3':null).attr('d',d3.line().x(function(d){return x(d.frequency_lp_per_mm)}).y(function(d){return y(d.mtf*100)}))});
+        else{marks.selectAll('circle').data(points).join('circle').attr('cx',function(d){return x(d.x)}).attr('cy',function(d){return y(d.y)}).attr('r',type==='spot'?2.6:2.1).attr('fill',type==='spot'?'var(--o-blue)':'var(--o-teal)').attr('opacity',.6);if(type==='scatter'&&data.metrics[0]&&data.spot_summary[0])marks.append('path').attr('d',d3.symbol().type(d3.symbolDiamond).size(50)()).attr('transform','translate('+x(data.metrics[0].horizontal_fov_deg)+','+y(data.spot_summary[0].rms_radius_mm_proxy*2000)+')').attr('fill','var(--o-purple)')}
+      }
+      paint();
+      let tip=node.parentElement.querySelector('.o-chart-tip');if(!tip){tip=document.createElement('div');tip.className='o-chart-tip';node.parentElement.appendChild(tip)}
+      const hit=svg.append('rect').attr('x',margin.left).attr('y',margin.top).attr('width',Math.max(1,w-margin.left-margin.right)).attr('height',h-margin.top-margin.bottom).attr('fill','transparent');
+      hit.on('pointermove click',function(e){const p=d3.pointer(e,node);let text='';
+        if(type==='mtf'){const value=x.invert(p[0]);if(value<x0.domain()[0]||value>x0.domain()[1]){guide.style('display','none');tip.style.display='none';return}guide.style('display',null).attr('x1',p[0]).attr('x2',p[0]);text=value.toFixed(2)+' lp/mm';series.forEach(function(s){const list=s.values,i=Math.max(1,Math.min(list.length-1,d3.bisector(function(d){return d.frequency_lp_per_mm}).left(list,value))),a=list[i-1],b=list[i],t=(value-a.frequency_lp_per_mm)/(b.frequency_lp_per_mm-a.frequency_lp_per_mm),v=(a.mtf+t*(b.mtf-a.mtf))*100;text+='\n'+s.key.replace('SAGITTAL','S').replace('TANGENTIAL','T')+': '+v.toFixed(1)+'%'})}
+        else{const d=d3.least(points,function(q){return (x(q.x)-p[0])**2+(y(q.y)-p[1])**2});if(!d)return;text=(d.id?d.id+'\n':'')+(type==='spot'?'x / y: ':'FOV / RMS Ø: ')+d.x.toFixed(2)+' / '+d.y.toFixed(2)+(type==='spot'?' μm':' ° / μm')}
+        tip.textContent=text;tip.style.display='block';tip.style.left=Math.max(4,Math.min(p[0]+12,w-tip.offsetWidth-5))+'px';tip.style.top=Math.max(0,p[1]-tip.offsetHeight-8)+'px';
+      }).on('pointerleave',function(){tip.style.display='none';guide.style('display','none')});
+      if(popup){const zoom=d3.zoom().scaleExtent([1,12]).extent([[margin.left,margin.top],[w-margin.right,h-margin.bottom]]).on('zoom',function(e){x=e.transform.rescaleX(x0);y=type==='mtf'?y0:e.transform.rescaleY(y0);chartViews[type]={k:e.transform.k,x:e.transform.x,y:e.transform.y};paint();tip.style.display='none'});const saved=chartViews[type];svg.call(zoom);if(saved&&Number.isFinite(saved.k)&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))svg.call(zoom.transform,d3.zoomIdentity.translate(saved.x,saved.y).scale(Math.max(1,Math.min(12,saved.k))));byId('o-modal-body').querySelectorAll('[data-zoom]').forEach(function(b){b.onclick=function(){if(b.dataset.zoom==='reset')svg.call(zoom.transform,d3.zoomIdentity);else svg.call(zoom.scaleBy,b.dataset.zoom==='in'?1.4:1/1.4)}})}
+    }
+    function renderCharts(){root.querySelectorAll('svg[data-chart]').forEach(drawChart);paretoPanel?.draw()}
+    window.__OPTICS_SMOKE__=async function(){
+      const checks=[];const check=function(name,value){checks.push({name:name,pass:!!value})};
+      check('one_workspace_navigation',root.querySelectorAll('#o-workspace-nav').length===1&&!root.textContent.includes('Back to workspace'));
+      model(true);check('compute_test_right_heading',!!byId('o-compute-test')&&byId('o-compute-test').parentElement.classList.contains('o-compute-heading'));
+      await testCompute();check('local_cuda_message',byId('o-compute-status').dataset.result==='unsupported'||byId('o-compute-status').dataset.result==='ready'||byId('o-compute-status').dataset.result==='missing_driver');
+      byId('o-compute').value='server';byId('o-compute').dispatchEvent(new Event('change'));await testCompute();check('server_no_configuration',byId('o-compute-status').dataset.result==='not_configured');
+      workspace();const config=window.__OPTICS_SMOKE_CONFIG__||{};
+      const stableBefore=JSON.stringify({state:state,parameters:settings,training:trainingSettings});const malformed=snapshotSession();malformed.training.learning_rate='invalid';
+      let rejected=false;try{restoreSession(malformed)}catch{rejected=true}
+      check('invalid_session_preserves_workspace',rejected&&stableBefore===JSON.stringify({state:state,parameters:settings,training:trainingSettings}));
+      if(config.dialog_stubs&&config.report_path){
+        const report=await fileController.openReport();check('report_and_db_loaded',!!report&&fileContext().cases.length>0&&fileContext().report.model_deserialized===false);
+        const before=snapshotSession(),defaultRays=sectionRays();
+        check('catalog_indices_drive_local_rays',defaultRays.performance_prediction===false&&defaultRays.image_z_mm===0&&defaultRays.rays.some(function(r){return Number.isFinite(r.image_height_mm)}));
+        const chiefs=defaultRays.rays.filter(function(r){return r.kind==='chief'});
+        check('chief_replaces_paraxial',chiefs.length===1&&chiefs[0].stop_height_mm===0&&chiefs[0].image_height_mm===0&&!defaultRays.rays.some(function(r){return r.kind==='paraxial'||r.kind==='axis'}));
+        const originalThickness=state.lenses[0].thickness,originalAperture=state.lenses[2].surfaces[1].aperture;
+        state.lenses[0].thickness+=.5;state.lenses[2].surfaces[1].aperture-=.25;const followed=sectionRays();
+        check('default_stop_follows_lens_parameters',state.stop.position_mode==='surface'&&followed.stop.surface_index===6&&Math.abs(followed.stop.z_mm-defaultRays.stop.z_mm-.5)<1e-8&&followed.stop.semi_diameter_mm===originalAperture-.25);
+        state.lenses[0].thickness=originalThickness;state.lenses[2].surfaces[1].aperture=originalAperture;
+        state.stop=moveStop(zPositions()[2][1]+10);const openStopRays=sectionRays();
+        check('far_field_marginal_reaches_image_plane',openStopRays.rays.filter(function(r){return r.kind==='marginal'&&r.status==='ok'&&r.points.at(-1).z===0}).length===2);
+        state.lenses[0].thickness=7;state.stop=moveStop(18.25);state.ray_visibility.chief=false;renderParams();trainingSettings.learning_rate=0.002;autoSettings.hours=12;llmDraft='검증용 저장 초안';model(true);
+        if(config.target_path)await fileController.openTarget();
+        const saved=await fileController.save();check('session_saved',saved?.status==='saved');
+        state.lenses[0].thickness=8;state.stop=moveStop(22);state.ray_visibility.chief=true;trainingSettings.learning_rate=0.003;llmDraft='changed';workspace();
+        const loaded=await fileController.open();check('session_restored',loaded?.resume_jobs===false&&state.lenses[0].thickness===7&&trainingSettings.learning_rate===0.002&&autoSettings.hours===12&&llmDraft==='검증용 저장 초안');
+        check('stop_position_restored',state.stop.position_mode==='absolute'&&state.stop.surface_index===6&&state.stop.z_mm===18.25);
+        check('ray_visibility_restored',state.ray_visibility.chief===false&&state.ray_visibility.marginal===true);
+        check('model_view_restored',activeView==='update'&&!!byId('o-compute-test'));
+        const exported=await fileController.exportBundle();check('portable_bundle_exported',exported?.status==='exported'&&exported?.executed===false);
+        check('a12_and_ri_blank',state.lenses.every(function(l){return l.surfaces.every(function(s){return s.a12===null})})&&byId('o-ri-value').textContent==='');
+        restoreSession(before);
+      }
+      workspace();return {checks:checks};
+    };
+    window.__OPTICS_PARETO_SMOKE__=async function(fixture){
+      const checks=[],check=function(name,pass){checks.push({name:name,pass:!!pass})};
+      const pause=()=>new Promise(resolve=>setTimeout(resolve,25));
+      const wait=async predicate=>{for(let i=0;i<600;i++){if(predicate())return;await pause()}throw new Error('Pareto UI wait timed out')};
+      const paint=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      await fileController.loadReport(fixture.source_report_path);
+      await fileController.openTarget();await fileController.refreshCandidates();
+      let evaluation=OpticsPareto.evaluateCases(fileContext().candidateData.cases,fileContext().target.profile);
+      check('original_db_connected_500_cases',evaluation.rows.length===500);
+      check('original_db_has_no_eligible_candidates',evaluation.cohorts.every(c=>c.eligible_count===0));
+      await fileController.loadReport(fixture.report_path);await fileController.refreshCandidates();
+      evaluation=OpticsPareto.evaluateCases(fileContext().candidateData.cases,fileContext().target.profile);
+      const cohort=evaluation.cohorts.find(c=>evaluation.rows.some(r=>r.id===fixture.first&&r.cohort_key===c.cohort_key));
+      paretoPanel.restore({cohort_key:cohort.cohort_key,source_kind:cohort.source_kind});
+      candidates();await paint();
+      check('eligible_ui_has_three_cases',byId('o-pareto-case').options.length===3);
+      check('two_objective_front_connects_observed_candidates',byId('o-pareto-large').querySelectorAll('[data-pareto="true"]').length===2&&!!byId('o-pareto-large').querySelector('[data-pareto-guide]'));
+      const firstDot=byId('o-pareto-large').querySelector('[data-case-id="'+fixture.first+'"]');
+      const pointRect=firstDot.getBoundingClientRect();
+      byId('o-pareto-large').querySelector('rect[fill="transparent"]').dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:pointRect.x+pointRect.width/2,clientY:pointRect.y+pointRect.height/2}));
+      check('graph_point_selects_matching_case',byId('o-pareto-case').value===fixture.first&&byId('o-pareto-detail').textContent.includes(fixture.first));
+      byId('o-pareto-settings').open=true;byId('o-pareto-line').checked=false;byId('o-pareto-line').dispatchEvent(new Event('change'));
+      check('optional_guide_can_be_hidden',!byId('o-pareto-large').querySelector('[data-pareto-guide]'));
+      byId('o-pareto-line').checked=true;byId('o-pareto-line').dispatchEvent(new Event('change'));
+      check('weighted_best_is_full_objective_candidate',byId('o-pareto-large').querySelector('[data-weighted-best]')?.getAttribute('data-weighted-best')===fixture.best);
+      byId('o-pareto-projection').value='full';byId('o-pareto-projection').dispatchEvent(new Event('change'));await paint();
+      check('three_objective_projection_has_three_highlights_without_line',byId('o-pareto-large').querySelectorAll('[data-pareto="true"]').length===3&&!byId('o-pareto-large').querySelector('[data-pareto-guide]'));
+      byId('o-pareto-mode').value='exploratory';byId('o-pareto-mode').dispatchEvent(new Event('change'));await paint();
+      check('ng_exploration_does_not_promote_ng_best',byId('o-pareto-case').options.length>3&&byId('o-pareto-large').querySelector('[data-weighted-best]')?.getAttribute('data-weighted-best')===fixture.best);
+      byId('o-pareto-mode').value='eligible';byId('o-pareto-mode').dispatchEvent(new Event('change'));
+      byId('o-pareto-projection').value='pair';byId('o-pareto-projection').dispatchEvent(new Event('change'));
+      // Applying a candidate must be reversible even after current manual edits.
+      workspace();const beforeId=data.id;const input=root.querySelector('[data-key="L0thickness"] .o-current');
+      input.value=state.lenses[0].thickness+.125;input.dispatchEvent(new Event('change'));
+      const beforeThickness=state.lenses[0].thickness;
+      candidates();byId('o-pareto-case').value=fixture.second;byId('o-pareto-case').dispatchEvent(new Event('change'));
+      byId('o-pareto-apply-selected').click();await wait(()=>data.id===fixture.second);await paint();
+      check('candidate_applies_actual_db_case',data.id===fixture.second&&activeView==='workspace');
+      byId('o-pareto-undo').click();await paint();
+      check('candidate_undo_restores_preexisting_edits',data.id===beforeId&&state.lenses[0].thickness===beforeThickness);
+      candidates();byId('o-pareto-case').value=fixture.best;byId('o-pareto-case').dispatchEvent(new Event('change'));
+      byId('o-pareto-apply-selected').click();workspace();
+      const edit=root.querySelector('[data-key="L0thickness"] .o-current');edit.value=beforeThickness+.1;edit.dispatchEvent(new Event('change'));
+      await wait(()=>byId('o-file-notice').textContent.includes('이전 후보를 적용하지 않았습니다'));
+      check('late_candidate_does_not_overwrite_new_edits',data.id===beforeId&&Math.abs(state.lenses[0].thickness-beforeThickness-.1)<1e-10);
+      candidates();byId('o-pareto-projection').value='full';byId('o-pareto-projection').dispatchEvent(new Event('change'));
+      const snapshot=snapshotSession();restoreSession(snapshot);await paint();
+      check('pareto_view_settings_roundtrip',byId('o-pareto-projection').value==='full');
+      // Final captures show the original DB, never the fabricated passing fixture.
+      await fileController.loadReport(fixture.source_report_path);await fileController.refreshCandidates();
+      paretoPanel.restore({mode:'exploratory'});candidates();await paint();
+      const beforeFocus=byId('o-pareto-large').querySelectorAll('[data-pareto="true"]').length;byId('o-pareto-focus').click();await paint();
+      check('focus_keeps_full_population_pareto',byId('o-pareto-large').querySelectorAll('[data-pareto="true"]').length===beforeFocus&&byId('o-pareto-viewport').textContent.includes('Pareto 주변'));
+      check('original_db_exploratory_front_is_honest',!!byId('o-pareto-large').querySelector('[data-pareto-guide]')&&!byId('o-pareto-large').querySelector('[data-weighted-best]')&&byId('o-pareto-status').textContent.includes('NG'));
+      return {checks:checks,fixture_metrics_are_not_optical_validation:true,final_capture:'original DB exploratory'};
+    };
+    window.__OPTICS_CAPTURE_COMPUTE__=async function(){
+      model(true);byId('o-compute').value='local';byId('o-compute').dispatchEvent(new Event('change'));
+      await testCompute();return {status:byId('o-compute-status').dataset.result};
+    };
+    if(window.createOpticsFileController&&window.opticsBridge){
+      fileController=window.createOpticsFileController({enableCandidates:true,snapshot:snapshotSession,restore:restoreSession,applyCase:applyCase,contextChanged:contextChanged,notice:notice,error:fileError});
+      window.opticsBridge.ready.then(function(ready){if(ready){byId('o-data-kind').textContent='Local app · Reference data';notice('로컬 파일 기능 연결됨 · 광학 backend 및 LLM 연결은 보류')}});
+    }
+    // Explicit user-provided provisional targets, never substituted for an invalid loaded JSON.
+    const paretoFallbackProfile={"profile_id":"local-ui-demo-targets-v1","profile_version":1,"read_only":true,"is_ui_example":true,"category_weights":{"mtf":1,"spot":1,"horizontal_fov":1},"relative_tolerance":0.05,"conditions_policy":{"prefer":"current_database_analysis_metadata","display_defaults":{"temperature_c":25,"wavelength_nm":560},"fallback_does_not_recalculate_results":true},"targets":[{"id":"mtf-0-sagittal","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.0,"orientation":"SAGITTAL","comparator":">=","value":0.4,"unit":"fraction","required":true},{"id":"mtf-0-tangential","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.0,"orientation":"TANGENTIAL","comparator":">=","value":0.4,"unit":"fraction","required":true},{"id":"mtf-0.8-sagittal","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.8,"orientation":"SAGITTAL","comparator":">=","value":0.3,"unit":"fraction","required":true},{"id":"mtf-0.8-tangential","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.8,"orientation":"TANGENTIAL","comparator":">=","value":0.3,"unit":"fraction","required":true},{"id":"spot-1f-rms-diameter","category":"spot","metric":"spot_rms_diameter","field_norm":1.0,"comparator":"close_to","value":1.6,"unit":"um","required":true},{"id":"horizontal-full-fov","category":"horizontal_fov","metric":"horizontal_fov_full","comparator":"close_to","value":24,"unit":"deg","required":true}],"notes":["UI example JSON only; not a finalized backend target schema.","MTF conditions share one category weight; four conditions do not make MTF four times heavier.","Spot is RMS diameter near 1.6 um at normalized field 1.0.","Horizontal FOV is the full 24 degree angle (plus/minus 12 degrees).","Reference case D057_2 is not declared to pass these targets or be the current best candidate."]};
+    paretoPanel=window.createOpticsParetoView({root:root,show:show,getContext:fileContext,getCurrentId:function(){return data.id},
+      fallbackProfile:paretoFallbackProfile,isActive:function(){return activeView==='candidates'},snapshot:snapshotSession,
+      restore:restoreSession,notice:notice,editKey:function(){return JSON.stringify({lenses:state.lenses,source:state.source,gaps:state.gaps,stop:state.stop,parameters:allDescriptors().map(function(d){const c=config(d);return [d.key,c.active,c.min,c.max]})})},refreshCandidates:function(){return fileController?.refreshCandidates()},
+      selectCase:function(id,isCurrent){return fileController?fileController.selectCase(id,{isCurrent:isCurrent}):Promise.resolve(null)}});
+    applyCase(data);renderCharts();paretoPanel.refresh();
+    let layoutFrame=0,layoutWidth=null;
+    function scheduleLayout(){if(layoutFrame)return;layoutFrame=requestAnimationFrame(function(){layoutFrame=0;renderCharts();if(state.section)drawSection()})}
+    new ResizeObserver(function(entries){const width=entries[0]?.contentRect.width;if(width===layoutWidth)return;layoutWidth=width;scheduleLayout()}).observe(root);
+    window.addEventListener('resize',scheduleLayout);
+    if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:function(){root.classList.toggle('o-analysis',state.layout==='analysis');refreshCoverage();requestAnimationFrame(renderCharts)}});tweak.addSelect(state,'layout',{label:'화면 구성',options:[{label:'A · 형상 중심',value:'studio'},{label:'B · 성능 중심',value:'analysis'}]});tweak.addToggle(state,'coverageExample',{label:'학습 구간 예시'});}
+  })();
+  

@@ -1,0 +1,76 @@
+{
+  "status": "available",
+  "wavelength_nm": 546.074,
+  "temperature_c": 20.0,
+  "indices": {
+    "PC_LEXAN_OQ3820_PROXY": 1.595537564,
+    "PC_MAKROLON_LED2245_PROXY": 1.5897533225135922,
+    "PMMA_DELPET_80NH_PROXY": 1.4926111347569782,
+    "PMMA_PLEXIGLAS_8N_PROXY": 1.4926111347569782,
+    "SCHOTT_N_BK7": 1.5187219714708264,
+    "SCHOTT_N_SF6HTULTRA": 1.8126590955276354
+  },
+  "missing_material_ids": [],
+  "provenance": {
+    "lookup": "exact_sample",
+    "catalog_reference": "materials/material_catalog.sqlite",
+    "catalog_path": "examples/local-demo/materials/material_catalog.sqlite",
+    "condition_sources": {
+      "wavelength": "primary_wavelength_nm",
+      "temperature": "analysis_metadata"
+    },
+    "catalog_metadata": {
+      "dataset_name": "AI Imaging Optics Sample Material Catalog",
+      "dataset_version": "1.0.0",
+      "created_at_utc": "2026-08-22T00:00:00Z",
+      "synthetic_warning": "Polymer non-dispersion properties and all custom AGF polymer thermal fields are test-only proxies.",
+      "target_zemax_version": "OpticStudio 2025 R2"
+    },
+    "materials": {
+      "PC_LEXAN_OQ3820_PROXY": {
+        "n_model_id": "PC_ZHANG_2020",
+        "n_is_proxy": 1,
+        "is_extrapolated": 0,
+        "source_quality": "generic_polymer_n_proxy"
+      },
+      "PC_MAKROLON_LED2245_PROXY": {
+        "n_model_id": "PC_SULTANOVA_2009",
+        "n_is_proxy": 1,
+        "is_extrapolated": 0,
+        "source_quality": "generic_polymer_n_proxy"
+      },
+      "PMMA_DELPET_80NH_PROXY": {
+        "n_model_id": "PMMA_SZCZUROWSKI_2013_SHARED_PROXY",
+        "n_is_proxy": 1,
+        "is_extrapolated": 0,
+        "source_quality": "generic_polymer_n_proxy"
+      },
+      "PMMA_PLEXIGLAS_8N_PROXY": {
+        "n_model_id": "PMMA_SZCZUROWSKI_2013",
+        "n_is_proxy": 1,
+        "is_extrapolated": 0,
+        "source_quality": "generic_polymer_n_proxy"
+      },
+      "SCHOTT_N_BK7": {
+        "n_model_id": "SCHOTT_N_BK7_MANUFACTURER",
+        "n_is_proxy": 0,
+        "is_extrapolated": 0,
+        "source_quality": "manufacturer_n"
+      },
+      "SCHOTT_N_SF6HTULTRA": {
+        "n_model_id": "SCHOTT_N_SF6HTULTRA_MANUFACTURER",
+        "n_is_proxy": 0,
+        "is_extrapolated": 0,
+        "source_quality": "manufacturer_n"
+      }
+    },
+    "fixture_source": {
+      "case_id": "D057_2",
+      "database": "examples/local-demo/demo-cases.sqlite",
+      "catalog_sha256": "111efdeb5753f57e8cde67df847130903dd6210399b5004a3d913a52bf43d40c",
+      "extracted_with": "FileDataService.load_case",
+      "model_predictions": false
+    }
+  },
+  "warnings": []
+}

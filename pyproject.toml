@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optics-design-ui"
+version = "0.1.0"
+description = "Local desktop interface for AI-supported imaging optics design"
+requires-python = ">=3.12,<3.13"
+dependencies = ["PySide6==6.11.2"]
+
+[project.scripts]
+optics-ui = "optics_ui.desktop:main"
+
+[tool.setuptools.packages.find]
+include = ["optics_ui*"]
+
+[tool.setuptools.package-data]
+optics_ui = ["assets/*", "assets/vendor/*", "assets/vendor/three/*"]

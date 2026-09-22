@@ -1,0 +1,4 @@
+OPTICS UI DEMO ARTIFACT
+THIS FILE IS NOT TRAINED MODEL WEIGHTS.
+It is opaque fixture data for file-selection and checksum tests only.
+Do not load with torch.load, pickle, or an inference engine.

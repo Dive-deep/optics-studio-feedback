@@ -1,0 +1,37 @@
+{
+  "report_version": 1,
+  "demo_only": true,
+  "model": {
+    "filename": "demo-model.pth",
+    "id": "UI-FIXTURE-NOT-TRAINED",
+    "sha256": "1dc9256257fefcd8aeaa1b1b5ffd337e0a87e7751700cbabb53b57b72a91bb0a",
+    "artifact_kind": "opaque_ui_fixture",
+    "trained_weights": false
+  },
+  "database": {
+    "filename": "demo-cases.sqlite",
+    "id": "local-ui-demo-optics-v1",
+    "schema_version": "1.0.0"
+  },
+  "material_catalog": {
+    "filename": "materials/material_catalog.sqlite"
+  },
+  "suggested_case_id": "D057_2",
+  "target_profile": {
+    "filename": "target.json",
+    "sha256": "92d22ff1e4a45302f3a259be073119c80dd3f4a76dfdc64746496bfdf62e71e5"
+  },
+  "provenance": {
+    "data_origin": "SYNTHETIC_MATH_PROXY",
+    "zemax_executed": false,
+    "source_dataset_name": "AI Imaging Optics Synthetic Sample DB",
+    "source_dataset_version": "1.0.0",
+    "source_database_sha256": "3fda79d2cb0805a451428e98312c0ba2e34cd444e5ad5c8ed93f9215c24f92d9"
+  },
+  "notes": [
+    "UI FILE-LOADING DEMO ONLY. demo-model.pth is plain fixture bytes, not trained surrogate weights.",
+    "The copied optical database contains synthetic mathematical proxies, not Zemax measurements.",
+    "Training membership is deliberately absent. Do not infer trained counts from family_split.",
+    "D057_2 is a reference case for UI loading, not a best or target-passing claim."
+  ]
+}
