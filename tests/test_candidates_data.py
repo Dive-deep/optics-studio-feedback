@@ -1,5 +1,5 @@
 """Candidate extraction acceptance tests, written before implementation."""
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 import hashlib
 import json
 from pathlib import Path
@@ -29,7 +29,7 @@ class CandidatesDataTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix="candidate-data-")
         self.addCleanup(self.temp.cleanup)
         self.path = Path(self.temp.name) / "cases.sqlite"
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.executescript(SCHEMA)
         self.service = FileDataService()
         self.add_case("D1")
@@ -43,7 +43,7 @@ class CandidatesDataTests(unittest.TestCase):
                     "orientations": ["SAGITTAL", "TANGENTIAL"], "frequencies_lp_per_mm": [0, 6]},
             "spot": {**spectrum, "reference": "CENTROID", "ray_pattern": "GRID", "rays_per_field": 64},
         }
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.execute("INSERT INTO designs VALUES(?,?,?,?,?,?)", (case_id, "SYNTHETIC_MATH_PROXY", 0, 1, 1, "SUCCESS"))
             for lens in range(1, 4):
                 db.execute("INSERT INTO lens_elements VALUES(?,?,?,?,?)", (case_id, lens, 2*lens-1, 2*lens, "BK7"))
@@ -60,11 +60,11 @@ class CandidatesDataTests(unittest.TestCase):
                             db.execute("INSERT INTO mtf_samples VALUES(?,?,?,?,?,?,?,?)", (case_id, case_id+"-mtf", temperature, field, orientation, frequency, 1 if frequency==0 else .5, "FFT_ROWS"))
 
     def change(self, sql, args=()):
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.execute(sql, args)
 
     def change_settings(self, suffix, change, case_id="D1"):
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             current=json.loads(db.execute("SELECT settings_json FROM analyses WHERE analysis_id=?", (case_id+"-"+suffix,)).fetchone()[0])
             change(current)
             db.execute("UPDATE analyses SET settings_json=? WHERE analysis_id=?", (json.dumps(current),case_id+"-"+suffix))
