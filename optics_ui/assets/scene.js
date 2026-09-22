@@ -3,7 +3,10 @@
     import {OrbitControls} from './vendor/three/OrbitControls.js';
     const root=document.getElementById('optics-review'),canvas=root.querySelector('#o-canvas'),host=root.querySelector('#o-view'),state=root.__opticsState;
     try {
-      const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x000000,0);
+      const context=canvas.getContext('webgl2',{antialias:true,alpha:true});
+      if(!context){root.__setWebGLUnavailable('webgl2-unavailable')}
+      else {
+      const renderer=new THREE.WebGLRenderer({canvas:canvas,context:context,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x000000,0);
       const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(34,1,.1,500);camera.position.set(67,34,63);
       const controls=new OrbitControls(camera,canvas);controls.target.set(24,0,0);controls.enableDamping=false;controls.minDistance=18;controls.maxDistance=200;
       scene.add(new THREE.HemisphereLight(0xffffff,0x496078,2.4));const light=new THREE.DirectionalLight(0xffffff,3.5);light.position.set(-20,40,60);scene.add(light);
@@ -15,8 +18,10 @@
         const outline=new THREE.LineSegments(new THREE.EdgesGeometry(plane.geometry),new THREE.LineBasicMaterial({color:color('--o-teal'),transparent:true,opacity:.5}));outline.rotation.y=Math.PI/2;group.add(outline);
         if(!state.section)root.querySelector('#o-view-note').textContent=valid?'Image plane · reference at (0,0)':'형상을 만들 수 없는 파라미터';render();
       }
-      function render(){if(state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
+      function render(){if(root.dataset.webgl==='failed'||state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
       root.__getCameraSnapshot=function(){return {position:camera.position.toArray(),target:controls.target.toArray(),zoom:camera.zoom,fov:camera.fov}};root.__restoreCamera=function(saved){if(!saved||!Array.isArray(saved.position)||saved.position.length!==3||!saved.position.every(Number.isFinite)||!Array.isArray(saved.target)||saved.target.length!==3||!saved.target.every(Number.isFinite))return;camera.position.fromArray(saved.position);controls.target.fromArray(saved.target);if(Number.isFinite(saved.zoom)&&saved.zoom>0)camera.zoom=saved.zoom;if(Number.isFinite(saved.fov)&&saved.fov>1&&saved.fov<179)camera.fov=saved.fov;controls.update();render()};if(root.__pendingCamera)root.__restoreCamera(root.__pendingCamera);
-      controls.addEventListener('change',render);root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);rebuild();root.dataset.webgl='ready';
-    }catch(e){root.dataset.webgl='failed';root.querySelector('#o-view-note').textContent='3D preview unavailable';root.querySelector('#o-view-toggle').click()}
+      controls.addEventListener('change',render);root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);rebuild();root.dataset.webgl='ready';root.__syncViewerMode();
+      canvas.addEventListener('webglcontextlost',function(event){event.preventDefault();root.__setWebGLUnavailable('context-lost')});
+      }
+    }catch(e){root.__setWebGLUnavailable('renderer-error');console.error('3D viewer initialization failed',e)}
   

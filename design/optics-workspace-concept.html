@@ -174,6 +174,7 @@
     <main class="o-stack o-main">
       <section class="o-panel" aria-label="Optical geometry">
         <div class="o-head"><strong>Optical layout</strong><button id="o-view-toggle">2D section view</button></div>
+        <div class="o-notice" id="o-webgl-status" role="status" hidden></div>
         <div class="o-view" id="o-view">
           <canvas id="o-canvas" aria-label="Three lens 3D model. Drag to rotate, right-drag to pan, scroll to zoom."></canvas>
           <svg class="o-section" id="o-section" aria-label="Optical system 2D section" hidden></svg>
@@ -1331,7 +1332,27 @@
       if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();
       state.stop=moveStop(Math.max(0,resolveStop(state).z_mm+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1)),state.stop.surface_index);drawSection();
     };
-    byId('o-view-toggle').onclick=function(){state.section=!state.section;byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;this.textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';byId('o-coordinates').textContent='mm';if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'))};
+    function syncViewerMode(){
+      const failed=root.dataset.webgl==='failed';
+      if(failed)state.section=true;
+      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);
+      stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
+      const toggle=byId('o-view-toggle');toggle.disabled=failed;
+      toggle.textContent=failed?'3D unavailable':state.section?'3D viewer':'2D section view';
+      byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
+      const status=byId('o-webgl-status');status.hidden=!failed;
+      status.textContent=failed?'현재 그래픽 환경에서 3D를 표시할 수 없어 2D 단면으로 전환했습니다.':'';
+    }
+    root.__syncViewerMode=syncViewerMode;
+    root.__setWebGLUnavailable=function(reason){
+      root.dataset.webgl='failed';root.dataset.webglReason=reason;
+      syncViewerMode();drawSection();
+    };
+    byId('o-view-toggle').onclick=function(){
+      if(root.dataset.webgl==='failed'){syncViewerMode();return}
+      state.section=!state.section;syncViewerMode();byId('o-coordinates').textContent='mm';
+      if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'));
+    };
     let activeView='workspace';
     let computeRevision=0;
     let fileController=null;
@@ -1348,8 +1369,7 @@
     }
     function workspace(){
       computeRevision++;activeView='workspace';byId('o-workspace-nav').setAttribute('aria-current','page');
-      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
-      byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
+      syncViewerMode();
       byId('o-modal-host').classList.remove('o-open');root.querySelector('.o-workspace').hidden=false;byId('o-modal-body').innerHTML='';
       requestAnimationFrame(function(){renderCharts();if(state.section)drawSection();root.dispatchEvent(new CustomEvent('optics-update'))});
     }
@@ -1444,7 +1464,7 @@
       paretoPanel?.restore(clean.pareto_view);
       for(const key of Object.keys(chartViews))delete chartViews[key];Object.assign(chartViews,clean.chart_views);
       root.classList.toggle('o-analysis',state.layout==='analysis');
-      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';
+      syncViewerMode();
       renderParams();updateReadouts();workspace();
       if(clean.camera){root.__pendingCamera=clean.camera;root.__restoreCamera?.(clean.camera)}
       const allowed=['configure','conditions','targets','candidates','model','update','auto','llm','mtf','spot'];
@@ -1686,7 +1706,10 @@
     import {OrbitControls} from 'https://esm.sh/three@0.180.0/examples/jsm/controls/OrbitControls.js';
     const root=document.getElementById('optics-review'),canvas=root.querySelector('#o-canvas'),host=root.querySelector('#o-view'),state=root.__opticsState;
     try {
-      const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x000000,0);
+      const context=canvas.getContext('webgl2',{antialias:true,alpha:true});
+      if(!context){root.__setWebGLUnavailable('webgl2-unavailable')}
+      else {
+      const renderer=new THREE.WebGLRenderer({canvas:canvas,context:context,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x000000,0);
       const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(34,1,.1,500);camera.position.set(67,34,63);
       const controls=new OrbitControls(camera,canvas);controls.target.set(24,0,0);controls.enableDamping=false;controls.minDistance=18;controls.maxDistance=200;
       scene.add(new THREE.HemisphereLight(0xffffff,0x496078,2.4));const light=new THREE.DirectionalLight(0xffffff,3.5);light.position.set(-20,40,60);scene.add(light);
@@ -1698,9 +1721,11 @@
         const outline=new THREE.LineSegments(new THREE.EdgesGeometry(plane.geometry),new THREE.LineBasicMaterial({color:color('--o-teal'),transparent:true,opacity:.5}));outline.rotation.y=Math.PI/2;group.add(outline);
         if(!state.section)root.querySelector('#o-view-note').textContent=valid?'Image plane · reference at (0,0)':'형상을 만들 수 없는 파라미터';render();
       }
-      function render(){if(state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
+      function render(){if(root.dataset.webgl==='failed'||state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
       root.__getCameraSnapshot=function(){return {position:camera.position.toArray(),target:controls.target.toArray(),zoom:camera.zoom,fov:camera.fov}};root.__restoreCamera=function(saved){if(!saved||!Array.isArray(saved.position)||saved.position.length!==3||!saved.position.every(Number.isFinite)||!Array.isArray(saved.target)||saved.target.length!==3||!saved.target.every(Number.isFinite))return;camera.position.fromArray(saved.position);controls.target.fromArray(saved.target);if(Number.isFinite(saved.zoom)&&saved.zoom>0)camera.zoom=saved.zoom;if(Number.isFinite(saved.fov)&&saved.fov>1&&saved.fov<179)camera.fov=saved.fov;controls.update();render()};if(root.__pendingCamera)root.__restoreCamera(root.__pendingCamera);
-      controls.addEventListener('change',render);root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);rebuild();root.dataset.webgl='ready';
-    }catch(e){root.dataset.webgl='failed';root.querySelector('#o-view-note').textContent='3D preview unavailable';root.querySelector('#o-view-toggle').click()}
+      controls.addEventListener('change',render);root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);rebuild();root.dataset.webgl='ready';root.__syncViewerMode();
+      canvas.addEventListener('webglcontextlost',function(event){event.preventDefault();root.__setWebGLUnavailable('context-lost')});
+      }
+    }catch(e){root.__setWebGLUnavailable('renderer-error');console.error('3D viewer initialization failed',e)}
   </script>
 </div>

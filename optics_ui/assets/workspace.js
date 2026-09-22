@@ -261,7 +261,27 @@
       if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();
       state.stop=moveStop(Math.max(0,resolveStop(state).z_mm+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1)),state.stop.surface_index);drawSection();
     };
-    byId('o-view-toggle').onclick=function(){state.section=!state.section;byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;this.textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';byId('o-coordinates').textContent='mm';if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'))};
+    function syncViewerMode(){
+      const failed=root.dataset.webgl==='failed';
+      if(failed)state.section=true;
+      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);
+      stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
+      const toggle=byId('o-view-toggle');toggle.disabled=failed;
+      toggle.textContent=failed?'3D unavailable':state.section?'3D viewer':'2D section view';
+      byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
+      const status=byId('o-webgl-status');status.hidden=!failed;
+      status.textContent=failed?'현재 그래픽 환경에서 3D를 표시할 수 없어 2D 단면으로 전환했습니다.':'';
+    }
+    root.__syncViewerMode=syncViewerMode;
+    root.__setWebGLUnavailable=function(reason){
+      root.dataset.webgl='failed';root.dataset.webglReason=reason;
+      syncViewerMode();drawSection();
+    };
+    byId('o-view-toggle').onclick=function(){
+      if(root.dataset.webgl==='failed'){syncViewerMode();return}
+      state.section=!state.section;syncViewerMode();byId('o-coordinates').textContent='mm';
+      if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'));
+    };
     let activeView='workspace';
     let computeRevision=0;
     let fileController=null;
@@ -278,8 +298,7 @@
     }
     function workspace(){
       computeRevision++;activeView='workspace';byId('o-workspace-nav').setAttribute('aria-current','page');
-      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
-      byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
+      syncViewerMode();
       byId('o-modal-host').classList.remove('o-open');root.querySelector('.o-workspace').hidden=false;byId('o-modal-body').innerHTML='';
       requestAnimationFrame(function(){renderCharts();if(state.section)drawSection();root.dispatchEvent(new CustomEvent('optics-update'))});
     }
@@ -374,7 +393,7 @@
       paretoPanel?.restore(clean.pareto_view);
       for(const key of Object.keys(chartViews))delete chartViews[key];Object.assign(chartViews,clean.chart_views);
       root.classList.toggle('o-analysis',state.layout==='analysis');
-      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);byId('o-view-toggle').textContent=state.section?'3D viewer':'2D section view';
+      syncViewerMode();
       renderParams();updateReadouts();workspace();
       if(clean.camera){root.__pendingCamera=clean.camera;root.__restoreCamera?.(clean.camera)}
       const allowed=['configure','conditions','targets','candidates','model','update','auto','llm','mtf','spot'];
