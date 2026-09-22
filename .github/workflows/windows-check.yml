@@ -15,6 +15,9 @@ jobs:
     timeout-minutes: 15
     env:
       PYTHONUTF8: "1"
+      # Hosted Windows has no usable hardware GPU. Keep Chromium sandbox enabled.
+      QTWEBENGINE_CHROMIUM_FLAGS: "--enable-features=AllowD3D11WarpFallback"
+      QT_LOGGING_RULES: "qt.webenginecontext=true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

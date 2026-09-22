@@ -179,7 +179,14 @@ class SmokeRunner(QObject):
       catch {rejected=true;}
       checks.push({name:'no_job_execution_method',pass:rejected});
       const frontend = typeof window.__OPTICS_SMOKE__ === 'function' ? await window.__OPTICS_SMOKE__() : null;
-      window.__DESKTOP_SMOKE_RESULT__={checks,frontend,canvasCount:document.querySelectorAll('canvas').length};
+      const graphics={status:document.querySelector('#optics-review')?.dataset.webgl||'uninitialized'};
+      if(graphics.status==='ready'){
+        const gl=document.querySelector('#o-canvas')?.getContext('webgl2');
+        const info=gl?.getExtension('WEBGL_debug_renderer_info');
+        graphics.renderer=info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null;
+      }
+      checks.push({name:'three_dimensional_view_ready',pass:graphics.status==='ready'});
+      window.__DESKTOP_SMOKE_RESULT__={checks,frontend,graphics,canvasCount:document.querySelectorAll('canvas').length};
     })().catch(()=>{window.__DESKTOP_SMOKE_RESULT__={checks:[{name:'frontend_smoke_completed',pass:false}],error:'Smoke could not complete.'};});
     """
 
