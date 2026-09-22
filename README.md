@@ -10,7 +10,7 @@
 
 ## 다운로드와 시작
 
-1. 이 저장소의 **Releases**에서 `Optics-Studio-Feedback-0.1.0-feedback.1.zip`을 내려받아 모두 압축 해제합니다. Releases가 아직 없다면 **Code → Download ZIP**으로 `feedback/windows-preview` 브랜치를 내려받습니다.
+1. [GitHub Releases](https://github.com/Dive-deep/optics-studio-feedback/releases)에서 `Optics-Studio-Feedback-0.1.0-feedback.1.zip`을 내려받아 모두 압축 해제합니다. Releases가 아직 없다면 **Code → Download ZIP**으로 `feedback/windows-preview` 브랜치를 내려받습니다.
 2. **Windows 11 x64 + Python 3.12 64비트**를 사용합니다. Python이 이미 설치되어 있다면 같은 환경을 그대로 사용합니다.
 3. 압축을 푼 폴더에서 터미널을 열고 의존성을 설치합니다.
 

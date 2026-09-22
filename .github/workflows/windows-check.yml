@@ -29,7 +29,9 @@ jobs:
       - name: Rebuild UTF-8 local UI assets
         run: |
           python scripts/sync_preview_modules.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python scripts/build_ui.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Headless launcher preflight
         run: python launch.py --check
       - name: CMD launcher from a different directory with Unicode and spaces

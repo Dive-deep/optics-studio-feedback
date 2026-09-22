@@ -7,7 +7,7 @@ if('IntersectionObserver' in window){
 }
 
 // Set only after the repository is created and verified. No requests are sent.
-const repositoryURL = '';
+const repositoryURL = 'https://github.com/Dive-deep/optics-studio-feedback';
 for (const link of document.querySelectorAll('[data-repo],[data-feedback],[data-bug]')) {
   if (repositoryURL) {
     link.href = repositoryURL + (link.hasAttribute('data-feedback') ? '/issues/new?template=usability.yml' : link.hasAttribute('data-bug') ? '/issues/new?template=bug.yml' : '/releases');

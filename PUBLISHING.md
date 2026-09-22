@@ -3,9 +3,9 @@
 This snapshot is isolated from the primary research/development project. Do not copy changes back automatically.
 
 Branch: `feedback/windows-preview`; baseline branch: `main`.
-Suggested repository: `Dive-deep/optics-studio-feedback` (verify availability before creation).
+Repository: https://github.com/Dive-deep/optics-studio-feedback (created private; owner visibility choice pending).
 
-The following external steps require a valid GitHub CLI login and the owner's chosen repository visibility. At preparation time the old CLI login was invalid; repository creation/upload must not be reported as done until verified.
+GitHub CLI authentication is now valid and the isolated repository exists. Public visibility and guide deployment remain subject to the owner's visibility choice. Follow the verified run/release state rather than treating a configured workflow as a passed test.
 
 1. Finish `gh auth login --hostname github.com --git-protocol https --web` using the owner's account. Never place credentials in this repository.
 2. Create a new, empty repository with the chosen visibility. Do not reuse an unrelated existing repository.
