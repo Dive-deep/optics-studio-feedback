@@ -43,9 +43,9 @@ def make_fixture(output):
             for field, threshold in [(0, .4), (.8, .3)]:
                 connection.execute("UPDATE mtf_samples SET mtf=? WHERE design_id=? AND temperature_c=20 AND field_norm=? AND frequency_lp_per_mm=6",
                                    (ratio * threshold, case_id, field))
-    report = json.loads((source / "training-report.json").read_text())
+    report = json.loads((source / "training-report.json").read_text(encoding="utf-8"))
     report["notes"].insert(0, "PARETO UI TEST FIXTURE: modified synthetic metrics, NOT optical performance validation.")
-    (folder / "training-report.json").write_text(json.dumps(report, indent=2))
+    (folder / "training-report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     return {"first": ids[0], "second": ids[1], "best": ids[2], "ng": ids[3],
             "report_path": str(folder / "training-report.json"),
             "target_path": str(folder / "target.json"),
@@ -58,7 +58,7 @@ def main():
     original = ROOT / "examples/local-demo/demo-cases.sqlite"
     before = hashlib.sha256(original.read_bytes()).hexdigest()
     fixture = make_fixture(output)
-    (output / "fixture.json").write_text(json.dumps(fixture, indent=2))
+    (output / "fixture.json").write_text(json.dumps(fixture, indent=2), encoding="utf-8")
 
     class ParetoRunner(desktop.SmokeRunner):
         SCRIPT = "window.__PARETO_FIXTURE__=" + json.dumps(fixture) + r""";

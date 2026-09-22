@@ -1,0 +1,4 @@
+# Install with the same Python used by the launcher:
+# py -3.12 -m pip install -r requirements.txt
+# Qt modules and Shiboken are resolved by PySide6. No ML/Zemax backend is required.
+PySide6==6.11.2

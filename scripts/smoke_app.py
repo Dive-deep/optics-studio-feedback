@@ -13,7 +13,10 @@ parser.add_argument("--smoke-target", type=Path, help="Replace native target dia
 args = parser.parse_args()
 output = args.output_dir.resolve()
 output.mkdir(parents=True, exist_ok=True)
-command = [sys.executable, "-m", "optics_ui", "--smoke", "--output-dir", str(output)]
+# Windows CI exercises the distribution launcher as well as the actual desktop.
+# Mac remains a development-only native host, not Windows validation.
+entry = [str(ROOT / "launch.py")] if sys.platform == "win32" else ["-m", "optics_ui"]
+command = [sys.executable, *entry, "--smoke", "--output-dir", str(output)]
 if args.smoke_report:
     command.extend(["--smoke-report", str(args.smoke_report.resolve())])
 if args.smoke_target:

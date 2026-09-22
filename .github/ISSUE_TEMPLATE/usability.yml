@@ -1,0 +1,38 @@
+name: 사용성 피드백
+description: 화면 배치, 용어, 조작 흐름, 필요한 기능에 대한 의견
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 사용 버전
+      value: 0.1.0-feedback.1
+    validations:
+      required: true
+  - type: input
+    id: screen
+    attributes:
+      label: 화면 / 버튼
+      placeholder: 예) Best candidates → 후보 적용
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: 하고 싶었던 작업과 수행 순서
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: 기대한 동작 / 실제 결과 / 어려웠던 점
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 개선 제안과 화면 캡처
+  - type: input
+    id: display
+    attributes:
+      label: 화면 해상도와 배율
+      placeholder: 예) 1920×1080, 125%

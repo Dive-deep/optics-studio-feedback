@@ -1,0 +1,28 @@
+{
+  "snapshot": "0.1.0-feedback.1",
+  "date": "2026-09-22",
+  "host": "macOS arm64 / Python 3.12.14 / PySide6 6.11.2",
+  "unit_tests": {
+    "python_passed": 132,
+    "javascript_passed": 133
+  },
+  "extracted_zip_smoke": {
+    "passed": true,
+    "checks": 22,
+    "dialogs_stubbed": true,
+    "javascript_errors": 0,
+    "external_requests": 0,
+    "unicode_space_path": true
+  },
+  "guide": {
+    "local_links_and_anchors": "pass",
+    "screenshots": 5,
+    "js_syntax": "pass"
+  },
+  "original_source": {
+    "unchanged": true,
+    "files_compared": 72
+  },
+  "windows_ci": "not_run_authentication_pending",
+  "windows11_physical": "TBU"
+}

@@ -1,0 +1,13 @@
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+artifacts/
+release/
+.DS_Store
+.env
+.env.*
+*.optics.json
+!examples/local-demo/demo.optics.json
+*.optics.zip

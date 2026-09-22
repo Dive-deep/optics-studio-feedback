@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def build(output_dir=None):
     dest = Path(output_dir) if output_dir else ROOT / "optics_ui" / "assets"
     dest.mkdir(parents=True, exist_ok=True)
-    source = (ROOT / "design" / "optics-workspace-concept.html").read_text()
+    source = (ROOT / "design" / "optics-workspace-concept.html").read_text(encoding="utf-8")
     styles = re.findall(r"<style>(.*?)</style>", source, re.S)
     scripts = [m.group(2) for m in re.finditer(r"<script([^>]*)>(.*?)</script>", source, re.S)
                if m.group(2).strip() and 'data-optics-module=' not in m.group(1)]
@@ -23,11 +23,11 @@ def build(output_dir=None):
     body = re.sub(r"<script[^>]*>.*?</script>", "", body, flags=re.S)
     style = "html,body{margin:0;padding:0;background:#f3f5f8;color-scheme:light dark}body{min-width:320px}\n"
     style += styles[0] + "\n#optics-review{border-radius:0;border:0;min-height:100vh}\n"
-    (dest / "style.css").write_text(style)
-    (dest / "workspace.js").write_text(scripts[0])
+    (dest / "style.css").write_text(style, encoding="utf-8")
+    (dest / "workspace.js").write_text(scripts[0], encoding="utf-8")
     scene = scripts[1].replace("https://esm.sh/three@0.180.0/examples/jsm/controls/OrbitControls.js", "./vendor/three/OrbitControls.js")
     scene = scene.replace("https://esm.sh/three@0.180.0", "./vendor/three/three.module.js")
-    (dest / "scene.js").write_text(scene)
+    (dest / "scene.js").write_text(scene, encoding="utf-8")
     for name in ("bridge-client.js", "file-controller.js", "session-validation.js", "ray-tracing.js", "pareto.js", "pareto-view.js"):
         shutil.copyfile(ROOT / "design" / name, dest / name)
     vendor = ROOT / "optics_ui" / "vendor"
@@ -42,7 +42,7 @@ def build(output_dir=None):
     html = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Optics Studio</title><link rel="stylesheet" href="style.css"></head><body>'
     html += body
     html += '\n<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>'
-    (dest / "index.html").write_text(html)
+    (dest / "index.html").write_text(html, encoding="utf-8")
     return dest
 
 

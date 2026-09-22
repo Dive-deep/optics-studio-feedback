@@ -1,0 +1,34 @@
+name: 실행 오류
+description: 설치, 실행, 파일, 화면 동작 오류
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 사용 버전
+      value: 0.1.0-feedback.1
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 실행 환경
+      description: Windows / Python 버전, 모니터 해상도와 배율
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 순서
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: 기대한 동작과 실제 결과
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 오류 메시지 / 캡처 / --check 결과
+      description: py -3.12 launch.py --check 결과가 있다면 함께 적어주세요.
