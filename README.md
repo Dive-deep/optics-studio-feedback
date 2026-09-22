@@ -56,11 +56,12 @@ py -3.12 launch.py --check
 - `py`가 없다면 같은 Python 3.12의 `python -m pip install -r requirements.txt`, `python launch.py`를 사용합니다.
 - 별도 Python 경로를 쓰려면 CMD에서 `set "OPTICS_PYTHON=C:\path\to\python.exe"` 후 `run_windows.cmd`를 실행합니다. 이 값에는 실행 파일 경로만 넣습니다.
 - 실패하면 터미널의 메시지, Windows/Python 버전, 화면 해상도와 배율을 Issues에 남겨주세요. CUDA GPU가 없어도 UI를 사용할 수 있습니다.
-- 빈 화면이 나타나면 ZIP을 전부 압축 해제했는지와 `--check` 결과를 확인합니다. QtWebEngine 보안 설정을 끄지 마세요.
+- WebGL2를 사용할 수 없는 그래픽 환경에서는 안내와 함께 2D 단면으로 전환하며 3D 버튼은 비활성화됩니다. 정상 드라이버 환경에서는 기존 3D 회전·이동·확대를 사용할 수 있습니다.
+- 앱 전체가 비어 보이면 ZIP을 전부 압축 해제했는지와 `--check` 결과를 확인합니다. QtWebEngine 보안 설정을 끄지 마세요.
 
 ## 검증 범위와 개발자 메모
 
-이 저장소의 Windows Actions는 Windows Server x64 runner에서 Python 3.12 의존성 설치, UTF-8 재빌드, 한글·공백 경로의 CMD 실행, 단위 검사, 실제 Qt 파일 흐름·Pareto 화면 검사를 수행하도록 구성했습니다. **설정만으로 통과를 주장하지 않습니다. Actions 실행 결과를 확인하세요.** 물리 Windows 11 PC의 GPU·DPI·OS 파일 선택/드래그 검증은 TBU입니다.
+[Windows 자동 검증](https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35732824991)을 통과했습니다. Windows Server 2025 x64 / Python 3.12 / PySide6 6.11.2에서 의존성 설치, UTF-8 재빌드, 한글·공백 경로의 CMD 실행, 단위 검사, 실제 3D·파일·세션 23개 및 Pareto 16개 검사를 확인했습니다. Python은 132개 통과·플랫폼 전용 1개 제외, JavaScript는 140개 통과했습니다. **물리 Windows 11 PC의 GPU·DPI·OS 파일 선택/드래그 검증은 TBU**입니다.
 
 Mac 개발 환경에서 단위 검사와 실제 Qt 앱의 합성 데이터 로딩·가이드 캡처를 검증했습니다. 상세 결과는 [`VALIDATION.md`](VALIDATION.md)에 기록합니다. 자동 GUI 검사의 파일 대화상자는 명시적인 테스트 경로로 대체합니다.
 

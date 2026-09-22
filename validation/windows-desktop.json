@@ -1,0 +1,184 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "pyside": "6.11.2",
+  "qt": "6.11.2",
+  "pid": 5056,
+  "mode": "actual-desktop-app-host",
+  "captures": [
+    {
+      "requested_content_size": [
+        1280,
+        720
+      ],
+      "actual_content_size": [
+        1280,
+        720
+      ],
+      "kind": "fixed-size-layout-capture",
+      "file": "app-1280x720.png",
+      "saved": true,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "dpr": 1,
+        "scrollWidth": 1265
+      }
+    },
+    {
+      "requested_content_size": [
+        1920,
+        1080
+      ],
+      "actual_content_size": [
+        1920,
+        1080
+      ],
+      "kind": "fixed-size-layout-capture",
+      "file": "app-1920x1080.png",
+      "saved": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1,
+        "scrollWidth": 1920
+      }
+    }
+  ],
+  "backend_jobs_executed": false,
+  "dialogs_stubbed": true,
+  "smoke_config": {
+    "report_path": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\examples\\local-demo\\training-report.json",
+    "target_path": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\examples\\local-demo\\target.json",
+    "output_dir": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\artifacts\\windows-smoke",
+    "dialog_stubs": true
+  },
+  "browser": {
+    "checks": [
+      {
+        "name": "internal_origin",
+        "pass": true
+      },
+      {
+        "name": "workspace_document",
+        "pass": true
+      },
+      {
+        "name": "local_compute_response",
+        "pass": true,
+        "status": "missing_driver"
+      },
+      {
+        "name": "server_compute_response",
+        "pass": true,
+        "status": "not_configured"
+      },
+      {
+        "name": "no_job_execution_method",
+        "pass": true
+      },
+      {
+        "name": "three_dimensional_view_ready",
+        "pass": true
+      }
+    ],
+    "frontend": {
+      "checks": [
+        {
+          "name": "one_workspace_navigation",
+          "pass": true
+        },
+        {
+          "name": "compute_test_right_heading",
+          "pass": true
+        },
+        {
+          "name": "local_cuda_message",
+          "pass": true
+        },
+        {
+          "name": "server_no_configuration",
+          "pass": true
+        },
+        {
+          "name": "invalid_session_preserves_workspace",
+          "pass": true
+        },
+        {
+          "name": "report_and_db_loaded",
+          "pass": true
+        },
+        {
+          "name": "catalog_indices_drive_local_rays",
+          "pass": true
+        },
+        {
+          "name": "chief_replaces_paraxial",
+          "pass": true
+        },
+        {
+          "name": "default_stop_follows_lens_parameters",
+          "pass": true
+        },
+        {
+          "name": "far_field_marginal_reaches_image_plane",
+          "pass": true
+        },
+        {
+          "name": "session_saved",
+          "pass": true
+        },
+        {
+          "name": "session_restored",
+          "pass": true
+        },
+        {
+          "name": "stop_position_restored",
+          "pass": true
+        },
+        {
+          "name": "ray_visibility_restored",
+          "pass": true
+        },
+        {
+          "name": "model_view_restored",
+          "pass": true
+        },
+        {
+          "name": "portable_bundle_exported",
+          "pass": true
+        },
+        {
+          "name": "a12_and_ri_blank",
+          "pass": true
+        }
+      ]
+    },
+    "graphics": {
+      "status": "ready",
+      "renderer": "ANGLE (Microsoft, Microsoft Basic Render Driver (0x0000008C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    "canvasCount": 1
+  },
+  "compute_panel_capture": {
+    "status": "captured",
+    "saved": true,
+    "file": "app-compute-panel.png",
+    "content_size": [
+      1440,
+      900
+    ],
+    "kind": "fixed-size-layout-capture",
+    "frontend_status": {
+      "status": "missing_driver"
+    }
+  },
+  "seconds": 8.733999999999924,
+  "resource_policy": {
+    "local_asset_requests": 16,
+    "blocked_external_requests": 0,
+    "javascript_errors": 0
+  },
+  "completed_deferred_operations": 16,
+  "passed": true
+}

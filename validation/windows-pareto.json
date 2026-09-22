@@ -1,0 +1,142 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "pyside": "6.11.2",
+  "qt": "6.11.2",
+  "pid": 4596,
+  "mode": "actual-desktop-app-host",
+  "captures": [
+    {
+      "requested_content_size": [
+        1280,
+        720
+      ],
+      "actual_content_size": [
+        1280,
+        720
+      ],
+      "kind": "fixed-size-layout-capture",
+      "file": "app-1280x720.png",
+      "saved": true,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "dpr": 1,
+        "scrollWidth": 1265
+      }
+    },
+    {
+      "requested_content_size": [
+        1920,
+        1080
+      ],
+      "actual_content_size": [
+        1920,
+        1080
+      ],
+      "kind": "fixed-size-layout-capture",
+      "file": "app-1920x1080.png",
+      "saved": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1,
+        "scrollWidth": 1905
+      }
+    }
+  ],
+  "backend_jobs_executed": false,
+  "dialogs_stubbed": true,
+  "smoke_config": {
+    "report_path": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\artifacts\\pareto-smoke\\pareto-fixture-wcr2kp0o\\training-report.json",
+    "target_path": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\artifacts\\pareto-smoke\\pareto-fixture-wcr2kp0o\\target.json",
+    "output_dir": "D:\\a\\optics-studio-feedback\\optics-studio-feedback\\artifacts\\pareto-smoke",
+    "dialog_stubs": true
+  },
+  "browser": {
+    "checks": [
+      {
+        "name": "internal_origin",
+        "pass": true
+      }
+    ],
+    "frontend": {
+      "checks": [
+        {
+          "name": "original_db_connected_500_cases",
+          "pass": true
+        },
+        {
+          "name": "original_db_has_no_eligible_candidates",
+          "pass": true
+        },
+        {
+          "name": "eligible_ui_has_three_cases",
+          "pass": true
+        },
+        {
+          "name": "two_objective_front_connects_observed_candidates",
+          "pass": true
+        },
+        {
+          "name": "graph_point_selects_matching_case",
+          "pass": true
+        },
+        {
+          "name": "optional_guide_can_be_hidden",
+          "pass": true
+        },
+        {
+          "name": "weighted_best_is_full_objective_candidate",
+          "pass": true
+        },
+        {
+          "name": "three_objective_projection_has_three_highlights_without_line",
+          "pass": true
+        },
+        {
+          "name": "ng_exploration_does_not_promote_ng_best",
+          "pass": true
+        },
+        {
+          "name": "candidate_applies_actual_db_case",
+          "pass": true
+        },
+        {
+          "name": "candidate_undo_restores_preexisting_edits",
+          "pass": true
+        },
+        {
+          "name": "late_candidate_does_not_overwrite_new_edits",
+          "pass": true
+        },
+        {
+          "name": "pareto_view_settings_roundtrip",
+          "pass": true
+        },
+        {
+          "name": "focus_keeps_full_population_pareto",
+          "pass": true
+        },
+        {
+          "name": "original_db_exploratory_front_is_honest",
+          "pass": true
+        }
+      ],
+      "fixture_metrics_are_not_optical_validation": true,
+      "final_capture": "original DB exploratory"
+    }
+  },
+  "compute_panel_capture": {
+    "status": "hook_unavailable"
+  },
+  "capture_scenario": "original_synthetic_db_exploratory_front_not_target_passing",
+  "seconds": 13.937999999999988,
+  "resource_policy": {
+    "local_asset_requests": 16,
+    "blocked_external_requests": 0,
+    "javascript_errors": 0
+  },
+  "completed_deferred_operations": 18,
+  "passed": true
+}

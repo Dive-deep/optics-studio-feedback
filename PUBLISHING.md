@@ -1,20 +1,16 @@
-# Maintainer publishing checklist
+# Maintainer handoff
 
-This snapshot is isolated from the primary research/development project. Do not copy changes back automatically.
+Independent repository: https://github.com/Dive-deep/optics-studio-feedback
 
-Branch: `feedback/windows-preview`; baseline branch: `main`.
-Repository: https://github.com/Dive-deep/optics-studio-feedback (created private; owner visibility choice pending).
+Default branch: `feedback/windows-preview`. `main` preserves the snapshot before Windows packaging. Do not synchronize changes back to the primary development project automatically.
 
-GitHub CLI authentication is now valid and the isolated repository exists. Public visibility and guide deployment remain subject to the owner's visibility choice. Follow the verified run/release state rather than treating a configured workflow as a passed test.
+- GitHub CLI authentication and source upload are complete.
+- Windows verification passed: https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35732824991
+- The source-only feedback ZIP is generated with `python scripts/build_feedback_release.py`. It excludes Python/Qt runtimes, virtual environments, tests, research and private artifacts.
+- Release target: `v0.1.0-feedback.1`, marked prerelease. Keep ZIP and `SHA256SUMS` together.
+- Repository visibility is currently Private pending the owner's explicit Public/Private choice. Private downloads and Issues are limited to authorized collaborators.
+- GitHub Pages workflow intentionally skips while the repository is private. The offline guide at `guide/dist/index.html` remains included in every release.
 
-1. Finish `gh auth login --hostname github.com --git-protocol https --web` using the owner's account. Never place credentials in this repository.
-2. Create a new, empty repository with the chosen visibility. Do not reuse an unrelated existing repository.
-3. Set `repositoryURL` in `guide/dist/guide.js` to the verified new repository URL. Add a visible guide URL to README after Pages deploys.
-4. Rebuild and verify the feedback ZIP after any content change: `python scripts/build_feedback_release.py`.
-5. Commit only this isolated source tree, push `main` and `feedback/windows-preview`, and set the default branch to `feedback/windows-preview`.
-6. Run Windows source preview checks and inspect the actual result. Fix failures here, never in the primary development folder. Server CI passing is not physical Windows 11 validation.
-7. Create a prerelease `v0.1.0-feedback.1` targeting the feedback branch. Attach the source-only ZIP and SHA256SUMS. Do not attach any Python environment or wheel cache.
-8. Enable GitHub Pages with Actions source and deploy only `guide/dist`. For private repositories, check the account's supported Pages visibility before publishing; the offline guide remains usable regardless.
-9. Verify the repository, prerelease asset, guide URL, and issue templates are accessible as intended. Record URLs and Windows run status in VALIDATION.md.
+If the owner chooses Public, change visibility, enable Pages with Actions source, dispatch `guide-pages.yml` on the feedback branch, wait for the deployment to succeed, and verify its URL and assets. Only `guide/dist` is uploaded by Pages. Then add the verified guide URL to README and repository About.
 
-GitHub Pages deployment grants the workflow only pages/id-token permissions; it uploads the guide directory, not the desktop source or databases. Feedback is collected with Issues templates, not background telemetry.
+Feedback is collected through two Issues templates, not background telemetry. Never put credentials in this repository or disable the Chromium sandbox to make a test pass.
