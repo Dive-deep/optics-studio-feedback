@@ -36,7 +36,7 @@ Python·가상환경·Qt/PySide 라이브러리는 배포 ZIP에 포함하지 �
 
 상단 **Open**은 모델이 아닌 Save로 만든 작업 세션을 여는 버튼입니다. `.pth`는 직접 선택하지 않습니다. 데모 파일들의 상대 위치와 이름을 유지하세요.
 
-웹 가이드: **[`guide/dist/index.html`](guide/dist/index.html)**을 브라우저에서 열면 됩니다. GitHub 소스 화면에서는 HTML이 실행되지 않으므로 다운로드 후 열거나 저장소 About에 게시된 가이드 링크를 사용합니다. 가이드는 설명 페이지이며 설계 작업을 실행하지 않습니다.
+웹 가이드: **[온라인 사용자 가이드](https://dive-deep.github.io/optics-studio-feedback/)**에서 바로 읽을 수 있습니다. 오프라인에서는 다운로드한 폴더의 **`guide/dist/index.html`**을 브라우저에서 여세요. 가이드는 설명 페이지이며 설계 작업을 실행하지 않습니다.
 
 ## 피드백
 
