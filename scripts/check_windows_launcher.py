@@ -1,6 +1,7 @@
 """Exercise the Windows CMD launcher without PowerShell rewriting its quotes."""
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 import shutil
@@ -38,15 +39,30 @@ def main() -> int:
             completed = subprocess.run(
                 command, executable=str(command_processor), shell=False,
                 cwd=preview.parent, env=environment, stdin=subprocess.DEVNULL,
-                timeout=30, check=False,
+                timeout=30, check=False, capture_output=True, text=True, encoding="utf-8", errors="replace",
             )
         except subprocess.TimeoutExpired:
             print("CMD launcher preflight exceeded 30 seconds.", file=sys.stderr)
             return 124
+        print(completed.stdout, end="")
+        print(completed.stderr, end="", file=sys.stderr)
         if completed.returncode:
             print(f"CMD launcher preflight failed with exit code {completed.returncode}.", file=sys.stderr)
             return completed.returncode
-    print("CMD launcher preflight PASS.")
+        reports = [line.split("=", 1)[1] for line in completed.stdout.splitlines() if line.startswith("OPTICS_RUNTIME=")]
+        if len(reports) != 1:
+            print("CMD launcher did not report the resolved Python runtime exactly once.", file=sys.stderr)
+            return 1
+        try:
+            reported = json.loads(reports[0])
+            same_runtime = (reported["version"] == list(sys.version_info[:3])
+                            and Path(reported["executable"]).resolve() == Path(sys.executable).resolve())
+        except (ValueError, TypeError, KeyError):
+            same_runtime = False
+        if not same_runtime:
+            print("CMD launcher used a different Python than the explicitly selected interpreter.", file=sys.stderr)
+            return 1
+    print("CMD launcher preflight PASS: selected interpreter version and executable match.")
     return 0
 
 

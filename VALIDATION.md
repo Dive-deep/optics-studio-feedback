@@ -1,5 +1,15 @@
 # Feedback snapshot validation
 
+## Python compatibility update — 0.1.0-feedback.2 / 2026-09-23
+
+Python 3.12 is recommended, not mandatory. Runtime guards and packaging metadata use one supported range: standard CPython 3.10–3.14 x64. The upper/lower limits follow [PySide6 6.11.2 metadata](https://pypi.org/project/PySide6/6.11.2/), not an arbitrary preference for 3.12. Free-threaded builds cannot use the pinned stable-ABI wheels.
+
+The Windows workflow runs separate jobs for 3.10, 3.11, 3.12, 3.13 and 3.14, each including dependency installation, launcher selection, all unit tests, actual Qt 3D/file/session smoke and Pareto smoke. [Current matrix results](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml). The release notes link the exact successful run used for the downloadable ZIP.
+
+Dependency errors print an install command for the currently executing Python. The CMD no longer forces `py -3.12`; an explicitly selected interpreter and an existing activated virtual environment take priority. No environment is created or installed automatically.
+
+## Original feedback.1 validation record
+
 2026-09-22 · isolated Windows source preview and static user guide.
 
 ## Windows CI passed

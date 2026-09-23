@@ -19,6 +19,7 @@ from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineProfile, QWebEngin
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from .bridge import BridgeError, DesktopBridge, encode, failure
+from .runtime import python_runtime_errors
 
 ASSETS = Path(__file__).resolve().parent / "assets"
 ALLOWED_SUFFIXES = {".html", ".js", ".css", ".json", ".svg", ".png", ".jpg", ".jpeg", ".webp", ".woff", ".woff2", ".ttf", ".ico", ".wasm", ".map"}
@@ -329,8 +330,9 @@ def main(argv=None) -> int:
     options = parser.parse_args(argv)
     if (options.smoke_report is not None or options.smoke_target is not None) and not options.smoke:
         parser.error("--smoke-report and --smoke-target require --smoke")
-    if sys.version_info[:2] != (3, 12):
-        print("This application currently requires Python 3.12.", file=sys.stderr)
+    runtime_errors = python_runtime_errors()
+    if runtime_errors:
+        print("\n".join(runtime_errors), file=sys.stderr)
         return 2
     if not (ASSETS / "index.html").is_file():
         print("Local UI assets are missing. Build or restore optics_ui/assets first.", file=sys.stderr)

@@ -4,9 +4,15 @@ rem Uses the user's Python; no virtual environment or automatic installation.
 pushd "%~dp0"
 if errorlevel 1 goto directory_error
 if defined OPTICS_PYTHON goto custom_python
+if defined VIRTUAL_ENV if exist "%VIRTUAL_ENV%\Scripts\python.exe" goto active_environment
 where py >nul 2>&1
 if errorlevel 1 goto default_python
-py -3.12 -X utf8 "%~dp0launch.py" %*
+py -3 -c "import sys" >nul 2>&1
+if errorlevel 1 goto default_python
+py -3 -X utf8 "%~dp0launch.py" %*
+goto finished
+:active_environment
+"%VIRTUAL_ENV%\Scripts\python.exe" -X utf8 "%~dp0launch.py" %*
 goto finished
 :custom_python
 "%OPTICS_PYTHON%" -X utf8 "%~dp0launch.py" %*
@@ -17,8 +23,8 @@ if errorlevel 1 goto missing_python
 python -X utf8 "%~dp0launch.py" %*
 goto finished
 :missing_python
-echo Python 3.12 x64 was not found. Install it, then run:
-echo py -3.12 -m pip install -r requirements.txt
+echo A Python 3 x64 interpreter was not found. Install Python 3.10 through 3.14; 3.12 is recommended.
+echo Then install dependencies using that interpreter: python -m pip install -r requirements.txt
 set "OPTICS_EXIT=2"
 goto report_failure
 :finished

@@ -1,6 +1,6 @@
 # Optics Studio — Windows 사용자 피드백 버전
 
-**0.1.0-feedback.1 · 2026-09-22**
+**0.1.0-feedback.2 · 2026-09-23**
 
 결상광학계 설계 UI를 직접 써 보고 화면 구성과 사용 흐름에 대한 의견을 받기 위한 독립 스냅샷입니다. 메인 개발 프로젝트와 분리되어 있으며 `feedback/windows-preview` 브랜치에서 관리합니다.
 
@@ -10,18 +10,18 @@
 
 ## 다운로드와 시작
 
-1. [GitHub Releases](https://github.com/Dive-deep/optics-studio-feedback/releases)에서 `Optics-Studio-Feedback-0.1.0-feedback.1.zip`을 내려받아 모두 압축 해제합니다. Releases가 아직 없다면 **Code → Download ZIP**으로 `feedback/windows-preview` 브랜치를 내려받습니다.
-2. **Windows 11 x64 + Python 3.12 64비트**를 사용합니다. Python이 이미 설치되어 있다면 같은 환경을 그대로 사용합니다.
+1. [GitHub Releases](https://github.com/Dive-deep/optics-studio-feedback/releases)에서 `Optics-Studio-Feedback-0.1.0-feedback.2.zip`을 내려받아 모두 압축 해제합니다. Releases가 아직 없다면 **Code → Download ZIP**으로 `feedback/windows-preview` 브랜치를 내려받습니다.
+2. **Windows 11 x64 + 표준 Python 3.10–3.14 64비트**를 사용합니다. **3.12는 권장 버전이며 필수 조건이 아닙니다. 3.13도 사용할 수 있습니다.** 이 범위는 고정 의존성 PySide6 6.11.2의 지원 범위입니다. Python 3.9 이하·3.15 이상 또는 free-threaded 빌드는 현재 의존성에 맞지 않습니다.
 3. 압축을 푼 폴더에서 터미널을 열고 의존성을 설치합니다.
 
 ```powershell
-py -3.12 -m pip install -r requirements.txt
+py -3 -m pip install -r requirements.txt
 ```
 
 4. **`run_windows.cmd`를 더블클릭**합니다. 또는 같은 터미널에서:
 
 ```powershell
-py -3.12 launch.py
+py -3 launch.py
 ```
 
 Python·가상환경·Qt/PySide 라이브러리는 배포 ZIP에 포함하지 않습니다. 자동 설치나 가상환경 생성도 하지 않습니다. 화면에 필요한 로컬 JavaScript·아이콘 자산과 라이선스는 앱 소스에 포함됩니다. 사용자 실행에 Node.js, PyTorch, CUDA, Zemax는 필요하지 않습니다.
@@ -49,17 +49,21 @@ Python·가상환경·Qt/PySide 라이브러리는 배포 ZIP에 포함하지 �
 ## 실행 문제 확인
 
 ```powershell
-py -3.12 launch.py --check
+py -3 launch.py --check
 ```
 
 - Python/PySide 버전·x64·필수 화면 파일을 확인하며 창이나 백엔드 작업은 시작하지 않습니다.
-- `py`가 없다면 같은 Python 3.12의 `python -m pip install -r requirements.txt`, `python launch.py`를 사용합니다.
+- `py`가 없다면 같은 지원 Python 환경에서 `python -m pip install -r requirements.txt`, `python launch.py`를 사용합니다.
+- 3.13을 명시하려면 설치와 실행 모두 `py -3.13`을 사용하세요: `py -3.13 -m pip install -r requirements.txt`, `py -3.13 launch.py`.
+- CMD는 `OPTICS_PYTHON`으로 지정한 경로, 활성 가상환경, 기본 Python 3(`py -3`), PATH의 `python` 순으로 찾습니다. 설치한 Python과 다른 버전이 선택된다면 해당 버전 명령으로 직접 실행하거나 경로를 지정하세요.
 - 별도 Python 경로를 쓰려면 CMD에서 `set "OPTICS_PYTHON=C:\path\to\python.exe"` 후 `run_windows.cmd`를 실행합니다. 이 값에는 실행 파일 경로만 넣습니다.
 - 실패하면 터미널의 메시지, Windows/Python 버전, 화면 해상도와 배율을 Issues에 남겨주세요. CUDA GPU가 없어도 UI를 사용할 수 있습니다.
 - WebGL2를 사용할 수 없는 그래픽 환경에서는 안내와 함께 2D 단면으로 전환하며 3D 버튼은 비활성화됩니다. 정상 드라이버 환경에서는 기존 3D 회전·이동·확대를 사용할 수 있습니다.
 - 앱 전체가 비어 보이면 ZIP을 전부 압축 해제했는지와 `--check` 결과를 확인합니다. QtWebEngine 보안 설정을 끄지 마세요.
 
 ## 검증 범위와 개발자 메모
+
+이번 버전은 Python 3.10 / 3.11 / 3.12 / 3.13 / 3.14 각각에 동일한 Windows 설치·런처·단위·실제 앱 검사를 적용합니다. [버전별 최신 실행 결과](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 확인할 수 있습니다. 아래 기록은 최초 3.12 기반 배포의 검증 이력입니다.
 
 [Windows 자동 검증](https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35732824991)을 통과했습니다. Windows Server 2025 x64 / Python 3.12 / PySide6 6.11.2에서 의존성 설치, UTF-8 재빌드, 한글·공백 경로의 CMD 실행, 단위 검사, 실제 3D·파일·세션 23개 및 Pareto 16개 검사를 확인했습니다. Python은 132개 통과·플랫폼 전용 1개 제외, JavaScript는 140개 통과했습니다. **물리 Windows 11 PC의 GPU·DPI·OS 파일 선택/드래그 검증은 TBU**입니다.
 

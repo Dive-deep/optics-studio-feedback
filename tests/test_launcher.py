@@ -3,6 +3,8 @@ from contextlib import redirect_stderr, redirect_stdout
 import io
 from pathlib import Path
 import tempfile
+import json
+import sys
 import unittest
 from unittest import mock
 
@@ -25,12 +27,14 @@ class LauncherTests(unittest.TestCase):
         return launch.preflight(self.root, **(self.platform | changes))
 
     def test_supported_environment_and_unicode_path_pass_without_gui(self):
-        self.assertEqual(self.check(), [])
+        for minor in range(10, 15):
+            with self.subTest(minor=minor):
+                self.assertEqual(self.check(python_version=(3, minor)), [])
 
     def test_wrong_python_is_explained_before_importing_qt(self):
         loader = mock.Mock(side_effect=AssertionError("do not import Qt"))
-        errors = self.check(python_version=(3, 13), dependency_loader=loader)
-        self.assertTrue(any("Python 3.12" in item for item in errors))
+        errors = self.check(python_version=(3, 9), dependency_loader=loader)
+        self.assertTrue(any("3.10" in item and "3.14" in item for item in errors))
         loader.assert_not_called()
 
     def test_windows_x64_and_windows_11_build_are_required(self):
@@ -44,6 +48,8 @@ class LauncherTests(unittest.TestCase):
             raise ModuleNotFoundError("No module named PySide6")
         errors = self.check(dependency_loader=missing)
         self.assertTrue(any("pip install -r requirements.txt" in item for item in errors))
+        self.assertTrue(any(sys.executable in item for item in errors))
+        self.assertFalse(any("py -3.12" in item for item in errors))
 
     def test_dll_import_error_is_actionable(self):
         def missing_dll():
@@ -61,8 +67,13 @@ class LauncherTests(unittest.TestCase):
     def test_check_does_not_launch_or_change_working_directory(self):
         runner = mock.Mock()
         with mock.patch.object(launch, "preflight", return_value=[]), mock.patch.object(launch.os, "chdir") as cd:
-            with redirect_stdout(io.StringIO()):
+            with redirect_stdout(io.StringIO()) as output:
                 code = launch.main(["--check"], app_runner=runner)
+        lines=[line for line in output.getvalue().splitlines() if line.startswith("OPTICS_RUNTIME=")]
+        self.assertEqual(len(lines), 1)
+        reported=json.loads(lines[0].split("=", 1)[1])
+        self.assertEqual(reported["version"], list(sys.version_info[:3]))
+        self.assertEqual(reported["executable"], sys.executable)
         self.assertEqual(code, 0)
         runner.assert_not_called()
         cd.assert_not_called()

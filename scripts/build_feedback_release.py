@@ -11,10 +11,10 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = "Optics-Studio-Feedback-0.1.0-feedback.1"
+PREFIX = "Optics-Studio-Feedback-0.1.0-feedback.2"
 REQUIRED_FILES = (
     "launch.py", "run_windows.cmd", "requirements.txt", "README.md", "THIRD_PARTY_NOTICES.md", "VALIDATION.md",
-    "optics_ui/__init__.py", "optics_ui/__main__.py", "optics_ui/desktop.py", "optics_ui/bridge.py",
+    "optics_ui/__init__.py", "optics_ui/__main__.py", "optics_ui/runtime.py", "optics_ui/desktop.py", "optics_ui/bridge.py",
     "optics_ui/services/__init__.py", "optics_ui/services/files.py", "optics_ui/services/materials.py",
     "optics_ui/services/candidates.py", "optics_ui/services/compute.py",
     "optics_ui/assets/index.html", "optics_ui/assets/style.css", "optics_ui/assets/workspace.js",
@@ -110,7 +110,7 @@ def build_release(root: Path = ROOT, output_dir: Path | None = None) -> dict:
         with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
             for relative in files:
                 path = _safe_file(root, relative)
-                member = zipfile.ZipInfo(PREFIX + "/" + relative.as_posix(), date_time=(2026, 9, 22, 0, 0, 0))
+                member = zipfile.ZipInfo(PREFIX + "/" + relative.as_posix(), date_time=(2026, 9, 23, 0, 0, 0))
                 member.create_system = 3
                 member.external_attr = 0o100644 << 16
                 member.compress_type = zipfile.ZIP_DEFLATED

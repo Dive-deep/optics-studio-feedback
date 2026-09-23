@@ -7,7 +7,7 @@ Default branch: `feedback/windows-preview`. `main` preserves the snapshot before
 - GitHub CLI authentication and source upload are complete.
 - Windows verification passed: https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35732824991
 - The source-only feedback ZIP is generated with `python scripts/build_feedback_release.py`. It excludes Python/Qt runtimes, virtual environments, tests, research and private artifacts.
-- Release target: `v0.1.0-feedback.1`, marked prerelease. Keep ZIP and `SHA256SUMS` together.
+- Release target: `v0.1.0-feedback.2`, marked prerelease. Keep ZIP and `SHA256SUMS` together.
 - The owner approved Public visibility on 2026-09-22. Repository and Release downloads are public; posting Issues requires a GitHub account.
 - GitHub Pages uses the Actions workflow and publishes only `guide/dist`: https://dive-deep.github.io/optics-studio-feedback/
 - The offline guide at `guide/dist/index.html` remains included in every release.

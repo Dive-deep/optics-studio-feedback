@@ -11,7 +11,12 @@ permissions:
 jobs:
   windows-preview:
     # GitHub's hosted Windows runner is Server, not a physical Windows 11 workstation.
+    name: Python ${{ matrix.python-version }}
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     timeout-minutes: 15
     env:
       PYTHONUTF8: "1"
@@ -22,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
           architecture: x64
       - uses: actions/setup-node@v4
         with:
@@ -37,6 +42,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Headless launcher preflight
         run: python launch.py --check
+      - name: Direct module entry imports with this Python
+        run: python -m optics_ui --help
       - name: CMD launcher from a different directory with Unicode and spaces
         run: python scripts/check_windows_launcher.py
       - name: Python unit tests
@@ -57,7 +64,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: windows-desktop-evidence
+          name: windows-desktop-evidence-py${{ matrix.python-version }}
           path: |
             artifacts/windows-smoke/*.json
             artifacts/windows-smoke/*.log
@@ -68,6 +75,6 @@ jobs:
       - name: Preserve source-only feedback release
         uses: actions/upload-artifact@v4
         with:
-          name: optics-feedback-release
+          name: optics-feedback-release-py${{ matrix.python-version }}
           path: release/*
           if-no-files-found: error
