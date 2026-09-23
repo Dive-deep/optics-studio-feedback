@@ -4,7 +4,7 @@
 
 Python 3.12 is recommended, not mandatory. Runtime guards and packaging metadata use one supported range: standard CPython 3.10–3.14 x64. The upper/lower limits follow [PySide6 6.11.2 metadata](https://pypi.org/project/PySide6/6.11.2/), not an arbitrary preference for 3.12. Free-threaded builds cannot use the pinned stable-ABI wheels.
 
-The Windows workflow runs separate jobs for 3.10, 3.11, 3.12, 3.13 and 3.14, each including dependency installation, launcher selection, all unit tests, actual Qt 3D/file/session smoke and Pareto smoke. [Current matrix results](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml). The release notes link the exact successful run used for the downloadable ZIP.
+The Windows workflow runs separate jobs for 3.10, 3.11, 3.12, 3.13 and 3.14, each including dependency installation, launcher selection, all unit tests, actual Qt 3D/file/session smoke and Pareto smoke. [Current matrix results](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml). [Run 35804703019](https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35804703019) passed all five versions on release commit `40c3fff2c8e86fc314f72d27af7aeb6f9bb98e23`: 139 Python unit tests plus one platform-only skip, 140 JavaScript tests, 23 actual desktop checks and 16 Pareto checks per version. JavaScript errors and external requests were zero. The public ZIP was built by the Python 3.13 Windows job.
 
 Dependency errors print an install command for the currently executing Python. The CMD no longer forces `py -3.12`; an explicitly selected interpreter and an existing activated virtual environment take priority. No environment is created or installed automatically.
 
