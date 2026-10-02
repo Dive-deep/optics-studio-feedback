@@ -1,0 +1,2465 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Optics Studio · VS Code UI 시안</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Optics Studio · VS Code UI 시안" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Optics Studio · VS Code UI 시안&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget &gt; :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(&gt; .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel &gt; [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel &gt; [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host&#x27;s design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker &gt; summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-picker &gt; summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls &gt; button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker &gt; summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls &gt; button &gt; svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls &gt; button::before,
+.viz-carousel-picker &gt; summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: &quot;&quot;;
+  pointer-events: none;
+}
+
+.viz-carousel-controls &gt; button:hover::before,
+.viz-carousel-picker &gt; summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker &gt; summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker &gt; summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options &gt; button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options &gt; [aria-current=&quot;true&quot;],
+.viz-carousel-options &gt; button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(&gt; .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker &gt; summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
+&lt;script&gt;(() =&gt; {
+  const root = document.documentElement;
+  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
+  const apply = Reflect.apply;
+  const isArray = Array.isArray;
+  const hasOwn = Object.hasOwn;
+  const parentWindow = globalThis.parent;
+  const stringify = JSON.stringify;
+  const parse = JSON.parse;
+  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
+  const initialStateElement = document.getElementById(
+    &quot;codex-visualization-widget-state&quot;,
+  );
+  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
+  initialStateElement?.remove();
+  /** @type {Record&lt;string, unknown&gt; | null} */
+  let state = initialGlobals.widgetState ?? null;
+  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
+  let nextStateRequestId = 0;
+  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
+  const pendingStateWrites = new Map();
+  const persistenceError = () =&gt;
+    Object.assign(
+      new Error(&quot;The host could not persist the widget state update&quot;),
+      {
+        code: -32000,
+        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
+      },
+    );
+  /**
+   * @param {object} prototype
+   * @param {string} property
+   */
+  const getPrototypeGetter = (prototype, property) =&gt; {
+    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
+    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
+    if (getter == null) {
+      throw new Error(`Missing ${property} getter`);
+    }
+    return getter;
+  };
+  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
+  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
+  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const addHostMessageListener = MessagePort.prototype.addEventListener;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const postHostMessage = MessagePort.prototype.postMessage;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const startHostPort = MessagePort.prototype.start;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
+  /** @type {MessagePort | null} */
+  let hostPort = null;
+  const postToHost = (type, payload) =&gt; {
+    if (hostPort != null) {
+      apply(postHostMessage, hostPort, [{ type, ...payload }]);
+    }
+  };
+  const openExternal = ({ href }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;open-external&quot;, { href });
+    }
+  };
+  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;follow-up&quot;, { context, prompt, title });
+    }
+    return Promise.resolve();
+  };
+  /**
+   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
+   * @returns {Promise&lt;void&gt;}
+   */
+  const setWidgetState = async (next) =&gt; {
+    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
+    if (
+      nextState == null ||
+      typeof nextState !== &quot;object&quot; ||
+      isArray(nextState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const inputState = stringify(
+      nextState,
+      (_key, /** @type {unknown} */ value) =&gt; {
+        if (
+          typeof value === &quot;undefined&quot; ||
+          typeof value === &quot;function&quot; ||
+          typeof value === &quot;symbol&quot; ||
+          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
+        ) {
+          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+        }
+        return value;
+      },
+    );
+    const parsedState = parse(inputState);
+    if (
+      parsedState == null ||
+      typeof parsedState !== &quot;object&quot; ||
+      isArray(parsedState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const storedState = {
+      modelContent: null,
+      privateContent: null,
+      ...parsedState,
+    };
+    const serializedState = stringify(storedState);
+    if (encode(serializedState).length &gt; 16 * 1024) {
+      throw new TypeError(
+        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
+      );
+    }
+    if (
+      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
+      (!isArray(storedState.imageIds) ||
+        storedState.imageIds.some(
+          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
+        ))
+    ) {
+      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
+    }
+    if (storedState.imageIds?.length &gt; 0) {
+      throw Object.assign(
+        new TypeError(&quot;Visualization state does not support image attachments&quot;),
+        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
+      );
+    }
+    state = storedState;
+    globalThis.openai.widgetState = state;
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: { widgetState: state } },
+      }),
+    );
+    if (statePersistence === &quot;none&quot;) {
+      throw persistenceError();
+    }
+    const id = ++nextStateRequestId;
+    return new Promise((resolve, reject) =&gt; {
+      const timeout = globalThis.setTimeout(() =&gt; {
+        pendingStateWrites.delete(id);
+        reject(persistenceError());
+      }, 30_000);
+      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
+      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+    });
+  };
+  const syncTheme = () =&gt; {
+    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
+    root.dataset.theme = theme;
+    globalThis.openai = {
+      ...globalThis.openai,
+      openExternal,
+      sendFollowUpMessage,
+      setWidgetState,
+      theme,
+      visualizationStyleVariables: {},
+      visualizationTheme: theme,
+      widgetState: state,
+      statePersistence,
+      stateModelContext: &quot;none&quot;,
+    };
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: globalThis.openai },
+      }),
+    );
+  };
+  const sendHeight = () =&gt; {
+    postToHost(&quot;height&quot;, {
+      height: Math.ceil(
+        Math.max(
+          document.body.scrollHeight,
+          document.body.getBoundingClientRect().height,
+        ),
+      ),
+    });
+  };
+
+  globalThis.addEventListener(
+    &quot;message&quot;,
+    (event) =&gt; {
+      const data = apply(getMessageData, event, []);
+      const ports = apply(getMessagePorts, event, []);
+      const source = apply(getMessageSource, event, []);
+      if (
+        hostPort != null ||
+        source !== parentWindow ||
+        typeof data !== &quot;object&quot; ||
+        data?.type !== &quot;codex-visualization-initialize&quot; ||
+        !isArray(ports) ||
+        ports.length !== 1
+      ) {
+        return;
+      }
+      apply(stopMessagePropagation, event, []);
+      const nextHostPort = ports[0];
+      try {
+        apply(addHostMessageListener, nextHostPort, [
+          &quot;message&quot;,
+          (event) =&gt; {
+            const data = apply(getMessageData, event, []);
+            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
+              sendHeight();
+            } else if (
+              typeof data === &quot;object&quot; &amp;&amp;
+              data?.type === &quot;widget-state-result&quot;
+            ) {
+              /** @type {unknown} */
+              const id = data.id;
+              if (typeof id !== &quot;number&quot;) {
+                return;
+              }
+              const pending = pendingStateWrites.get(id);
+              if (pending != null) {
+                pendingStateWrites.delete(id);
+                globalThis.clearTimeout(pending.timeout);
+                if (data.ok === true) {
+                  pending.resolve();
+                } else {
+                  pending.reject(persistenceError());
+                }
+              }
+            }
+          },
+        ]);
+        apply(startHostPort, nextHostPort, []);
+      } catch {
+        return;
+      }
+      hostPort = nextHostPort;
+      for (const [id, { serializedState }] of pendingStateWrites) {
+        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+      }
+      sendHeight();
+    },
+    { capture: true },
+  );
+  document.currentScript?.remove();
+  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
+  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let element = null;
+    if (event.target instanceof globalThis.Element) {
+      element = event.target;
+    } else if (event.target instanceof globalThis.Node) {
+      element = event.target.parentElement;
+    }
+    const link = element?.closest(&quot;a[href]&quot;);
+    const href = link?.getAttribute(&quot;href&quot;);
+    if (href == null) {
+      return;
+    }
+    if (href.startsWith(&quot;#&quot;)) {
+      let id;
+      try {
+        id = decodeURIComponent(href.slice(1));
+      } catch {
+        return;
+      }
+      const target = id.length === 0 ? root : document.getElementById(id);
+      if (
+        target == null ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      event.preventDefault();
+      postToHost(&quot;scroll-to&quot;, {
+        top: target.getBoundingClientRect().top + globalThis.scrollY,
+      });
+      return;
+    }
+    event.preventDefault();
+    openExternal({ href });
+  });
+  new ResizeObserver(sendHeight).observe(document.body);
+  syncTheme();
+})();
+&lt;/script&gt;
+&lt;div id=&quot;optics-vscode-review&quot; aria-label=&quot;VS Code 방식 광학 설계 작업대 시안&quot;&gt;
+&lt;style&gt;
+#optics-vscode-review{--ov-bg:light-dark(#ffffff,#1f1f1f);--ov-side:light-dark(#f8f8f8,#181818);--ov-chrome:light-dark(#f8f8f8,#181818);--ov-fg:light-dark(#252526,#cccccc);--ov-dim:light-dark(#616161,#9d9d9d);--ov-line:light-dark(#e4e4e4,#2b2b2b);--ov-hover:light-dark(#ececec,#2a2d2e);--ov-blue:light-dark(#006ab1,#4daafc);--ov-primary:#0078d4;--ov-on-primary:#fff;--ov-selected:light-dark(#e4effb,#203547);--ov-input:light-dark(#ffffff,#313131);--ov-green:light-dark(#26713f,#73c991);--ov-orange:light-dark(#956416,#d7ba7d);--ov-purple:light-dark(#7854aa,#b69ade);--ov-glass:light-dark(#59a5be,#79bfd4);--ov-syntax:light-dark(#0000ff,#569cd6);--ov-string:light-dark(#a31515,#ce9178);--ov-comment:light-dark(#008000,#6a9955);color:var(--ov-fg);font:13px/1.5 &quot;Segoe UI&quot;,&quot;Malgun Gothic&quot;,-apple-system,sans-serif;color-scheme:inherit;--ov-sidebar:210px;--ov-chat:260px;background:var(--ov-bg);border:1px solid var(--ov-line);border-radius:8px;overflow:hidden}
+#optics-vscode-review *{box-sizing:border-box}#optics-vscode-review [hidden]{display:none!important}#optics-vscode-review button,#optics-vscode-review input,#optics-vscode-review select,#optics-vscode-review textarea{font:inherit;color:inherit}#optics-vscode-review button{background:transparent;border:0;padding:5px 9px;text-align:left;border-radius:3px}#optics-vscode-review button:hover:not(:disabled){background:var(--ov-hover)}#optics-vscode-review button:disabled{opacity:.45;cursor:default}#optics-vscode-review button:focus-visible,#optics-vscode-review input:focus-visible,#optics-vscode-review select:focus-visible,#optics-vscode-review textarea:focus-visible{outline:1px solid var(--ov-blue);outline-offset:1px}#optics-vscode-review button.ov-primary{background:var(--ov-primary);color:var(--ov-on-primary);text-align:center}#optics-vscode-review button.ov-primary:hover{filter:brightness(1.08)}#optics-vscode-review .ov-button{border:1px solid var(--ov-line);background:var(--ov-input)}#optics-vscode-review input:not([type=range]):not([type=checkbox]),#optics-vscode-review select,#optics-vscode-review textarea{width:100%;background:var(--ov-input);border:1px solid var(--ov-line);border-radius:2px;padding:5px 7px;min-width:0}#optics-vscode-review input[type=checkbox],#optics-vscode-review input[type=range]{accent-color:var(--ov-primary)}#optics-vscode-review input[type=range]{width:100%;margin:6px 0}#optics-vscode-review textarea{resize:vertical;min-height:92px}#optics-vscode-review svg.lucide{width:17px;height:17px;flex:none;stroke-width:1.6}#optics-vscode-review .ov-inline{display:flex;align-items:center;gap:7px}#optics-vscode-review .ov-wrap{flex-wrap:wrap}#optics-vscode-review .ov-spacer{flex:1}#optics-vscode-review .ov-small{font-size:11px;color:var(--ov-dim)}#optics-vscode-review .ov-muted{color:var(--ov-dim)}#optics-vscode-review .ov-tag{border:1px solid var(--ov-line);border-radius:3px;padding:1px 5px;font-size:11px;white-space:nowrap}#optics-vscode-review .ov-preview{color:var(--ov-orange)}#optics-vscode-review .ov-titlebar{display:flex;align-items:center;gap:12px;min-height:35px;padding:4px 12px;background:var(--ov-chrome);border-bottom:1px solid var(--ov-line)}#optics-vscode-review .ov-product{font-weight:500;white-space:nowrap}#optics-vscode-review .ov-title-menu{font-size:12px;color:var(--ov-dim)}#optics-vscode-review .ov-command{border:1px solid var(--ov-line);background:var(--ov-input);border-radius:5px;max-width:400px;min-width:0;flex:1;justify-content:center;color:var(--ov-dim);height:25px;font-size:12px}#optics-vscode-review .ov-windowpad{width:78px;flex:none}#optics-vscode-review .ov-body{display:grid;grid-template-columns:50px var(--ov-sidebar) minmax(0,1fr);min-height:660px}#optics-vscode-review[data-chat=true] .ov-body{grid-template-columns:50px var(--ov-sidebar) minmax(0,1fr) var(--ov-chat)}#optics-vscode-review[data-sidebar=false] .ov-body{grid-template-columns:50px minmax(0,1fr)}#optics-vscode-review[data-sidebar=false][data-chat=true] .ov-body{grid-template-columns:50px minmax(0,1fr) var(--ov-chat)}#optics-vscode-review .ov-activity{background:var(--ov-chrome);border-right:1px solid var(--ov-line);display:flex;flex-direction:column;align-items:stretch;padding-top:5px;gap:2px}#optics-vscode-review .ov-activity button{position:relative;min-height:46px;display:flex;justify-content:center;align-items:center;border-radius:0;color:var(--ov-dim);flex-direction:column;gap:3px;padding:8px 3px}#optics-vscode-review .ov-activity button[aria-pressed=true]{color:var(--ov-fg);background:var(--ov-hover)}#optics-vscode-review .ov-activity button[aria-pressed=true]:before{content:&quot;&quot;;position:absolute;left:0;top:7px;bottom:7px;width:2px;background:var(--ov-blue)}#optics-vscode-review .ov-activity svg.lucide{width:23px;height:23px}#optics-vscode-review .ov-navname{display:none;font-size:11px;text-align:center;max-width:80px}#optics-vscode-review[data-labels=true] .ov-navname{display:block}#optics-vscode-review[data-labels=true] .ov-body{grid-template-columns:86px var(--ov-sidebar) minmax(0,1fr)}#optics-vscode-review[data-labels=true][data-chat=true] .ov-body{grid-template-columns:86px var(--ov-sidebar) minmax(0,1fr) var(--ov-chat)}#optics-vscode-review[data-labels=true][data-sidebar=false] .ov-body{grid-template-columns:86px minmax(0,1fr)}#optics-vscode-review[data-labels=true][data-sidebar=false][data-chat=true] .ov-body{grid-template-columns:86px minmax(0,1fr) var(--ov-chat)}#optics-vscode-review .ov-nav-bottom{margin-top:auto;border-top:1px solid var(--ov-line)}#optics-vscode-review .ov-sidebar{background:var(--ov-side);border-right:1px solid var(--ov-line);min-width:0}#optics-vscode-review .ov-sidehead,#optics-vscode-review .ov-chathead{display:flex;align-items:center;gap:6px;padding:8px 12px;min-height:38px;font-size:11px;letter-spacing:.05em}#optics-vscode-review .ov-sidebody{padding:0 12px 14px}#optics-vscode-review .ov-sectiontitle{font-size:11px;font-weight:500;padding:14px 0 8px;color:var(--ov-dim);display:flex;align-items:center;gap:5px}#optics-vscode-review .ov-project{padding:7px 0;overflow-wrap:anywhere;font-size:12px;font-weight:500}#optics-vscode-review .ov-filetree{margin:4px -8px}#optics-vscode-review details{border:0;margin:0;padding:0;background:transparent}#optics-vscode-review summary{font-size:12px;padding:3px 4px;cursor:default}#optics-vscode-review .ov-treebranch{margin-left:12px;border-left:1px solid var(--ov-line);padding-left:6px}#optics-vscode-review .ov-file{width:100%;font-size:12px;padding:3px 4px;display:flex;gap:6px;align-items:center;overflow-wrap:anywhere}#optics-vscode-review .ov-file[aria-current=true]{background:var(--ov-selected)}#optics-vscode-review .ov-file svg.lucide{width:14px;height:14px;color:var(--ov-blue)}#optics-vscode-review label.ov-field{display:block;margin:10px 0;font-size:12px}#optics-vscode-review label.ov-field&gt;span{display:block;margin-bottom:4px;color:var(--ov-dim)}#optics-vscode-review .ov-param{border-top:1px solid var(--ov-line);padding:11px 0 9px}#optics-vscode-review .ov-paramhead{display:flex;justify-content:space-between;gap:7px;align-items:center;font-size:12px}#optics-vscode-review .ov-paramhead output{color:var(--ov-blue);font-variant-numeric:tabular-nums}#optics-vscode-review .ov-rangelabels{display:flex;justify-content:space-between;color:var(--ov-dim);font-size:11px}#optics-vscode-review .ov-paramhead input{margin:0 5px 0 0}#optics-vscode-review .ov-panel-note{font-size:11px;color:var(--ov-dim);padding:10px 0}#optics-vscode-review .ov-sidebar .ov-button,#optics-vscode-review .ov-sidebar .ov-primary{width:100%;margin:5px 0;font-size:12px}#optics-vscode-review .ov-editor{min-width:0;display:flex;flex-direction:column;background:var(--ov-bg)}#optics-vscode-review .ov-tabs{display:flex;flex-wrap:wrap;background:var(--ov-chrome);border-bottom:1px solid var(--ov-line);min-height:36px;gap:0}#optics-vscode-review .ov-tab{display:flex;align-items:center;gap:7px;padding:8px 10px;font-size:12px;border-right:1px solid var(--ov-line);border-radius:0;max-width:210px;overflow:hidden;white-space:nowrap}#optics-vscode-review .ov-tab[aria-selected=true]{background:var(--ov-bg);box-shadow:inset 0 1px var(--ov-blue)}#optics-vscode-review .ov-tab .ov-tabname{overflow:hidden;text-overflow:ellipsis}#optics-vscode-review .ov-breadcrumb{padding:6px 14px;border-bottom:1px solid var(--ov-line);font-size:11px;color:var(--ov-dim);display:flex;align-items:center;gap:6px;flex-wrap:wrap}#optics-vscode-review .ov-content{padding:15px 16px 18px;min-width:0;flex:1}#optics-vscode-review .ov-content h2{font-size:18px;font-weight:500;line-height:1.4;margin:0}#optics-vscode-review .ov-content h3{font-size:12px;font-weight:500;line-height:1.5;margin:0}#optics-vscode-review .ov-content p{margin:8px 0;color:var(--ov-dim);font-size:12px}#optics-vscode-review .ov-contenthead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:13px}#optics-vscode-review .ov-contenthead&gt;div:first-child{flex:1}#optics-vscode-review .ov-contenthead .ov-small{margin-top:4px}#optics-vscode-review .ov-localbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:12px}#optics-vscode-review .ov-localbar button{border-radius:0;border-bottom:2px solid transparent;font-size:12px;padding:6px 8px}#optics-vscode-review .ov-localbar button[aria-pressed=true]{border-bottom-color:var(--ov-blue);color:var(--ov-blue)}#optics-vscode-review .ov-geometry{border:1px solid var(--ov-line);background:var(--ov-side);min-width:0}#optics-vscode-review .ov-boxhead{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:12px;border-bottom:1px solid var(--ov-line)}#optics-vscode-review .ov-geometry svg{display:block;width:100%;height:196px}#optics-vscode-review .ov-geometry .ov-small{padding:5px 10px}#optics-vscode-review .ov-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:12px 0;border-bottom:1px solid var(--ov-line)}#optics-vscode-review .ov-metrics span{font-size:11px;color:var(--ov-dim);display:block}#optics-vscode-review .ov-metrics strong{font-size:14px;font-weight:500;display:block;white-space:nowrap}#optics-vscode-review .ov-charts{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:12px}#optics-vscode-review .ov-chart{min-width:0;border:1px solid var(--ov-line)}#optics-vscode-review .ov-chart svg{display:block;width:100%;height:135px}#optics-vscode-review .ov-chart .ov-boxhead{border:0;padding:6px 8px}#optics-vscode-review .ov-svgtext{fill:var(--ov-dim);font:11px &quot;Segoe UI&quot;,sans-serif}#optics-vscode-review .ov-gridline{stroke:var(--ov-line);stroke-width:1}#optics-vscode-review .ov-axis{stroke:var(--ov-dim);stroke-width:1;opacity:.6}#optics-vscode-review .ov-bottom{border-top:1px solid var(--ov-line);padding:0 12px 10px;background:var(--ov-bg);min-height:96px}#optics-vscode-review .ov-bottomtabs{display:flex;gap:17px;font-size:11px;color:var(--ov-dim);padding:7px 0;border-bottom:1px solid var(--ov-line)}#optics-vscode-review .ov-bottomtabs button{font-size:11px;border-radius:0;padding:2px 0}#optics-vscode-review .ov-bottomtabs button[aria-pressed=true]{color:var(--ov-fg);border-bottom:1px solid var(--ov-blue)}#optics-vscode-review .ov-log{font:11px/1.7 Consolas,monospace;margin-top:7px;color:var(--ov-dim);overflow-wrap:anywhere}#optics-vscode-review .ov-chat{border-left:1px solid var(--ov-line);background:var(--ov-side);min-width:0;display:flex;flex-direction:column}#optics-vscode-review .ov-chathead{border-bottom:1px solid var(--ov-line);letter-spacing:0;font-size:12px;min-height:38px}#optics-vscode-review .ov-chatbody{padding:13px 12px;flex:1}#optics-vscode-review .ov-chat-empty{padding:13px 0 20px;color:var(--ov-dim);font-size:12px}#optics-vscode-review .ov-contexts{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 16px}#optics-vscode-review .ov-contexts span{border:1px solid var(--ov-line);border-radius:3px;padding:2px 6px;font-size:11px;max-width:100%;overflow-wrap:anywhere}#optics-vscode-review .ov-chatprompt{display:block;width:100%;border:1px solid var(--ov-line);padding:8px;margin:8px 0;font-size:12px;color:var(--ov-fg);background:var(--ov-bg);border-radius:4px}#optics-vscode-review .ov-message{margin:9px 0;padding:9px;background:var(--ov-bg);border:1px solid var(--ov-line);font-size:12px;overflow-wrap:anywhere}#optics-vscode-review .ov-message strong{font-size:11px;font-weight:500;color:var(--ov-blue);display:block;margin-bottom:5px}#optics-vscode-review .ov-composer{padding:10px 12px;border-top:1px solid var(--ov-line)}#optics-vscode-review .ov-composer textarea{border-radius:4px;background:var(--ov-bg);font-size:12px}#optics-vscode-review .ov-composer .ov-inline{margin-top:8px;font-size:11px}#optics-vscode-review .ov-statebar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--ov-chrome);border-top:1px solid var(--ov-line);min-height:25px;padding:3px 10px;font-size:11px;color:var(--ov-dim)}#optics-vscode-review .ov-statebar .ov-pill{color:var(--ov-blue)}#optics-vscode-review .ov-inset{border:1px solid var(--ov-line);padding:12px;margin:12px 0}#optics-vscode-review .ov-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}#optics-vscode-review .ov-statusline{color:var(--ov-dim);font-size:11px;display:flex;gap:12px;flex-wrap:wrap;margin:9px 0}#optics-vscode-review .ov-scatterbox{border:1px solid var(--ov-line);min-width:0}#optics-vscode-review .ov-scatter{width:100%;height:238px;display:block;touch-action:none}#optics-vscode-review .ov-selectionline{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:12px 0;font-size:12px}#optics-vscode-review .ov-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--ov-dim);padding:8px 12px}#optics-vscode-review .ov-legend span{display:flex;align-items:center;gap:5px}#optics-vscode-review .ov-dot{height:7px;width:7px;border-radius:50%;display:inline-block}#optics-vscode-review .ov-tablewrap{max-width:100%;overflow:auto}#optics-vscode-review table{border-collapse:collapse;width:100%;font-size:11px;white-space:nowrap}#optics-vscode-review th,#optics-vscode-review td{padding:6px 7px;text-align:left;border-bottom:1px solid var(--ov-line)}#optics-vscode-review th{background:var(--ov-side);color:var(--ov-dim);font-weight:500}#optics-vscode-review tr.ov-selected{background:var(--ov-selected)}#optics-vscode-review .ov-code{margin:0;padding:6px 0;font:12px/1.85 Consolas,&quot;SFMono-Regular&quot;,monospace;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:4;counter-reset:ov-line}#optics-vscode-review .ov-code .ov-code-line{display:flex;gap:15px;min-width:0}#optics-vscode-review .ov-code .ov-lineno{flex:none;width:25px;text-align:right;color:var(--ov-dim);user-select:none;opacity:.65}#optics-vscode-review .ov-code .ov-src{min-width:0;white-space:pre-wrap;overflow-wrap:anywhere}#optics-vscode-review .ov-code .ov-key{color:var(--ov-syntax)}#optics-vscode-review .ov-code .ov-string{color:var(--ov-string)}#optics-vscode-review .ov-code .ov-comment{color:var(--ov-comment)}#optics-vscode-review .ov-flow{display:grid;grid-template-columns:1fr;gap:0;margin:16px 0}#optics-vscode-review .ov-flowstep{display:flex;gap:12px;padding:12px;border-left:2px solid var(--ov-line);margin-left:9px;background:var(--ov-side);margin-bottom:6px}#optics-vscode-review .ov-flowstep .ov-stepnum{font-size:11px;color:var(--ov-blue);width:16px;flex:none}#optics-vscode-review .ov-flowstep strong{display:block;font-weight:500;font-size:12px}#optics-vscode-review .ov-flowstep span{font-size:11px;color:var(--ov-dim)}#optics-vscode-review .ov-targets{display:flex;gap:16px;flex-wrap:wrap;padding:9px 0;font-size:12px}#optics-vscode-review .ov-targets span{color:var(--ov-dim);font-size:11px;display:block}#optics-vscode-review .ov-options{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0;font-size:12px}#optics-vscode-review .ov-note{padding:9px 11px;border-left:2px solid var(--ov-blue);background:var(--ov-side);color:var(--ov-dim);font-size:12px;margin:12px 0}#optics-vscode-review .ov-folderform{border:1px solid var(--ov-line);background:var(--ov-bg);padding:9px;margin:8px 0}#optics-vscode-review .ov-folderform input{font-size:11px}#optics-vscode-review kbd{background:var(--ov-input);border:1px solid var(--ov-line);border-radius:3px;font:11px &quot;Segoe UI&quot;,sans-serif;padding:1px 4px;color:var(--ov-dim)}
+@media(max-width:950px){#optics-vscode-review{--ov-sidebar:180px;--ov-chat:230px}#optics-vscode-review .ov-title-menu{display:none}#optics-vscode-review .ov-windowpad{width:35px}#optics-vscode-review .ov-content{padding:12px}#optics-vscode-review .ov-metrics{grid-template-columns:1fr 1fr;gap:8px}}
+@media(max-width:780px){#optics-vscode-review .ov-body,#optics-vscode-review[data-chat=true] .ov-body,#optics-vscode-review[data-sidebar=false] .ov-body,#optics-vscode-review[data-sidebar=false][data-chat=true] .ov-body,#optics-vscode-review[data-labels=true] .ov-body,#optics-vscode-review[data-labels=true][data-chat=true] .ov-body,#optics-vscode-review[data-labels=true][data-sidebar=false] .ov-body,#optics-vscode-review[data-labels=true][data-sidebar=false][data-chat=true] .ov-body{grid-template-columns:46px minmax(0,1fr);min-height:0}#optics-vscode-review .ov-activity{grid-column:1;grid-row:1 / span 3}#optics-vscode-review .ov-sidebar{grid-column:2;grid-row:1;border-bottom:1px solid var(--ov-line);border-right:0}#optics-vscode-review .ov-sidebar .ov-sidebody{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}#optics-vscode-review .ov-sidebar .ov-filetree,#optics-vscode-review .ov-sidebar .ov-project,#optics-vscode-review .ov-sidebar .ov-folderform,#optics-vscode-review .ov-sidebar .ov-sectiontitle{grid-column:1 / -1}#optics-vscode-review .ov-editor{grid-column:2;grid-row:2}#optics-vscode-review .ov-chat{grid-column:2;grid-row:3;border-left:0;border-top:1px solid var(--ov-line)}#optics-vscode-review .ov-navname{display:none!important}#optics-vscode-review .ov-titlebar{gap:8px;padding:5px 8px;flex-wrap:wrap}#optics-vscode-review .ov-command{display:none}#optics-vscode-review .ov-windowpad{display:none}#optics-vscode-review .ov-titlebar&gt;.ov-spacer{display:block}#optics-vscode-review .ov-titlebar .ov-shortcut{display:none}#optics-vscode-review .ov-chatbody{min-height:80px}#optics-vscode-review .ov-body .ov-chat-empty{padding-bottom:0}#optics-vscode-review .ov-activity button{min-height:48px}}
+@media(max-width:440px){#optics-vscode-review .ov-charts,#optics-vscode-review .ov-row{grid-template-columns:1fr}#optics-vscode-review .ov-sidebar .ov-sidebody{display:block}#optics-vscode-review .ov-statebar{gap:8px}#optics-vscode-review .ov-statebar .ov-secondary-status{display:none}#optics-vscode-review .ov-localbar{gap:2px}#optics-vscode-review .ov-localbar button{padding:6px}#optics-vscode-review .ov-contenthead h2{font-size:16px}#optics-vscode-review .ov-content{padding:12px 9px}}
+@media(prefers-reduced-motion:reduce){#optics-vscode-review *{scroll-behavior:auto!important}}
+
+/* Sharing preview: readable touch navigation on phone screens. */
+@media(max-width:780px){
+#optics-vscode-review .ov-body,#optics-vscode-review[data-chat=true] .ov-body,#optics-vscode-review[data-sidebar=false] .ov-body,#optics-vscode-review[data-sidebar=false][data-chat=true] .ov-body,#optics-vscode-review[data-labels=true] .ov-body,#optics-vscode-review[data-labels=true][data-chat=true] .ov-body,#optics-vscode-review[data-labels=true][data-sidebar=false] .ov-body,#optics-vscode-review[data-labels=true][data-sidebar=false][data-chat=true] .ov-body{grid-template-columns:74px minmax(0,1fr)}
+#optics-vscode-review .ov-navname{display:block!important;max-width:68px;font-size:11px;line-height:1.25}
+#optics-vscode-review .ov-activity button{min-height:64px}
+#optics-vscode-review #ov-label-toggle{display:none}
+#optics-vscode-review .ov-scatter{touch-action:pan-y}
+#optics-vscode-review .ov-sidebar .ov-sidebody{display:block}
+}
+&lt;/style&gt;
+&lt;div class=&quot;ov-titlebar&quot;&gt;
+  &lt;span class=&quot;ov-product ov-inline&quot;&gt;&lt;i data-lucide=&quot;aperture&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Optics Studio&lt;/span&gt;
+  &lt;span class=&quot;ov-title-menu&quot;&gt;File &amp;nbsp; Edit &amp;nbsp; View&lt;/span&gt;
+  &lt;div class=&quot;ov-command ov-inline&quot;&gt;&lt;i data-lucide=&quot;search&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span id=&quot;ov-project-title&quot;&gt;AI imaging optics&lt;/span&gt;&lt;/div&gt;
+  &lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;
+  &lt;button type=&quot;button&quot; id=&quot;ov-sidebar-toggle&quot; class=&quot;ov-inline cursor-interaction&quot; aria-label=&quot;왼쪽 보조 패널 열기 닫기&quot; data-tooltip=&quot;Primary Side Bar · Ctrl+B&quot;&gt;&lt;i data-lucide=&quot;panel-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+  &lt;button type=&quot;button&quot; id=&quot;ov-chat-toggle&quot; class=&quot;ov-inline cursor-interaction&quot; aria-pressed=&quot;true&quot; data-tooltip=&quot;LLM 패널 · Ctrl+Alt+B&quot;&gt;&lt;i data-lucide=&quot;panel-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; LLM &lt;kbd class=&quot;ov-shortcut&quot;&gt;Ctrl Alt B&lt;/kbd&gt;&lt;/button&gt;
+  &lt;span class=&quot;ov-windowpad&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ov-body&quot;&gt;
+  &lt;nav class=&quot;ov-activity&quot; aria-label=&quot;작업 메뉴&quot; id=&quot;ov-activity&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;explorer&quot; aria-label=&quot;Explorer&quot; data-tooltip=&quot;Explorer · 폴더와 코드&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;files&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;Explorer&lt;/span&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;workspace&quot; aria-label=&quot;Workspace&quot; data-tooltip=&quot;Workspace · 광학 설계&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;aperture&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;Workspace&lt;/span&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;tailoring&quot; aria-label=&quot;DB tailoring&quot; data-tooltip=&quot;DB tailoring · 학습 데이터 선택&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;database&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;DB tailoring&lt;/span&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;update&quot; aria-label=&quot;Update model&quot; data-tooltip=&quot;Update model · 모델 학습 설정&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;brain-circuit&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;Update model&lt;/span&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;sim&quot; aria-label=&quot;Add Zemax Sim&quot; data-tooltip=&quot;Add Zemax Sim · 추가 데이터&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;flask-conical&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;Add Zemax Sim&lt;/span&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-view=&quot;auto&quot; aria-label=&quot;Auto design&quot; data-tooltip=&quot;Auto design · 목표 기반 반복&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;workflow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;Auto design&lt;/span&gt;&lt;/button&gt;
+    &lt;div class=&quot;ov-nav-bottom&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; id=&quot;ov-label-toggle&quot; aria-label=&quot;메뉴 이름 표시 전환&quot; data-tooltip=&quot;메뉴 이름 표시 / 숨기기&quot; data-tooltip-placement=&quot;right&quot;&gt;&lt;i data-lucide=&quot;panel-left-dashed&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;ov-navname&quot;&gt;메뉴 이름&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
+  &lt;/nav&gt;
+  &lt;aside class=&quot;ov-sidebar&quot; id=&quot;ov-sidebar&quot; aria-label=&quot;작업 탐색과 설정&quot;&gt;&lt;div class=&quot;ov-sidehead&quot;&gt;&lt;span id=&quot;ov-side-title&quot;&gt;WORKSPACE&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;i data-lucide=&quot;ellipsis&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;div class=&quot;ov-sidebody&quot; id=&quot;ov-side-body&quot;&gt;&lt;/div&gt;&lt;/aside&gt;
+  &lt;main class=&quot;ov-editor&quot; id=&quot;ov-editor&quot; aria-label=&quot;작업 및 코드 편집기&quot;&gt;
+    &lt;div class=&quot;ov-tabs&quot; id=&quot;ov-tabs&quot; role=&quot;tablist&quot; aria-label=&quot;열린 작업 탭&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ov-breadcrumb&quot; id=&quot;ov-breadcrumb&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ov-content&quot; id=&quot;ov-content&quot; role=&quot;tabpanel&quot;&gt;&lt;/div&gt;
+    &lt;section class=&quot;ov-bottom&quot; aria-label=&quot;작업 출력 패널&quot;&gt;&lt;div class=&quot;ov-bottomtabs&quot;&gt;&lt;button type=&quot;button&quot; data-output=&quot;output&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;OUTPUT&lt;/button&gt;&lt;button type=&quot;button&quot; data-output=&quot;jobs&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;JOBS&lt;/button&gt;&lt;button type=&quot;button&quot; data-output=&quot;terminal&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;TERMINAL &lt;span class=&quot;ov-small&quot;&gt;TBU&lt;/span&gt;&lt;/button&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;i data-lucide=&quot;chevron-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;div class=&quot;ov-log&quot; id=&quot;ov-log&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+  &lt;/main&gt;
+  &lt;aside class=&quot;ov-chat&quot; id=&quot;ov-chat&quot; aria-label=&quot;LLM 작업 도우미&quot;&gt;
+    &lt;div class=&quot;ov-chathead&quot;&gt;&lt;i data-lucide=&quot;message-square&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;LLM extension&lt;/span&gt;&lt;span class=&quot;ov-tag&quot;&gt;TBU&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;button type=&quot;button&quot; id=&quot;ov-chat-close&quot; class=&quot;cursor-interaction&quot; aria-label=&quot;LLM 패널 닫기&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;ov-chatbody&quot;&gt;&lt;div class=&quot;ov-inline&quot;&gt;&lt;strong style=&quot;font-weight:500&quot;&gt;Claude&lt;/strong&gt;&lt;span class=&quot;ov-small&quot;&gt;연결 전&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-contexts&quot; id=&quot;ov-chat-context&quot;&gt;&lt;/div&gt;&lt;div class=&quot;ov-chat-empty&quot; id=&quot;ov-chat-empty&quot;&gt;현재 설계와 선택 데이터를 바탕으로 요청을 작성합니다.&lt;button type=&quot;button&quot; class=&quot;ov-chatprompt cursor-interaction&quot; data-prompt=&quot;선택한 데이터로 현재 모델을 업데이트하는 계획을 세워줘.&quot;&gt;선택한 데이터로 모델 업데이트 계획&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ov-chatprompt cursor-interaction&quot; data-prompt=&quot;FOV 24° 목표를 유지하면서 Spot을 개선할 후보를 검토해줘.&quot;&gt;목표 성능에 가까운 후보 검토&lt;/button&gt;&lt;/div&gt;&lt;div id=&quot;ov-messages&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;ov-composer&quot;&gt;&lt;label for=&quot;ov-prompt&quot; class=&quot;ov-small&quot;&gt;수행하고 싶은 작업&lt;/label&gt;&lt;textarea id=&quot;ov-prompt&quot; placeholder=&quot;원하는 작업을 자연어로 입력…&quot;&gt;&lt;/textarea&gt;&lt;div class=&quot;ov-inline&quot;&gt;&lt;span class=&quot;ov-small&quot;&gt;전송·실행 미연결&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;button type=&quot;button&quot; class=&quot;ov-primary cursor-interaction&quot; id=&quot;ov-preview-request&quot;&gt;계획 예시&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/aside&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ov-statebar&quot;&gt;&lt;span class=&quot;ov-pill ov-inline&quot;&gt;&lt;i data-lucide=&quot;git-branch&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; UI PREVIEW&lt;/span&gt;&lt;span id=&quot;ov-state-view&quot;&gt;Workspace&lt;/span&gt;&lt;span id=&quot;ov-global-selection&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ov-secondary-status&quot;&gt;파일 읽기 · 분석 · 작업 실행 TBU&lt;/span&gt;&lt;/div&gt;
+&lt;script&gt;
+(function(){
+&#x27;use strict&#x27;;
+const root=document.getElementById(&#x27;optics-vscode-review&#x27;);
+const $=id=&gt;root.querySelector(&#x27;#&#x27;+id);
+const esc=v=&gt;String(v).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g,c=&gt;({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;,&quot;&#x27;&quot;:&#x27;&amp;#39;&#x27;}[c]));
+const icon=name=&gt;&#x27;&lt;i data-lucide=&quot;&#x27;+name+&#x27;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&#x27;;
+const titles={explorer:&#x27;Explorer&#x27;,workspace:&#x27;Workspace&#x27;,tailoring:&#x27;DB tailoring&#x27;,update:&#x27;Update model&#x27;,sim:&#x27;Add Zemax Sim&#x27;,auto:&#x27;Auto design&#x27;};
+const icons={workspace:&#x27;aperture&#x27;,tailoring:&#x27;database&#x27;,update:&#x27;brain-circuit&#x27;,sim:&#x27;flask-conical&#x27;,auto:&#x27;workflow&#x27;,explorer:&#x27;files&#x27;};
+const files={
+ &#x27;design_driver.py&#x27;:{lang:&#x27;Python&#x27;,text:&#x27;# Optical design workflow — illustrative code\nfrom optics.parameters import OpticalSystem\nfrom workflows import evaluate, propose\n\ndef review_candidate(prescription, model):\n    system = OpticalSystem.from_dict(prescription)\n    prediction = evaluate(system, model=model)\n    return {\n        &quot;prescription&quot;: system.parameters,\n        &quot;performance&quot;: prediction,\n        &quot;status&quot;: &quot;awaiting_zemax_validation&quot;,\n    }\n\n# Backend execution is not connected in this mockup.\n# Files in this Explorer are preview examples.&#x27;},
+ &#x27;workflows/train_model.py&#x27;:{lang:&#x27;Python&#x27;,text:&#x27;# Training entry point — illustrative code\nfrom training import TrainingRequest\n\ndef prepare_update(model, selected_case_ids):\n    return TrainingRequest(\n        parent_model=model,\n        case_ids=selected_case_ids,\n        learning_rate=0.001,\n        epochs=100,\n        save_as_new_version=True,\n    )\n\n# Existing model remains unchanged.\n# GPU and training backend: TBU.&#x27;},
+ &#x27;workflows/zemax_sim.py&#x27;:{lang:&#x27;Python&#x27;,text:&#x27;# Zemax integration — illustrative code\ndef prepare_simulation(parameters, sampling):\n    return {\n        &quot;parameters&quot;: parameters,\n        &quot;sampling&quot;: sampling,\n        &quot;engine&quot;: &quot;Zemax&quot;,\n        &quot;execution&quot;: &quot;not_connected&quot;,\n    }&#x27;},
+ &#x27;config/targets.json&#x27;:{lang:&#x27;JSON&#x27;,text:&#x27;{\n  &quot;read_only&quot;: true,\n  &quot;category_weights&quot;: {\n    &quot;mtf&quot;: 1, &quot;spot&quot;: 1, &quot;horizontal_fov&quot;: 1\n  },\n  &quot;targets&quot;: {\n    &quot;mtf_6lp_0F_ST_min&quot;: 0.40,\n    &quot;mtf_6lp_08F_ST_min&quot;: 0.30,\n    &quot;spot_rms_diameter_um&quot;: 1.60,\n    &quot;horizontal_full_fov_deg&quot;: 24\n  },\n  &quot;relative_candidate_allowance&quot;: 0.05\n}&#x27;},
+ &#x27;config/model-report.json&#x27;:{lang:&#x27;JSON&#x27;,text:&#x27;{\n  &quot;model&quot;: &quot;surrogate-v03.pth&quot;,\n  &quot;database&quot;: &quot;optics-cases.sqlite&quot;,\n  &quot;training_membership&quot;: &quot;TBU&quot;,\n  &quot;next_version&quot;: &quot;surrogate-v04.pth&quot;,\n  &quot;overwrite_parent&quot;: false\n}&#x27;},
+ &#x27;README.md&#x27;:{lang:&#x27;Markdown&#x27;,text:&#x27;# AI imaging optics workspace\n\n## Workflow\n1. Open an optical-system template.\n2. Inspect and select data in DB tailoring.\n3. Review the model and training settings.\n4. Explore parameters and request Zemax cases.\n\n## Preview boundary\nThis screen is a UI proposal.\nIt does not open real files, train models,\nconnect to Claude, or run Zemax.&#x27;}
+};
+const sample=Array.from({length:72},(_,i)=&gt;{const group=i%3,j=Math.floor(i/3);return {id:&#x27;DEMO-&#x27;+String(i+1).padStart(3,&#x27;0&#x27;),material:[&#x27;N-BK7&#x27;,&#x27;PMMA&#x27;,&#x27;PC&#x27;][group],surface:i%4===0?&#x27;STANDARD&#x27;:&#x27;EVEN_ASPHERE&#x27;,temperature:i%3===0?20:25,status:i%11===0?&#x27;INVALID&#x27;:&#x27;VALID&#x27;,group,x:group*2.35-2.6+Math.cos(j*1.8)*(.3+(j%6)*.12),y:(group===1?1.25:-.4)+Math.sin(j*1.3)*(.4+(j%7)*.1),ux:(group===2?1.6:-1.4)+Math.cos(j*.92+group)*(.2+(j%7)*.12),uy:group*1.65-1.7+Math.sin(j*1.37)*(.3+(j%5)*.12)};});
+const s={view:&#x27;workspace&#x27;,nav:&#x27;workspace&#x27;,tabs:[&#x27;workspace&#x27;,&#x27;tailoring&#x27;],chat:true,sidebar:true,labels:false,section:false,method:&#x27;PCA&#x27;,material:&#x27;all&#x27;,surface:&#x27;all&#x27;,status:&#x27;all&#x27;,temperature:&#x27;all&#x27;,selection:[],training:[],folder:&#x27;AI imaging optics&#x27;,output:&#x27;output&#x27;,thickness:6.862,gap:9.734,radius:57,lr:&#x27;0.001&#x27;,epochs:&#x27;100&#x27;,compute:&#x27;Local GPU&#x27;,simMode:&#x27;Manual&#x27;,simCount:5,log:&#x27;[preview] Workspace를 열었습니다.\n[backend] 파일·분석·학습·Zemax·LLM 연결은 TBU입니다.&#x27;};
+const design={labels:false,sidebarWidth:210,chatWidth:260};
+let hoverId=null;
+function save(){if(!window.openai?.setWidgetState)return;window.openai.setWidgetState({modelContent:{view:s.view,db_method:s.method,selected_cases:s.selection.length,training_cases:s.training.length,llm_open:s.chat,navigation_labels:s.labels},privateContent:{view:s.view,nav:s.nav,tabs:s.tabs,chat:s.chat,sidebar:s.sidebar,labels:s.labels,method:s.method,material:s.material,surface:s.surface,status:s.status,temperature:s.temperature,selection:s.selection,training:s.training,folder:s.folder,section:s.section}}).catch(()=&gt;{});}
+function restore(stored){const p=stored?.privateContent;if(!p||typeof p!==&#x27;object&#x27;)return;for(const k of [&#x27;chat&#x27;,&#x27;sidebar&#x27;,&#x27;labels&#x27;,&#x27;section&#x27;])if(typeof p[k]===&#x27;boolean&#x27;)s[k]=p[k];if(titles[p.nav])s.nav=p.nav;if(titles[p.view]||files[p.view])s.view=p.view;if(Array.isArray(p.tabs))s.tabs=p.tabs.filter(x=&gt;titles[x]||files[x]).slice(0,8);if(!s.tabs.includes(s.view)&amp;&amp;s.view!==&#x27;explorer&#x27;)s.tabs.push(s.view);if([&#x27;PCA&#x27;,&#x27;UMAP&#x27;,&#x27;User select from DB&#x27;].includes(p.method))s.method=p.method;for(const k of [&#x27;material&#x27;,&#x27;surface&#x27;,&#x27;status&#x27;,&#x27;temperature&#x27;])if(typeof p[k]===&#x27;string&#x27;)s[k]=p[k];for(const k of [&#x27;selection&#x27;,&#x27;training&#x27;])if(Array.isArray(p[k]))s[k]=p[k].filter(id=&gt;sample.some(r=&gt;r.id===id));if(typeof p.folder===&#x27;string&#x27;&amp;&amp;p.folder.length&lt;120)s.folder=p.folder;design.labels=s.labels;}
+function drawIcons(){if(globalThis.lucide)lucide.createIcons({attrs:{width:16,height:16}});}
+function setLog(message){s.log=&#x27;[preview] &#x27;+message+&#x27;\n[backend] 실제 작업은 실행하지 않았습니다.&#x27;;drawOutput();}
+function drawOutput(){let text=s.log;if(s.output===&#x27;jobs&#x27;)text=s.training.length?&#x27;[draft] 학습 데이터 집합: &#x27;+s.training.length+&#x27;건\n실행 중인 작업 없음 · training / Zemax / auto design TBU&#x27;:&#x27;실행 중인 작업 없음\nDB tailoring에서 학습용 데이터를 먼저 선택할 수 있습니다.&#x27;;if(s.output===&#x27;terminal&#x27;)text=&#x27;터미널 영역 · TBU\n실제 VS Code 기반에서는 기본 Terminal을 사용하는 구성입니다.&#x27;;$(&#x27;ov-log&#x27;).textContent=text;root.querySelectorAll(&#x27;[data-output]&#x27;).forEach(b=&gt;b.setAttribute(&#x27;aria-pressed&#x27;,b.dataset.output===s.output));}
+function filtered(){return sample.filter(r=&gt;(s.material===&#x27;all&#x27;||r.material===s.material)&amp;&amp;(s.surface===&#x27;all&#x27;||r.surface===s.surface)&amp;&amp;(s.status===&#x27;all&#x27;||r.status===s.status)&amp;&amp;(s.temperature===&#x27;all&#x27;||String(r.temperature)===s.temperature));}
+function selectMarkup(id,label,options,value){return &#x27;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;&#x27;+label+&#x27;&lt;/span&gt;&lt;select id=&quot;&#x27;+id+&#x27;&quot;&gt;&#x27;+options.map(o=&gt;{const v=Array.isArray(o)?o[0]:o,l=Array.isArray(o)?o[1]:o;return &#x27;&lt;option value=&quot;&#x27;+esc(v)+&#x27;&quot;&#x27;+(v===value?&#x27; selected&#x27;:&#x27;&#x27;)+&#x27;&gt;&#x27;+esc(l)+&#x27;&lt;/option&gt;&#x27;}).join(&#x27;&#x27;)+&#x27;&lt;/select&gt;&lt;/label&gt;&#x27;;}
+function fileButton(name,label){return &#x27;&lt;button type=&quot;button&quot; class=&quot;ov-file cursor-interaction&quot; data-file=&quot;&#x27;+name+&#x27;&quot; aria-current=&quot;&#x27;+(s.view===name)+&#x27;&quot;&gt;&#x27;+icon(name.endsWith(&#x27;.json&#x27;)?&#x27;braces&#x27;:name.endsWith(&#x27;.md&#x27;)?&#x27;file-text&#x27;:&#x27;file-code-2&#x27;)+esc(label||name)+&#x27;&lt;/button&gt;&#x27;;}
+function drawSidebar(){
+ $(&#x27;ov-side-title&#x27;).textContent=(titles[s.nav]||&#x27;Explorer&#x27;).toUpperCase();let h=&#x27;&#x27;;
+ if(s.nav===&#x27;explorer&#x27;)h=&#x27;&lt;button type=&quot;button&quot; class=&quot;ov-button ov-inline cursor-interaction&quot; id=&quot;ov-open-folder&quot;&gt;&#x27;+icon(&#x27;folder-open&#x27;)+&#x27; Open Folder…&lt;/button&gt;&lt;div class=&quot;ov-folderform&quot; id=&quot;ov-folder-form&quot; hidden&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;폴더 경로 · 선택 흐름 예시&lt;/span&gt;&lt;input id=&quot;ov-folder-path&quot; value=&quot;C:\\Projects\\AI imaging optics&quot; aria-label=&quot;폴더 경로 예시&quot;&gt;&lt;/label&gt;&lt;button type=&quot;button&quot; class=&quot;ov-primary cursor-interaction&quot; id=&quot;ov-folder-apply&quot;&gt;시안에 적용&lt;/button&gt;&lt;div class=&quot;ov-small&quot;&gt;실제 파일 읽기 TBU&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-project&quot;&gt;⌄ &#x27;+esc(s.folder.toUpperCase())+&#x27;&lt;/div&gt;&lt;div class=&quot;ov-filetree&quot;&gt;&#x27;+fileButton(&#x27;design_driver.py&#x27;)+&#x27;&lt;details open&gt;&lt;summary&gt;workflows&lt;/summary&gt;&lt;div class=&quot;ov-treebranch&quot;&gt;&#x27;+fileButton(&#x27;workflows/train_model.py&#x27;,&#x27;train_model.py&#x27;)+fileButton(&#x27;workflows/zemax_sim.py&#x27;,&#x27;zemax_sim.py&#x27;)+&#x27;&lt;/div&gt;&lt;/details&gt;&lt;details open&gt;&lt;summary&gt;config&lt;/summary&gt;&lt;div class=&quot;ov-treebranch&quot;&gt;&#x27;+fileButton(&#x27;config/targets.json&#x27;,&#x27;targets.json&#x27;)+fileButton(&#x27;config/model-report.json&#x27;,&#x27;model-report.json&#x27;)+&#x27;&lt;/div&gt;&lt;/details&gt;&lt;details open&gt;&lt;summary&gt;data&lt;/summary&gt;&lt;div class=&quot;ov-treebranch&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ov-file cursor-interaction&quot; data-open-db&gt;&#x27;+icon(&#x27;database&#x27;)+&#x27;optics-cases.sqlite&lt;/button&gt;&lt;span class=&quot;ov-file ov-muted&quot;&gt;&#x27;+icon(&#x27;file&#x27;)+&#x27;selected-cases.json&lt;/span&gt;&lt;/div&gt;&lt;/details&gt;&#x27;+fileButton(&#x27;README.md&#x27;)+&#x27;&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;OPEN EDITORS&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;Workspace · DB tailoring · 코드 파일&lt;/div&gt;&#x27;;
+ if(s.nav===&#x27;workspace&#x27;)h=&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;&#x27;+icon(&#x27;layers&#x27;)+&#x27; TRIPLET · 3 LENSES&lt;/div&gt;&#x27;+selectMarkup(&#x27;ov-lens&#x27;,&#x27;선택 렌즈&#x27;,[&#x27;Lens 1&#x27;,&#x27;Lens 2&#x27;,&#x27;Lens 3&#x27;],&#x27;Lens 1&#x27;)+selectMarkup(&#x27;ov-material-ws&#x27;,&#x27;Material&#x27;,[&#x27;PC proxy&#x27;,&#x27;N-BK7&#x27;,&#x27;PMMA&#x27;],&#x27;PC proxy&#x27;)+&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;ACTIVE PARAMETERS&lt;/div&gt;&#x27;+param(&#x27;thickness&#x27;,&#x27;L1 · Thickness&#x27;,3,10,s.thickness,&#x27;mm&#x27;)+param(&#x27;radius&#x27;,&#x27;L1 Front · Radius R&#x27;,16,160,s.radius,&#x27;mm&#x27;)+param(&#x27;gap&#x27;,&#x27;Image plane → L1&#x27;,1,35,s.gap,&#x27;mm&#x27;)+&#x27;&lt;div class=&quot;ov-panel-note&quot;&gt;파라미터·범위 표시 예시&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;PRED MODEL&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;model-report.json&lt;br&gt;surrogate-v03.pth&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; data-goto=&quot;update&quot;&gt;모델 설정 열기&lt;/button&gt;&#x27;;
+ if(s.nav===&#x27;tailoring&#x27;)h=&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;SOURCE DATABASE&lt;/div&gt;&lt;div class=&quot;ov-project ov-inline&quot;&gt;&#x27;+icon(&#x27;database&#x27;)+&#x27; optics-cases.sqlite&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;시안용 예시 &#x27;+sample.length+&#x27;건&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;FILTERS · DB COLUMNS&lt;/div&gt;&#x27;+selectMarkup(&#x27;ov-filter-material&#x27;,&#x27;Material&#x27;,[[&#x27;all&#x27;,&#x27;All materials&#x27;],&#x27;N-BK7&#x27;,&#x27;PMMA&#x27;,&#x27;PC&#x27;],s.material)+selectMarkup(&#x27;ov-filter-surface&#x27;,&#x27;Surface type&#x27;,[[&#x27;all&#x27;,&#x27;All types&#x27;],&#x27;STANDARD&#x27;,&#x27;EVEN_ASPHERE&#x27;],s.surface)+selectMarkup(&#x27;ov-filter-temperature&#x27;,&#x27;Temperature (°C)&#x27;,[[&#x27;all&#x27;,&#x27;All temperatures&#x27;],&#x27;20&#x27;,&#x27;25&#x27;],s.temperature)+selectMarkup(&#x27;ov-filter-status&#x27;,&#x27;Geometry / trace status&#x27;,[[&#x27;all&#x27;,&#x27;All statuses&#x27;],&#x27;VALID&#x27;,&#x27;INVALID&#x27;],s.status)+&#x27;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; id=&quot;ov-reset-filters&quot;&gt;필터 초기화&lt;/button&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;ANALYSIS FEATURES&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;Radius · Thickness · Gap&lt;br&gt;Conic · Clear semi-diameter&lt;/div&gt;&lt;label class=&quot;ov-options&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Standardize numeric features&lt;/label&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;TRAINING SET&lt;/div&gt;&lt;div class=&quot;ov-small&quot; id=&quot;ov-side-train&quot;&gt;&#x27;+s.training.length+&#x27; cases · 선택 집합&lt;/div&gt;&#x27;;
+ if(s.nav===&#x27;update&#x27;)h=&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;MODELS&lt;/div&gt;&lt;div class=&quot;ov-project ov-inline&quot;&gt;&#x27;+icon(&#x27;brain-circuit&#x27;)+&#x27; surrogate-v03&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;model-report.json&lt;br&gt;현재 선택 모델&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;DATA SELECTION&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;DB tailoring에서 선택한&lt;br&gt;&lt;strong style=&quot;font-weight:500;color:var(--ov-fg)&quot;&gt;&#x27;+s.training.length+&#x27;개 케이스&lt;/strong&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; data-goto=&quot;tailoring&quot;&gt;학습 데이터 검토&lt;/button&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;VERSION POLICY&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;새 버전으로 저장&lt;br&gt;기존 모델 보존&lt;/div&gt;&#x27;;
+ if(s.nav===&#x27;sim&#x27;)h=&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;CURRENT DESIGN&lt;/div&gt;&lt;div class=&quot;ov-project&quot;&gt;Triplet · D057_2&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;활성 파라미터 범위 복사&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;SAMPLING&lt;/div&gt;&#x27;+selectMarkup(&#x27;ov-sim-mode&#x27;,&#x27;Mode&#x27;,[&#x27;Manual&#x27;,&#x27;Auto&#x27;],s.simMode)+&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;ENGINE&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;Zemax · Backend TBU&lt;br&gt;라이선스 확인 TBU&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;DATA DESTINATION&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;optics-cases.sqlite&lt;br&gt;완료된 케이스 누적 보존&lt;/div&gt;&#x27;;
+ if(s.nav===&#x27;auto&#x27;)h=&#x27;&lt;div class=&quot;ov-sectiontitle&quot;&gt;TARGET PROFILE&lt;/div&gt;&#x27;+fileButton(&#x27;config/targets.json&#x27;,&#x27;targets.json&#x27;)+&#x27;&lt;div class=&quot;ov-small&quot;&gt;읽기 전용 목표 · weights 1:1:1&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;DESIGN CONSTRAINTS&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;3 lenses · Stop configuration&lt;br&gt;Parameter min / max bounds&lt;/div&gt;&lt;div class=&quot;ov-sectiontitle&quot;&gt;CANDIDATES&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; data-goto=&quot;workspace&quot;&gt;Workspace에서 후보 검토&lt;/button&gt;&#x27;;
+ $(&#x27;ov-side-body&#x27;).innerHTML=h;
+ root.querySelectorAll(&#x27;[data-file]&#x27;).forEach(b=&gt;b.onclick=()=&gt;openFile(b.dataset.file));root.querySelectorAll(&#x27;[data-goto]&#x27;).forEach(b=&gt;b.onclick=()=&gt;openView(b.dataset.goto));
+ if(s.nav===&#x27;explorer&#x27;){$(&#x27;ov-open-folder&#x27;).onclick=()=&gt;{$(&#x27;ov-folder-form&#x27;).hidden=!$(&#x27;ov-folder-form&#x27;).hidden};$(&#x27;ov-folder-apply&#x27;).onclick=()=&gt;{const value=$(&#x27;ov-folder-path&#x27;).value.trim();s.folder=value.split(/[\\/]/).filter(Boolean).pop()||&#x27;AI imaging optics&#x27;;setLog(&#x27;폴더 선택 흐름을 미리 봅니다. 실제 디렉토리를 읽지는 않았습니다.&#x27;);draw();save()};root.querySelector(&#x27;[data-open-db]&#x27;).onclick=()=&gt;openView(&#x27;tailoring&#x27;);}
+ if(s.nav===&#x27;workspace&#x27;)root.querySelectorAll(&#x27;[data-param]&#x27;).forEach(input=&gt;{input.oninput=()=&gt;{s[input.dataset.param]=Number(input.value);root.querySelector(&#x27;[data-param-value=&quot;&#x27;+input.dataset.param+&#x27;&quot;]&#x27;).textContent=Number(input.value).toFixed(input.dataset.param===&#x27;radius&#x27;?1:3)+&#x27; mm&#x27;;drawGeometry();};input.onchange=()=&gt;{setLog(&#x27;설계 파라미터를 변경했습니다. 성능 표시와 학습 영역은 시안 예시입니다.&#x27;);save()};});
+ if(s.nav===&#x27;tailoring&#x27;){for(const key of [&#x27;material&#x27;,&#x27;surface&#x27;,&#x27;status&#x27;,&#x27;temperature&#x27;])$(&#x27;ov-filter-&#x27;+key).onchange=e=&gt;{s[key]=e.target.value;drawContent();drawContexts();save()};$(&#x27;ov-reset-filters&#x27;).onclick=()=&gt;{for(const key of [&#x27;material&#x27;,&#x27;surface&#x27;,&#x27;status&#x27;,&#x27;temperature&#x27;])s[key]=&#x27;all&#x27;;draw();save()};}
+ if(s.nav===&#x27;sim&#x27;)$(&#x27;ov-sim-mode&#x27;).onchange=e=&gt;{s.simMode=e.target.value;drawContent();save()};
+}
+function param(key,label,min,max,value,unit){return &#x27;&lt;div class=&quot;ov-param&quot;&gt;&lt;div class=&quot;ov-paramhead&quot;&gt;&lt;label&gt;&lt;input type=&quot;checkbox&quot; checked&gt; &#x27;+label+&#x27;&lt;/label&gt;&lt;output data-param-value=&quot;&#x27;+key+&#x27;&quot;&gt;&#x27;+Number(value).toFixed(key===&#x27;radius&#x27;?1:3)+&#x27; &#x27;+unit+&#x27;&lt;/output&gt;&lt;/div&gt;&lt;input type=&quot;range&quot; min=&quot;&#x27;+min+&#x27;&quot; max=&quot;&#x27;+max+&#x27;&quot; step=&quot;0.001&quot; value=&quot;&#x27;+value+&#x27;&quot; data-param=&quot;&#x27;+key+&#x27;&quot; aria-label=&quot;&#x27;+label+&#x27;&quot;&gt;&lt;div class=&quot;ov-rangelabels&quot;&gt;&lt;span&gt;&#x27;+min+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+max+&#x27; &#x27;+unit+&#x27;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;;}
+function openView(view){s.nav=view;s.sidebar=true;if(view===&#x27;explorer&#x27;){if(!files[s.view])s.view=&#x27;design_driver.py&#x27;;if(!s.tabs.includes(s.view))s.tabs.push(s.view);}else{s.view=view;if(!s.tabs.includes(view))s.tabs.push(view);}draw();save();}
+function openFile(name){if(!files[name])return;s.view=name;s.nav=&#x27;explorer&#x27;;if(!s.tabs.includes(name))s.tabs.push(name);setLog(name+&#x27; · 코드 보기 예시. 실제 파일 접근과 수정은 TBU입니다.&#x27;);draw();save();}
+function drawTabs(){$(&#x27;ov-tabs&#x27;).innerHTML=s.tabs.map(t=&gt;&#x27;&lt;button type=&quot;button&quot; role=&quot;tab&quot; class=&quot;ov-tab cursor-interaction&quot; aria-selected=&quot;&#x27;+(s.view===t)+&#x27;&quot; aria-controls=&quot;ov-content&quot; data-tab=&quot;&#x27;+t+&#x27;&quot;&gt;&#x27;+icon(icons[t]||(t.endsWith(&#x27;.json&#x27;)?&#x27;braces&#x27;:&#x27;file-code-2&#x27;))+&#x27;&lt;span class=&quot;ov-tabname&quot;&gt;&#x27;+esc(titles[t]||t.split(&#x27;/&#x27;).pop())+&#x27;&lt;/span&gt;&lt;/button&gt;&#x27;).join(&#x27;&#x27;);root.querySelectorAll(&#x27;[data-tab]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{s.view=b.dataset.tab;s.nav=files[s.view]?&#x27;explorer&#x27;:s.view;draw();save()});}
+function drawContent(){const c=$(&#x27;ov-content&#x27;);$(&#x27;ov-breadcrumb&#x27;).innerHTML=icon(&#x27;folder&#x27;)+esc(s.folder)+&#x27; &lt;span&gt;›&lt;/span&gt; &#x27;+esc(titles[s.view]||s.view);if(files[s.view]){const f=files[s.view];c.innerHTML=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;span class=&quot;ov-small&quot;&gt;&#x27;+f.lang+&#x27; · 읽기 전용 코드 예시&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ov-tag&quot;&gt;파일 읽기 TBU&lt;/span&gt;&lt;/div&gt;&lt;pre class=&quot;ov-code&quot;&gt;&#x27;+f.text.split(&#x27;\n&#x27;).map((line,i)=&gt;&#x27;&lt;span class=&quot;ov-code-line&quot;&gt;&lt;span class=&quot;ov-lineno&quot;&gt;&#x27;+(i+1)+&#x27;&lt;/span&gt;&lt;span class=&quot;ov-src&#x27;+(line.trim().startsWith(&#x27;#&#x27;)?&#x27; ov-comment&#x27;:&#x27;&#x27;)+&#x27;&quot;&gt;&#x27;+esc(line)+&#x27;&lt;/span&gt;&lt;/span&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/pre&gt;&#x27;;return}
+ if(s.view===&#x27;workspace&#x27;){c.innerHTML=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;div&gt;&lt;h2&gt;Optical workspace&lt;/h2&gt;&lt;div class=&quot;ov-small&quot;&gt;Triplet · D057_2 · 저장 결과 표시 예시&lt;/div&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; id=&quot;ov-target-open&quot;&gt;&#x27;+icon(&#x27;crosshair&#x27;)+&#x27; Targets&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;ov-geometry&quot;&gt;&lt;div class=&quot;ov-boxhead&quot;&gt;&lt;h3&gt;Optical layout&lt;/h3&gt;&lt;button type=&quot;button&quot; id=&quot;ov-view-toggle&quot; class=&quot;cursor-interaction&quot;&gt;&#x27;+(s.section?&#x27;3D viewer&#x27;:&#x27;2D section view&#x27;)+&#x27;&lt;/button&gt;&lt;/div&gt;&lt;svg id=&quot;ov-geometry&quot; role=&quot;img&quot; aria-label=&quot;세 렌즈 광학계 배치 예시&quot;&gt;&lt;/svg&gt;&lt;div class=&quot;ov-small&quot;&gt;&#x27;+(s.section?&#x27;이미지면 (0, 0) · 단면 배치 예시&#x27;:&#x27;3D viewer 배치 예시 · 형상 미리보기&#x27;)+&#x27;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-metrics&quot;&gt;&lt;div&gt;&lt;span&gt;NA&lt;/span&gt;&lt;strong&gt;0.439&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;FOV H / V&lt;/span&gt;&lt;strong&gt;22.1° / 5.59°&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;Distortion&lt;/span&gt;&lt;strong&gt;1.02%&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;Rel. illum.&lt;/span&gt;&lt;strong&gt;— &lt;small class=&quot;ov-small&quot;&gt;TBU&lt;/small&gt;&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-charts&quot;&gt;&lt;section class=&quot;ov-chart&quot;&gt;&lt;div class=&quot;ov-boxhead&quot;&gt;&lt;h3&gt;MTF curve&lt;/h3&gt;&lt;span class=&quot;ov-small&quot;&gt;표시 예시&lt;/span&gt;&lt;/div&gt;&lt;svg id=&quot;ov-mtf&quot; role=&quot;img&quot; aria-label=&quot;MTF 곡선 화면 배치 예시&quot;&gt;&lt;/svg&gt;&lt;/section&gt;&lt;section class=&quot;ov-chart&quot;&gt;&lt;div class=&quot;ov-boxhead&quot;&gt;&lt;h3&gt;Spot · 1.0F&lt;/h3&gt;&lt;span class=&quot;ov-small&quot;&gt;RMS 직경&lt;/span&gt;&lt;/div&gt;&lt;svg id=&quot;ov-spot&quot; role=&quot;img&quot; aria-label=&quot;Spot diagram 화면 배치 예시&quot;&gt;&lt;/svg&gt;&lt;/section&gt;&lt;/div&gt;&lt;div class=&quot;ov-statusline&quot;&gt;&lt;span&gt;Prediction reliability &lt;strong&gt;— / TBU&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;Design space · Pareto&lt;/span&gt;&lt;span&gt;목표와 참조 결과 비교&lt;/span&gt;&lt;/div&gt;&#x27;;$(&#x27;ov-target-open&#x27;).onclick=()=&gt;openFile(&#x27;config/targets.json&#x27;);$(&#x27;ov-view-toggle&#x27;).onclick=()=&gt;{s.section=!s.section;drawContent();save()};requestAnimationFrame(drawWorkspacePlots);}
+ if(s.view===&#x27;tailoring&#x27;)drawTailoring();
+ if(s.view===&#x27;update&#x27;){c.innerHTML=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;div&gt;&lt;h2&gt;Update model&lt;/h2&gt;&lt;div class=&quot;ov-small&quot;&gt;surrogate-v03 → 새 모델 버전&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;ov-tag&quot;&gt;Training TBU&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-inset&quot;&gt;&lt;h3&gt;Training dataset&lt;/h3&gt;&lt;p&gt;&lt;strong style=&quot;color:var(--ov-fg);font-weight:500&quot;&gt;&#x27;+s.training.length+&#x27;개 케이스 선택&lt;/strong&gt; · DB tailoring의 선택 집합&lt;/p&gt;&lt;div class=&quot;ov-small&quot;&gt;&#x27;+(s.training.length?s.training.slice(0,4).join(&#x27;, &#x27;)+(s.training.length&gt;4?&#x27; …&#x27;:&#x27;&#x27;):&#x27;학습에 사용할 데이터를 먼저 검토하세요.&#x27;)+&#x27;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; data-goto=&quot;tailoring&quot;&gt;선택 데이터 검토&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;ov-row&quot;&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;Learning rate&lt;/span&gt;&lt;input id=&quot;ov-lr&quot; type=&quot;number&quot; value=&quot;&#x27;+s.lr+&#x27;&quot; step=&quot;0.0001&quot; min=&quot;0.000001&quot;&gt;&lt;/label&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;Epochs&lt;/span&gt;&lt;input id=&quot;ov-epochs&quot; type=&quot;number&quot; value=&quot;&#x27;+s.epochs+&#x27;&quot; min=&quot;1&quot;&gt;&lt;/label&gt;&lt;/div&gt;&#x27;+selectMarkup(&#x27;ov-compute&#x27;,&#x27;Compute&#x27;,[&#x27;Local GPU&#x27;,&#x27;Server GPU&#x27;],s.compute)+&#x27;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;New model version&lt;/span&gt;&lt;input value=&quot;surrogate-v04.pth&quot; aria-label=&quot;새 모델 버전 이름&quot;&gt;&lt;/label&gt;&lt;div class=&quot;ov-note&quot;&gt;현재 모델을 보존하고 새 버전으로 저장합니다. 학습이 완료되면 새 모델을 Pred model로 전환하는 구성입니다.&lt;/div&gt;&lt;div class=&quot;ov-inline ov-wrap&quot;&gt;&lt;button class=&quot;ov-primary&quot; type=&quot;button&quot; disabled&gt;Start update · TBU&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; id=&quot;ov-update-preview&quot;&gt;업데이트 계획 보기&lt;/button&gt;&lt;/div&gt;&#x27;;$(&#x27;ov-lr&#x27;).onchange=e=&gt;s.lr=e.target.value;$(&#x27;ov-epochs&#x27;).onchange=e=&gt;s.epochs=e.target.value;$(&#x27;ov-compute&#x27;).onchange=e=&gt;s.compute=e.target.value;$(&#x27;ov-update-preview&#x27;).onclick=()=&gt;setLog(&#x27;업데이트 계획: &#x27;+s.training.length+&#x27; cases · learning rate &#x27;+s.lr+&#x27; · &#x27;+s.epochs+&#x27; epochs · &#x27;+s.compute+&#x27; · 새 모델로 보존&#x27;);}
+ if(s.view===&#x27;sim&#x27;){c.innerHTML=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;div&gt;&lt;h2&gt;Add Zemax Sim&lt;/h2&gt;&lt;div class=&quot;ov-small&quot;&gt;추가 데이터 요청 · 메인 설계와 독립된 초안&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;ov-tag&quot;&gt;Zemax TBU&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-localbar&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-simmode=&quot;Manual&quot; aria-pressed=&quot;&#x27;+(s.simMode===&#x27;Manual&#x27;)+&#x27;&quot;&gt;Manual&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-simmode=&quot;Auto&quot; aria-pressed=&quot;&#x27;+(s.simMode===&#x27;Auto&#x27;)+&#x27;&quot;&gt;Auto&lt;/button&gt;&lt;/div&gt;&#x27;+(s.simMode===&#x27;Manual&#x27;?&#x27;&lt;div class=&quot;ov-inset&quot;&gt;&lt;h3&gt;L1 · Thickness&lt;/h3&gt;&lt;div class=&quot;ov-row&quot;&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;Min (mm)&lt;/span&gt;&lt;input type=&quot;number&quot; value=&quot;3&quot; aria-label=&quot;추가시뮬레이션최소값&quot;&gt;&lt;/label&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;Max (mm)&lt;/span&gt;&lt;input type=&quot;number&quot; value=&quot;10&quot; aria-label=&quot;추가시뮬레이션최대값&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;label class=&quot;ov-options&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; 추가 학습&lt;/label&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;추가 학습 데이터 수&lt;/span&gt;&lt;input id=&quot;ov-sim-count&quot; type=&quot;number&quot; value=&quot;&#x27;+s.simCount+&#x27;&quot; min=&quot;1&quot;&gt;&lt;/label&gt;&lt;div class=&quot;ov-small&quot;&gt;1개: 중간점 · 2개 이상: 양 끝을 포함한 등간격&lt;/div&gt;&lt;/div&gt;&#x27;+selectMarkup(&#x27;ov-combination&#x27;,&#x27;Combination&#x27;,[&#x27;All combinations&#x27;,&#x27;One parameter at a time&#x27;],&#x27;All combinations&#x27;)+&#x27;&lt;label class=&quot;ov-options&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; 기 구간 불포함&lt;/label&gt;&#x27;:&#x27;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;Additional cases&lt;/span&gt;&lt;input id=&quot;ov-sim-count&quot; type=&quot;number&quot; value=&quot;64&quot; min=&quot;1&quot;&gt;&lt;/label&gt;&#x27;+selectMarkup(&#x27;ov-algorithm&#x27;,&#x27;Sampling algorithm&#x27;,[&#x27;Space-filling / maximin&#x27;,&#x27;Sobol&#x27;,&#x27;Latin hypercube&#x27;],&#x27;Space-filling / maximin&#x27;))+&#x27;&lt;div class=&quot;ov-note&quot;&gt;실행·진행률·라이선스 오류는 백엔드 연결 후 제공됩니다.&lt;/div&gt;&lt;div class=&quot;ov-inline ov-wrap&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ov-primary&quot; disabled&gt;추가 데이터 생성 · TBU&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; id=&quot;ov-sim-preview&quot;&gt;요청 계획 보기&lt;/button&gt;&lt;/div&gt;&#x27;;root.querySelectorAll(&#x27;[data-simmode]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{s.simMode=b.dataset.simmode;drawSidebar();drawContent();drawIcons();save()});$(&#x27;ov-sim-preview&#x27;).onclick=()=&gt;{const n=Number($(&#x27;ov-sim-count&#x27;).value);if(!Number.isInteger(n)||n&lt;1){setLog(&#x27;입력 확인: 추가 데이터 수는 1 이상의 정수여야 합니다.&#x27;);return}s.simCount=n;setLog(&#x27;Zemax 요청 계획: &#x27;+s.simMode+&#x27; · &#x27;+n+&#x27;개 표본 · DB에 추가 저장 예정&#x27;);};}
+ if(s.view===&#x27;auto&#x27;){c.innerHTML=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;div&gt;&lt;h2&gt;Auto design&lt;/h2&gt;&lt;div class=&quot;ov-small&quot;&gt;목표·제약을 기준으로 반복하는 설계 흐름&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;ov-tag&quot;&gt;Execution TBU&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-targets&quot;&gt;&lt;div&gt;&lt;span&gt;MTF · 6 lp/mm&lt;/span&gt;0F ≥40% · 0.8F ≥30%&lt;/div&gt;&lt;div&gt;&lt;span&gt;Spot · RMS diameter&lt;/span&gt;1.60 μm&lt;/div&gt;&lt;div&gt;&lt;span&gt;FOV · horizontal full&lt;/span&gt;24°&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-flow&quot;&gt;&#x27;+[[&#x27;목표·제약 확인&#x27;,&#x27;targets.json · 읽기 전용&#x27;],[&#x27;후보 예측 · 검증 요청&#x27;,&#x27;surrogate → Zemax&#x27;],[&#x27;추가 데이터 · 모델 갱신&#x27;,&#x27;DB 누적 저장 → 새 모델 버전&#x27;],[&#x27;Best candidate 재평가&#x27;,&#x27;목표·중단 조건 확인&#x27;]].map((a,i)=&gt;&#x27;&lt;div class=&quot;ov-flowstep&quot;&gt;&lt;span class=&quot;ov-stepnum&quot;&gt;0&#x27;+(i+1)+&#x27;&lt;/span&gt;&lt;div&gt;&lt;strong&gt;&#x27;+a[0]+&#x27;&lt;/strong&gt;&lt;span&gt;&#x27;+a[1]+&#x27;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/div&gt;&lt;div class=&quot;ov-row&quot;&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;최대 시간 (hours)&lt;/span&gt;&lt;input type=&quot;number&quot; value=&quot;24&quot; min=&quot;1&quot;&gt;&lt;/label&gt;&lt;label class=&quot;ov-field&quot;&gt;&lt;span&gt;최대 반복 횟수&lt;/span&gt;&lt;input type=&quot;number&quot; value=&quot;1000&quot; min=&quot;1&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;div class=&quot;ov-small&quot;&gt;100 iteration 동안 best 개선이 0.5% 미만이면 중단&lt;/div&gt;&lt;div class=&quot;ov-inline ov-wrap&quot; style=&quot;margin-top:15px&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ov-primary&quot; disabled&gt;Start auto design · TBU&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button&quot; disabled&gt;Stop current job&lt;/button&gt;&lt;/div&gt;&#x27;;}
+ root.querySelectorAll(&#x27;[data-goto]&#x27;).forEach(b=&gt;b.onclick=()=&gt;openView(b.dataset.goto));drawIcons();
+}
+function drawTailoring(){const rows=filtered(),chosen=rows.filter(r=&gt;s.selection.includes(r.id));let h=&#x27;&lt;div class=&quot;ov-contenthead&quot;&gt;&lt;div&gt;&lt;h2&gt;DB tailoring&lt;/h2&gt;&lt;div class=&quot;ov-small&quot;&gt;분포를 살펴보고 학습에 사용할 케이스 선택&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;ov-tag ov-preview&quot;&gt;예시 데이터&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-localbar&quot;&gt;&#x27;+[&#x27;PCA&#x27;,&#x27;UMAP&#x27;,&#x27;User select from DB&#x27;].map(m=&gt;&#x27;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-method=&quot;&#x27;+m+&#x27;&quot; aria-pressed=&quot;&#x27;+(s.method===m)+&#x27;&quot;&gt;&#x27;+m+&#x27;&lt;/button&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/div&gt;&#x27;;
+ if(s.method!==&#x27;User select from DB&#x27;)h+=&#x27;&lt;div class=&quot;ov-inline ov-wrap&quot; style=&quot;margin-bottom:10px&quot;&gt;&lt;span class=&quot;ov-small&quot;&gt;&#x27;+(s.method===&#x27;PCA&#x27;?&#x27;Standardized numeric features · 설명 분산 TBU&#x27;:&#x27;n_neighbors 15 · min_dist 0.1 · seed 42&#x27;)+&#x27;&lt;/span&gt;&lt;span class=&quot;ov-spacer&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ov-tag&quot;&gt;계산 TBU&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;ov-scatterbox&quot;&gt;&lt;svg id=&quot;ov-scatter&quot; class=&quot;ov-scatter&quot; role=&quot;img&quot; aria-label=&quot;&#x27;+s.method+&#x27; 데이터 투영 예시. 점을 클릭하여 학습 케이스를 선택합니다.&quot;&gt;&lt;/svg&gt;&lt;div class=&quot;ov-legend&quot;&gt;&lt;span&gt;&lt;i class=&quot;ov-dot&quot; style=&quot;background:var(--ov-blue)&quot;&gt;&lt;/i&gt;N-BK7&lt;/span&gt;&lt;span&gt;&lt;i class=&quot;ov-dot&quot; style=&quot;background:var(--ov-green)&quot;&gt;&lt;/i&gt;PMMA&lt;/span&gt;&lt;span&gt;&lt;i class=&quot;ov-dot&quot; style=&quot;background:var(--ov-purple)&quot;&gt;&lt;/i&gt;PC&lt;/span&gt;&lt;span&gt;선택 = 테두리 강조&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-small&quot; id=&quot;ov-hover-info&quot; style=&quot;padding:5px 0&quot;&gt;배치 예시 · 학습 신뢰도를 나타내지 않습니다.&lt;/div&gt;&#x27;;
+ h+=&#x27;&lt;div class=&quot;ov-selectionline&quot;&gt;&lt;span&gt;필터 &lt;strong&gt;&#x27;+rows.length+&#x27;&lt;/strong&gt; / &#x27;+sample.length+&#x27;건 · 선택 &lt;strong&gt;&#x27;+s.selection.length+&#x27;&lt;/strong&gt;건&lt;/span&gt;&lt;div class=&quot;ov-inline ov-wrap&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ov-button cursor-interaction&quot; id=&quot;ov-select-filtered&quot;&gt;필터 결과 선택&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; id=&quot;ov-clear-selection&quot;&gt;선택 해제&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;ov-tablewrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th aria-label=&quot;선택&quot;&gt;&lt;/th&gt;&lt;th&gt;Case ID&lt;/th&gt;&lt;th&gt;Material&lt;/th&gt;&lt;th&gt;Surface&lt;/th&gt;&lt;th&gt;°C&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#x27;+rows.slice(0,8).map(r=&gt;&#x27;&lt;tr class=&quot;&#x27;+(s.selection.includes(r.id)?&#x27;ov-selected&#x27;:&#x27;&#x27;)+&#x27;&quot;&gt;&lt;td&gt;&lt;input type=&quot;checkbox&quot; data-case=&quot;&#x27;+r.id+&#x27;&quot; aria-label=&quot;&#x27;+r.id+&#x27; 선택&quot;&#x27;+(s.selection.includes(r.id)?&#x27; checked&#x27;:&#x27;&#x27;)+&#x27;&gt;&lt;/td&gt;&lt;td&gt;&#x27;+r.id+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+r.material+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+(r.surface===&#x27;STANDARD&#x27;?&#x27;Standard&#x27;:&#x27;Even asphere&#x27;)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+r.temperature+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+r.status+&#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&#x27;+(rows.length?&#x27;&lt;div class=&quot;ov-small&quot; style=&quot;padding:5px 0&quot;&gt;&#x27;+Math.min(rows.length,8)+&#x27; / &#x27;+rows.length+&#x27;행 미리보기 · 필터 결과 전체 선택 가능&lt;/div&gt;&#x27;:&#x27;&lt;div class=&quot;ov-note&quot;&gt;이 필터에 맞는 예시 케이스가 없습니다.&lt;/div&gt;&#x27;)+&#x27;&lt;div class=&quot;ov-inline ov-wrap&quot; style=&quot;margin-top:13px&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ov-primary cursor-interaction&quot; id=&quot;ov-use-selection&quot;&#x27;+(!s.selection.length?&#x27; disabled&#x27;:&#x27;&#x27;)+&#x27;&gt;학습 집합으로 사용 (&#x27;+s.selection.length+&#x27;)&lt;/button&gt;&lt;span class=&quot;ov-small&quot;&gt;DB 원본 변경 없음 · 시안 내 선택만 반영&lt;/span&gt;&lt;/div&gt;&#x27;;
+ $(&#x27;ov-content&#x27;).innerHTML=h;root.querySelectorAll(&#x27;[data-method]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{s.method=b.dataset.method;drawContent();save()});root.querySelectorAll(&#x27;[data-case]&#x27;).forEach(input=&gt;input.onchange=()=&gt;toggleCase(input.dataset.case));$(&#x27;ov-select-filtered&#x27;).onclick=()=&gt;{s.selection=Array.from(new Set([...s.selection,...rows.map(r=&gt;r.id)]));drawContent();drawContexts();save()};$(&#x27;ov-clear-selection&#x27;).onclick=()=&gt;{s.selection=[];drawContent();drawContexts();save()};$(&#x27;ov-use-selection&#x27;).onclick=()=&gt;{s.training=[...s.selection];setLog(&#x27;학습 집합에 &#x27;+s.training.length+&#x27;개 예시 케이스를 반영했습니다. Update model에서 검토할 수 있습니다.&#x27;);drawSidebar();drawContexts();drawIcons();save()};if(s.method!==&#x27;User select from DB&#x27;)requestAnimationFrame(drawScatter);
+}
+function toggleCase(id){s.selection=s.selection.includes(id)?s.selection.filter(v=&gt;v!==id):[...s.selection,id];drawContent();drawContexts();save();}
+function svgEl(tag,attrs={},text){const e=document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}
+function setupSvg(id,height){const svg=$(id);if(!svg)return null;const w=Math.max(180,Math.round(svg.getBoundingClientRect().width));svg.setAttribute(&#x27;viewBox&#x27;,&#x27;0 0 &#x27;+w+&#x27; &#x27;+height);svg.replaceChildren();return {svg,w,h:height};}
+function drawGeometry(){const a=setupSvg(&#x27;ov-geometry&#x27;,196);if(!a)return;const{svg,w,h}=a;svg.append(svgEl(&#x27;line&#x27;,{x1:20,y1:104,x2:w-20,y2:104,stroke:&#x27;var(--ov-dim)&#x27;,&#x27;stroke-width&#x27;:1,&#x27;stroke-dasharray&#x27;:&#x27;4 4&#x27;,opacity:.5}));const x0=w*.17;svg.append(svgEl(&#x27;line&#x27;,{x1:x0,y1:41,x2:x0,y2:155,stroke:&#x27;var(--ov-green)&#x27;,&#x27;stroke-width&#x27;:1.3}));svg.append(svgEl(&#x27;text&#x27;,{x:x0,y:178,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;ov-svgtext&#x27;},&#x27;Image plane&#x27;));const gapAdjust=(s.gap-9.734)*1.5;[.39,.58,.77].forEach((f,i)=&gt;{const x=w*f+gapAdjust*(i+1)*.3,ww=i===0?Math.min(28,s.thickness*2.8):[0,19,25][i],hh=[57,67,62][i];let path;if(s.section){path=&#x27;M &#x27;+(x-ww/2)+&#x27; &#x27;+(104-hh)+&#x27; Q &#x27;+(x+ww*.95)+&#x27; 104 &#x27;+(x-ww/2)+&#x27; &#x27;+(104+hh)+&#x27; L &#x27;+(x+ww/2)+&#x27; &#x27;+(104+hh)+&#x27; Q &#x27;+(x-ww*.95)+&#x27; 104 &#x27;+(x+ww/2)+&#x27; &#x27;+(104-hh)+&#x27; Z&#x27;;}else{path=&#x27;M &#x27;+(x-ww/2)+&#x27; &#x27;+(104-hh)+&#x27; C &#x27;+(x-43)+&#x27; &#x27;+(104-hh)+&#x27; &#x27;+(x-43)+&#x27; &#x27;+(104+hh)+&#x27; &#x27;+(x-ww/2)+&#x27; &#x27;+(104+hh)+&#x27; L &#x27;+(x+ww/2)+&#x27; &#x27;+(104+hh)+&#x27; C &#x27;+(x+40)+&#x27; &#x27;+(104+hh)+&#x27; &#x27;+(x+40)+&#x27; &#x27;+(104-hh)+&#x27; &#x27;+(x+ww/2)+&#x27; &#x27;+(104-hh)+&#x27; Z&#x27;;}svg.append(svgEl(&#x27;path&#x27;,{d:path,fill:&#x27;var(--ov-glass)&#x27;,&#x27;fill-opacity&#x27;:.18,stroke:&#x27;var(--ov-glass)&#x27;,&#x27;stroke-width&#x27;:1.3}));if(!s.section)svg.append(svgEl(&#x27;ellipse&#x27;,{cx:x+ww/2,cy:104,rx:25,ry:hh,fill:&#x27;var(--ov-glass)&#x27;,&#x27;fill-opacity&#x27;:.09,stroke:&#x27;var(--ov-glass)&#x27;,&#x27;stroke-width&#x27;:1}));svg.append(svgEl(&#x27;text&#x27;,{x,y:184,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;ov-svgtext&#x27;},&#x27;L&#x27;+(i+1)));});svg.append(svgEl(&#x27;text&#x27;,{x:w-10,y:17,&#x27;text-anchor&#x27;:&#x27;end&#x27;,class:&#x27;ov-svgtext&#x27;},s.section?&#x27;Section / mm&#x27;:&#x27;Geometry preview&#x27;));}
+function drawWorkspacePlots(){drawGeometry();let a=setupSvg(&#x27;ov-mtf&#x27;,135);if(a){let{svg,w}=a;const x=v=&gt;30+(w-42)*v/30,y=v=&gt;104-78*v;[0,.5,1].forEach(t=&gt;{svg.append(svgEl(&#x27;line&#x27;,{x1:30,y1:y(t),x2:w-12,y2:y(t),class:&#x27;ov-gridline&#x27;}));svg.append(svgEl(&#x27;text&#x27;,{x:25,y:y(t)+4,&#x27;text-anchor&#x27;:&#x27;end&#x27;,class:&#x27;ov-svgtext&#x27;},Math.round(t*100)))});[0,10,20,30].forEach(t=&gt;svg.append(svgEl(&#x27;text&#x27;,{x:x(t),y:118,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;ov-svgtext&#x27;},t)));for(let k=0;k&lt;3;k++){const points=Array.from({length:31},(_,i)=&gt;x(i)+&#x27;,&#x27;+y(Math.exp(-Math.pow(i/(18-k*2),1.65)))).join(&#x27; &#x27;);svg.append(svgEl(&#x27;polyline&#x27;,{points,fill:&#x27;none&#x27;,stroke:k===2?&#x27;var(--ov-purple)&#x27;:&#x27;var(--ov-blue)&#x27;,&#x27;stroke-width&#x27;:1.6,&#x27;stroke-dasharray&#x27;:k===1?&#x27;4 3&#x27;:&#x27;none&#x27;,opacity:1-k*.15}));}svg.append(svgEl(&#x27;text&#x27;,{x:w-10,y:132,&#x27;text-anchor&#x27;:&#x27;end&#x27;,class:&#x27;ov-svgtext&#x27;},&#x27;lp/mm&#x27;));}a=setupSvg(&#x27;ov-spot&#x27;,135);if(a){let{svg,w}=a;const cx=w/2,cy=67;svg.append(svgEl(&#x27;line&#x27;,{x1:20,y1:cy,x2:w-12,y2:cy,class:&#x27;ov-gridline&#x27;}));svg.append(svgEl(&#x27;line&#x27;,{x1:cx,y1:20,x2:cx,y2:110,class:&#x27;ov-gridline&#x27;}));for(let i=0;i&lt;45;i++){const t=i*2.399,r=4+Math.sqrt(i)*4.3;svg.append(svgEl(&#x27;circle&#x27;,{cx:cx+Math.cos(t)*r,cy:cy+Math.sin(t)*r*.75,r:1.7,fill:&#x27;var(--ov-blue)&#x27;,opacity:.7}));}svg.append(svgEl(&#x27;text&#x27;,{x:cx,y:128,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;ov-svgtext&#x27;},&#x27;RMS diameter 48.71 μm · 예시&#x27;));}}
+function drawScatter(){const a=setupSvg(&#x27;ov-scatter&#x27;,238);if(!a)return;const{svg,w,h}=a,rows=filtered();const px=r=&gt;s.method===&#x27;PCA&#x27;?r.x:r.ux,py=r=&gt;s.method===&#x27;PCA&#x27;?r.y:r.uy;const xs=sample.map(px),ys=sample.map(py),xmin=Math.min(...xs)-.35,xmax=Math.max(...xs)+.35,ymin=Math.min(...ys)-.35,ymax=Math.max(...ys)+.35;const left=40,right=w-16,top=18,bottom=205;const x=v=&gt;left+(v-xmin)/(xmax-xmin)*(right-left),y=v=&gt;bottom-(v-ymin)/(ymax-ymin)*(bottom-top);for(let i=0;i&lt;4;i++){const xx=left+(right-left)*i/3,yy=top+(bottom-top)*i/3;svg.append(svgEl(&#x27;line&#x27;,{x1:xx,y1:top,x2:xx,y2:bottom,class:&#x27;ov-gridline&#x27;}));svg.append(svgEl(&#x27;line&#x27;,{x1:left,y1:yy,x2:right,y2:yy,class:&#x27;ov-gridline&#x27;}));}svg.append(svgEl(&#x27;rect&#x27;,{x:left,y:top,width:right-left,height:bottom-top,fill:&#x27;none&#x27;,stroke:&#x27;var(--ov-line)&#x27;}));svg.append(svgEl(&#x27;text&#x27;,{x:(left+right)/2,y:229,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;ov-svgtext&#x27;},s.method===&#x27;PCA&#x27;?&#x27;PC1&#x27;:&#x27;UMAP 1&#x27;));svg.append(svgEl(&#x27;text&#x27;,{x:10,y:13,class:&#x27;ov-svgtext&#x27;},s.method===&#x27;PCA&#x27;?&#x27;PC2&#x27;:&#x27;UMAP 2&#x27;));rows.forEach(r=&gt;{const chosen=s.selection.includes(r.id),xx=x(px(r)),yy=y(py(r));if(chosen)svg.append(svgEl(&#x27;circle&#x27;,{cx:xx,cy:yy,r:6,fill:&#x27;none&#x27;,stroke:&#x27;var(--ov-orange)&#x27;,&#x27;stroke-width&#x27;:1.5}));svg.append(svgEl(&#x27;circle&#x27;,{cx:xx,cy:yy,r:chosen?3.5:3,fill:[&#x27;var(--ov-blue)&#x27;,&#x27;var(--ov-green)&#x27;,&#x27;var(--ov-purple)&#x27;][r.group],opacity:r.status===&#x27;INVALID&#x27;?.4:.9}));});const overlay=svgEl(&#x27;rect&#x27;,{x:left,y:top,width:right-left,height:bottom-top,fill:&#x27;transparent&#x27;});svg.append(overlay);function nearest(e){const b=svg.getBoundingClientRect(),xx=(e.clientX-b.left)*w/b.width,yy=(e.clientY-b.top)*h/b.height;let row=null,d=18;for(const r of rows){const dd=Math.hypot(x(px(r))-xx,y(py(r))-yy);if(dd&lt;d){d=dd;row=r}}return row}overlay.onpointermove=e=&gt;{const r=nearest(e);hoverId=r?.id||null;if($(&#x27;ov-hover-info&#x27;))$(&#x27;ov-hover-info&#x27;).textContent=r?r.id+&#x27; · &#x27;+r.material+&#x27; · &#x27;+r.surface+&#x27; · &#x27;+r.temperature+&#x27;°C · &#x27;+(s.selection.includes(r.id)?&#x27;선택됨&#x27;:&#x27;클릭하여 선택&#x27;):&#x27;배치 예시 · 학습 신뢰도를 나타내지 않습니다.&#x27;};overlay.onclick=e=&gt;{const r=nearest(e);if(r)toggleCase(r.id)};overlay.onpointerleave=()=&gt;{hoverId=null;};}
+function drawContexts(){$(&#x27;ov-chat-context&#x27;).innerHTML=&#x27;&lt;span&gt;@ &#x27;+esc(titles[s.view]||s.view.split(&#x27;/&#x27;).pop())+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+s.training.length+&#x27; training cases&lt;/span&gt;&lt;span&gt;targets.json&lt;/span&gt;&#x27;;$(&#x27;ov-global-selection&#x27;).textContent=s.training.length?&#x27;학습 집합 &#x27;+s.training.length+&#x27;건&#x27;:&#x27;&#x27;;}
+function applyLayout(){s.labels=design.labels;root.style.setProperty(&#x27;--ov-sidebar&#x27;,design.sidebarWidth+&#x27;px&#x27;);root.style.setProperty(&#x27;--ov-chat&#x27;,design.chatWidth+&#x27;px&#x27;);root.dataset.chat=String(s.chat);root.dataset.sidebar=String(s.sidebar);root.dataset.labels=String(s.labels);$(&#x27;ov-sidebar&#x27;).hidden=!s.sidebar;$(&#x27;ov-chat&#x27;).hidden=!s.chat;$(&#x27;ov-chat-toggle&#x27;).setAttribute(&#x27;aria-pressed&#x27;,s.chat);}
+function draw(){applyLayout();$(&#x27;ov-project-title&#x27;).textContent=s.folder;root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(b=&gt;b.setAttribute(&#x27;aria-pressed&#x27;,s.nav===b.dataset.view));$(&#x27;ov-state-view&#x27;).textContent=titles[s.nav]||&#x27;Explorer&#x27;;drawSidebar();drawTabs();drawContent();drawContexts();drawOutput();drawIcons();}
+root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(b=&gt;b.onclick=()=&gt;openView(b.dataset.view));
+function toggleChat(){s.chat=!s.chat;applyLayout();requestAnimationFrame(()=&gt;{if(s.view===&#x27;workspace&#x27;)drawWorkspacePlots();if(s.view===&#x27;tailoring&#x27;)drawScatter()});save();}
+function toggleSidebar(){s.sidebar=!s.sidebar;applyLayout();requestAnimationFrame(()=&gt;{if(s.view===&#x27;workspace&#x27;)drawWorkspacePlots();if(s.view===&#x27;tailoring&#x27;)drawScatter()});save();}
+$(&#x27;ov-chat-toggle&#x27;).onclick=toggleChat;$(&#x27;ov-chat-close&#x27;).onclick=toggleChat;$(&#x27;ov-sidebar-toggle&#x27;).onclick=toggleSidebar;$(&#x27;ov-label-toggle&#x27;).onclick=()=&gt;{design.labels=!design.labels;applyLayout();requestAnimationFrame(()=&gt;{drawWorkspacePlots();drawScatter()});save()};
+root.addEventListener(&#x27;keydown&#x27;,e=&gt;{const modifier=e.ctrlKey||e.metaKey,isB=e.code===&#x27;KeyB&#x27;||e.key.toLowerCase()===&#x27;b&#x27;;if(modifier&amp;&amp;e.altKey&amp;&amp;isB){e.preventDefault();toggleChat()}else if(modifier&amp;&amp;!e.altKey&amp;&amp;isB){e.preventDefault();toggleSidebar()}});
+root.querySelectorAll(&#x27;[data-output]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{s.output=b.dataset.output;drawOutput();save()});root.querySelectorAll(&#x27;[data-prompt]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{$(&#x27;ov-prompt&#x27;).value=b.dataset.prompt;$(&#x27;ov-prompt&#x27;).focus()});
+$(&#x27;ov-preview-request&#x27;).onclick=()=&gt;{const prompt=$(&#x27;ov-prompt&#x27;).value.trim();if(!prompt)return;const m=$(&#x27;ov-messages&#x27;);m.replaceChildren();const user=document.createElement(&#x27;div&#x27;);user.className=&#x27;ov-message&#x27;;const u=document.createElement(&#x27;strong&#x27;);u.textContent=&#x27;You&#x27;;user.append(u,document.createTextNode(prompt));const reply=document.createElement(&#x27;div&#x27;);reply.className=&#x27;ov-message&#x27;;const r=document.createElement(&#x27;strong&#x27;);r.textContent=&#x27;계획 예시 · Claude 응답 아님&#x27;;reply.append(r,document.createTextNode(&#x27;1. 현재 목표·제약 확인\n2. &#x27;+s.training.length+&#x27;개 선택 데이터와 현재 설계 검토\n3. 필요한 Python 작업 계획 제안\n4. 실행 전 확인&#x27;));reply.style.whiteSpace=&#x27;pre-line&#x27;;m.append(user,reply);$(&#x27;ov-chat-empty&#x27;).hidden=true;setLog(&#x27;LLM 요청 초안의 계획 예시를 표시했습니다. 외부 전송과 Python 실행은 하지 않았습니다.&#x27;);};
+restore(window.openai?.widgetState);draw();
+window.addEventListener(&#x27;openai:set_globals&#x27;,event=&gt;{if(event.detail?.globals?.widgetState){restore(event.detail.globals.widgetState);draw()}});
+let lastWidth=0,pending=false;new ResizeObserver(entries=&gt;{const width=entries[0]?.contentRect.width;if(width===lastWidth)return;lastWidth=width;if(pending)return;pending=true;requestAnimationFrame(()=&gt;{pending=false;if(s.view===&#x27;workspace&#x27;)drawWorkspacePlots();if(s.view===&#x27;tailoring&#x27;)drawScatter()})}).observe($(&#x27;ov-editor&#x27;));
+if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:()=&gt;{applyLayout();requestAnimationFrame(()=&gt;{drawWorkspacePlots();drawScatter()});save()}});tweak.addToggle(design,&#x27;labels&#x27;,{label:&#x27;왼쪽 메뉴 이름 표시&#x27;});tweak.addSlider(design,&#x27;sidebarWidth&#x27;,{label:&#x27;왼쪽 설정 패널 너비&#x27;,min:180,max:270,step:10,unit:&#x27;px&#x27;});tweak.addSlider(design,&#x27;chatWidth&#x27;,{label:&#x27;LLM 패널 너비&#x27;,min:220,max:340,step:10,unit:&#x27;px&#x27;});}
+})();
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (event) =&gt; {
+    for (const target of event.composedPath()) {
+      if (target?.nodeType === Node.ELEMENT_NODE) {
+        const trigger = target.closest(&quot;[data-tooltip]&quot;);
+        if (trigger) return trigger;
+      }
+    }
+    return null;
+  };
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handlers = {
+    pointerover: handlePointerOpen,
+    pointerdown: handlePointer,
+    pointercancel: handlePointer,
+    click: handleTouchClick,
+    pointerout: handleLeave,
+    focusin: handleFocusIn,
+    focusout: handleLeave,
+    keydown: handleKeyDown,
+    contextmenu: handleContextMenu,
+  };
+  const roots = new Map();
+  const handledEvents = new WeakSet();
+  const handleEvent = (event) =&gt; {
+    if (handledEvents.has(event)) return;
+    handledEvents.add(event);
+    handlers[event.type](event);
+  };
+  const discoverRoots = (node) =&gt; {
+    if (node.shadowRoot) listen(node.shadowRoot);
+    for (const element of node.querySelectorAll(&quot;*&quot;)) {
+      if (element.shadowRoot) listen(element.shadowRoot);
+    }
+  };
+  const listen = (root) =&gt; {
+    if (roots.has(root)) return;
+    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
+    const observer = new window.MutationObserver((records) =&gt; {
+      for (const { addedNodes } of records) {
+        for (const node of addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
+        }
+      }
+      for (const [root, cleanup] of roots) {
+        if (root.host &amp;&amp; !root.host.isConnected) {
+          cleanup();
+          roots.delete(root);
+        }
+      }
+      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    roots.set(root, () =&gt; {
+      observer.disconnect();
+      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
+    });
+    discoverRoots(root);
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    for (const cleanup of roots.values()) cleanup();
+    roots.clear();
+    tooltip = null;
+  };
+
+  // Events between children of one shadow root never reach the document.
+  listen(document);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-carousel&quot;&gt;
+  (() =&gt; {
+    for (const root of document.querySelectorAll(&quot;.viz-carousel&quot;)) {
+      const panels = Array.from(
+        root.querySelectorAll(&quot;:scope &gt; [data-variant]&quot;),
+      );
+      if (panels.length === 0) {
+        continue;
+      }
+      root.setAttribute(&quot;role&quot;, &quot;group&quot;);
+      panels.forEach((panel, index) =&gt; {
+        panel.hidden = index !== 0;
+        panel.setAttribute(&quot;role&quot;, &quot;group&quot;);
+        if (!panel.hasAttribute(&quot;aria-label&quot;)) {
+          panel.setAttribute(&quot;aria-label&quot;, panel.dataset.variant);
+        }
+      });
+      root.dataset.activeVariant = panels[0].dataset.variant;
+      if (panels.length === 1) {
+        continue;
+      }
+
+      const controls = document.createElement(&quot;div&quot;);
+      controls.className = &quot;viz-carousel-controls&quot;;
+      // Portable copy of the settings dropdown&#x27;s legacy glyph; no 14px icon-package preset matches it.
+      // https://github.com/openai/openai/blob/master/codex/codex-apps/webview/src/icons/chevron.svg
+      controls.innerHTML = `
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-previous cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;details class=&quot;viz-carousel-picker&quot;&gt;
+        &lt;summary class=&quot;cursor-interaction&quot;&gt;
+          &lt;span class=&quot;viz-carousel-count tabular-nums&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;viz-carousel-name&quot;&gt;&lt;/span&gt;
+          &lt;svg class=&quot;viz-carousel-caret&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 20 21&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+            &lt;path d=&quot;M15.2793 7.71101C15.539 7.45131 15.961 7.45131 16.2207 7.71101C16.4804 7.97071 16.4804 8.39272 16.2207 8.65242L10.4707 14.4024C10.211 14.6621 9.78902 14.6621 9.52932 14.4024L3.77932 8.65242L3.69436 8.54792C3.52385 8.28979 3.55205 7.93828 3.77932 7.71101C4.00659 7.48374 4.3581 7.45554 4.61623 7.62605L4.72073 7.71101L10 12.9903L15.2793 7.71101Z&quot; fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;0.6&quot; /&gt;
+          &lt;/svg&gt;
+        &lt;/summary&gt;
+        &lt;div class=&quot;viz-carousel-options&quot;&gt;&lt;/div&gt;
+      &lt;/details&gt;
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-next cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
+      const previous = controls.querySelector(&quot;.viz-carousel-previous&quot;);
+      const next = controls.querySelector(&quot;.viz-carousel-next&quot;);
+      const picker = controls.querySelector(&quot;.viz-carousel-picker&quot;);
+      const summary = picker.querySelector(&quot;summary&quot;);
+      const count = controls.querySelector(&quot;.viz-carousel-count&quot;);
+      const name = controls.querySelector(&quot;.viz-carousel-name&quot;);
+      const options = controls.querySelector(&quot;.viz-carousel-options&quot;);
+      const status = document.createElement(&quot;span&quot;);
+      status.className = &quot;sr-only&quot;;
+      status.setAttribute(&quot;role&quot;, &quot;status&quot;);
+      status.setAttribute(&quot;aria-live&quot;, &quot;polite&quot;);
+      status.setAttribute(&quot;aria-atomic&quot;, &quot;true&quot;);
+      previous.setAttribute(
+        &quot;aria-label&quot;,
+        root.dataset.previousLabel ?? &quot;Previous variant&quot;,
+      );
+      next.setAttribute(&quot;aria-label&quot;, root.dataset.nextLabel ?? &quot;Next variant&quot;);
+
+      let active = 0;
+      let mousePointerId = null;
+      let summaryPointerHandled = false;
+      summary.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+        summaryPointerHandled =
+          event.pointerType === &quot;mouse&quot; &amp;&amp; event.button === 0 &amp;&amp; !event.ctrlKey;
+        if (!summaryPointerHandled) {
+          return;
+        }
+        event.preventDefault();
+        summary.focus({ preventScroll: true });
+        picker.open = !picker.open;
+        mousePointerId = picker.open ? event.pointerId : null;
+      });
+      summary.addEventListener(&quot;click&quot;, (event) =&gt; {
+        if (summaryPointerHandled &amp;&amp; event.detail &gt; 0) {
+          event.preventDefault();
+        }
+      });
+      const choices = panels.map((panel, index) =&gt; {
+        const choice = document.createElement(&quot;button&quot;);
+        choice.type = &quot;button&quot;;
+        choice.className = &quot;cursor-interaction&quot;;
+        choice.textContent = panel.dataset.variant;
+        choice.addEventListener(&quot;click&quot;, () =&gt; {
+          select(index);
+          summary.focus();
+        });
+        choice.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+          if (
+            picker.open &amp;&amp;
+            event.pointerType === &quot;mouse&quot; &amp;&amp;
+            event.button === 0 &amp;&amp;
+            event.pointerId === mousePointerId
+          ) {
+            choice.click();
+          }
+        });
+        options.appendChild(choice);
+        return choice;
+      });
+      const select = (index) =&gt; {
+        const changed = active !== index;
+        active = index;
+        panels.forEach((panel, position) =&gt; {
+          panel.hidden = position !== active;
+          choices[position].setAttribute(
+            &quot;aria-current&quot;,
+            String(position === active),
+          );
+        });
+        root.dataset.activeVariant = panels[active].dataset.variant;
+        count.textContent = `${active + 1} / ${panels.length}`;
+        name.textContent = panels[active].dataset.variant;
+        picker.open = false;
+        mousePointerId = null;
+        if (changed) {
+          status.textContent = `${count.textContent}: ${name.textContent}`;
+        }
+      };
+      previous.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + panels.length - 1) % panels.length),
+      );
+      next.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + 1) % panels.length),
+      );
+      picker.addEventListener(&quot;keydown&quot;, (event) =&gt; {
+        if (event.key === &quot;Escape&quot; &amp;&amp; picker.open) {
+          event.preventDefault();
+          picker.open = false;
+          mousePointerId = null;
+          summary.focus();
+          return;
+        }
+        if (event.altKey || event.ctrlKey || event.metaKey) {
+          return;
+        }
+        const index = choices.indexOf(document.activeElement);
+        let nextIndex;
+        if (event.key === &quot;ArrowDown&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + 1) % choices.length;
+        } else if (event.key === &quot;ArrowUp&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + choices.length - 1) % choices.length;
+        } else if (picker.open &amp;&amp; event.key === &quot;Home&quot;) {
+          nextIndex = 0;
+        } else if (picker.open &amp;&amp; event.key === &quot;End&quot;) {
+          nextIndex = choices.length - 1;
+        } else {
+          return;
+        }
+        event.preventDefault();
+        picker.open = true;
+        choices[nextIndex].focus();
+      });
+      picker.addEventListener(&quot;focusout&quot;, (event) =&gt; {
+        if (!picker.contains(event.relatedTarget)) {
+          picker.open = false;
+          mousePointerId = null;
+        }
+      });
+      const dismiss = (event) =&gt; {
+        if (!summary.contains(event.target)) {
+          mousePointerId = null;
+        }
+        if (!picker.contains(event.target)) {
+          picker.open = false;
+        }
+      };
+      const endPointerSelection = () =&gt; {
+        mousePointerId = null;
+      };
+      const sizePicker = () =&gt; {
+        root.style.setProperty(
+          &quot;--viz-carousel-picker-height&quot;,
+          `${picker.open ? options.offsetHeight : 0}px`,
+        );
+      };
+      picker.addEventListener(&quot;toggle&quot;, sizePicker);
+      window.addEventListener(&quot;resize&quot;, sizePicker);
+      document.addEventListener(&quot;pointerdown&quot;, dismiss);
+      document.addEventListener(&quot;pointerup&quot;, endPointerSelection);
+      document.addEventListener(&quot;pointercancel&quot;, endPointerSelection);
+      window.addEventListener(&quot;blur&quot;, endPointerSelection);
+      window.addEventListener(
+        &quot;pagehide&quot;,
+        () =&gt; {
+          document.removeEventListener(&quot;pointerdown&quot;, dismiss);
+          document.removeEventListener(&quot;pointerup&quot;, endPointerSelection);
+          document.removeEventListener(&quot;pointercancel&quot;, endPointerSelection);
+          window.removeEventListener(&quot;blur&quot;, endPointerSelection);
+          window.removeEventListener(&quot;resize&quot;, sizePicker);
+        },
+        { once: true },
+      );
+      root.append(controls, status);
+      select(0);
+    }
+  })();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<script>(() => {
+  const frame = document.getElementById("codex-visualization");
+  if (!(frame instanceof HTMLIFrameElement)) {
+    return;
+  }
+  let viewportHeight = globalThis.innerHeight;
+  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
+    globalThis.location.pathname,
+    globalThis.location.search,
+  ])}`;
+  const parseState = (serializedState) => {
+    if (
+      typeof serializedState !== "string" ||
+      new TextEncoder().encode(serializedState).length > 16 * 1024
+    ) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    /** @type {unknown} */
+    const state = JSON.parse(serializedState);
+    if (
+      state == null ||
+      typeof state !== "object" ||
+      Array.isArray(state) ||
+      ("imageIds" in state &&
+        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
+    ) {
+      throw new TypeError("Widget state must be a JSON object");
+    }
+    const storedState = { modelContent: null, privateContent: null, ...state };
+    const canonicalState = JSON.stringify(
+      storedState,
+      (_key, /** @type {unknown} */ value) => {
+        if (typeof value === "number" && !Number.isFinite(value)) {
+          throw new TypeError("Widget state must contain finite numbers");
+        }
+        return value;
+      },
+    );
+    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    return storedState;
+  };
+  let storage = null;
+  let state = null;
+  try {
+    const localStorage = globalThis.localStorage;
+    const probeKey = `${storageKey}:probe`;
+    localStorage.setItem(probeKey, "1");
+    localStorage.removeItem(probeKey);
+    storage = localStorage;
+    const savedState = storage.getItem(storageKey);
+    if (savedState != null) {
+      try {
+        state = parseState(savedState);
+      } catch {
+        // Invalid saved state does not disable future writes.
+      }
+    }
+  } catch {
+    storage = null;
+  }
+  const initialGlobals = {
+    widgetState: state,
+    statePersistence: storage == null ? "none" : "local",
+  };
+
+  const channel = new MessageChannel();
+  channel.port1.addEventListener("message", (event) => {
+    const data = event.data;
+    if (typeof data !== "object" || data == null) {
+      return;
+    }
+    if (data.type === "widget-state-write") {
+      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
+        return;
+      }
+      let ok = false;
+      try {
+        if (storage != null) {
+          const state = parseState(data.state);
+          storage.setItem(storageKey, JSON.stringify(state));
+          ok = true;
+        }
+      } catch {
+        // Storage denial, quota limits, and invalid state return a failed receipt.
+      }
+      channel.port1.postMessage({
+        type: "widget-state-result",
+        id: data.id,
+        ok,
+      });
+      return;
+    }
+    if (data.type === "height") {
+      const height = data.height;
+      if (
+        typeof height === "number" &&
+        Number.isFinite(height) &&
+        height >= 0 &&
+        height <= 10_000
+      ) {
+        frame.style.height = Math.ceil(height) + "px";
+      }
+      return;
+    }
+    if (data.type === "scroll-to") {
+      const top = data.top;
+      if (
+        typeof top === "number" &&
+        Number.isFinite(top) &&
+        top >= 0 &&
+        globalThis.navigator.userActivation?.isActive === true
+      ) {
+        globalThis.scrollTo({
+          top: Math.ceil(
+            globalThis.scrollY + frame.getBoundingClientRect().top + top,
+          ),
+        });
+      }
+      return;
+    }
+    if (data.type === "open-external") {
+      const rawHref = data.href;
+      if (typeof rawHref !== "string") {
+        return;
+      }
+      let href;
+      try {
+        const url = new URL(rawHref, document.baseURI);
+        if (url.protocol !== "https:") {
+          return;
+        }
+        href = url.href;
+      } catch {
+        return;
+      }
+      if (globalThis.navigator.userActivation?.isActive === true) {
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        anchor.rel = "noopener noreferrer";
+        anchor.target = "_blank";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
+    if (data.type === "follow-up") {
+      const prompt = data.prompt;
+      if (
+        typeof prompt !== "string" ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      const title = data.title;
+      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
+    }
+  });
+  channel.port1.start();
+  const srcdoc = frame.dataset.srcdoc;
+  if (srcdoc == null) {
+    return;
+  }
+  globalThis.addEventListener("resize", () => {
+    const height = Number.parseFloat(frame.style.height);
+    if (!Number.isFinite(height) || height <= viewportHeight) {
+      frame.style.removeProperty("height");
+    }
+    viewportHeight = globalThis.innerHeight;
+    channel.port1.postMessage({ type: "measure" });
+  });
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.contentWindow?.postMessage(
+        { type: "codex-visualization-initialize" },
+        "*",
+        [channel.port2],
+      );
+    },
+    { once: true },
+  );
+  // Match the trusted bootstrap element, not the same text in an authored title.
+  frame.srcdoc = srcdoc.replace(
+    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
+    () =>
+      '<script type="application/json" id="codex-visualization-widget-state">' +
+      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
+      "<\/script>",
+  );
+  delete frame.dataset.srcdoc;
+})();
+</script>
+</body>
+</html>
