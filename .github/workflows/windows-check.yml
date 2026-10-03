@@ -50,8 +50,10 @@ jobs:
       - name: CMD launcher from a different directory with Unicode and spaces
         run: python scripts/check_windows_launcher.py
       - name: Python unit tests
+        id: python_tests
         run: python -m unittest discover -s tests -v
       - name: JavaScript unit tests
+        id: javascript_tests
         shell: pwsh
         run: |
           $testFiles = Get-ChildItem tests -Filter '*.cjs' | ForEach-Object { $_.FullName }
@@ -62,8 +64,10 @@ jobs:
       - name: Native workbench and real Qt desktop smoke
         run: python scripts/smoke_workbench.py
       - name: Independent chart windows, layout and unsaved-close acceptance
+        if: ${{ !cancelled() && steps.python_tests.outcome == 'success' && steps.javascript_tests.outcome == 'success' }}
         run: python scripts/smoke_analysis_windows.py
       - name: Pareto desktop smoke
+        if: ${{ !cancelled() && steps.python_tests.outcome == 'success' && steps.javascript_tests.outcome == 'success' }}
         run: python scripts/smoke_pareto.py
       - name: Preserve desktop evidence
         if: always()

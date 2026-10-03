@@ -75,6 +75,16 @@ class LayoutTests(unittest.TestCase):
         self.assertLessEqual(fitted['y'] + fitted['height'], 680)
         self.assertEqual(saved['x'], 4000)
 
+    def test_maximized_chart_normal_rect_is_fitted_at_bottom_of_720p_screen(self):
+        # A user may move a normal chart down before maximizing and saving.
+        # Restore must retain maximization and normal size, while bringing the
+        # saved client rectangle back above the current work-area bottom margin.
+        saved = dict(x=68, y=66, width=900, height=650, maximized=True)
+        fitted = fit_window_rect(saved, [dict(x=0, y=0, width=1024, height=720)],
+                                 minimum=(420, 300))
+        self.assertEqual(fitted, dict(x=68, y=58, width=900, height=650, maximized=True))
+        self.assertEqual(saved["y"], 66)
+
     def test_negative_coordinate_monitor_is_preserved(self):
         saved = dict(x=-1500, y=100, width=1000, height=650, maximized=True)
         screens = [dict(x=0, y=0, width=1920, height=1040), dict(x=-1920, y=0, width=1920, height=1040)]

@@ -7,11 +7,11 @@
 | 환경/검사 | 현재 기록 |
 | --- | --- |
 | 원본 v1.1 개발 검증 | 2026-10-03 macOS / CPython 3.12.14 / PySide6·Qt 6.11.2. Python 311개, Node 195개 통과. 실제 workbench 통합 76개, 독립 분석창 33개 통과. |
-| 이번 공개 저장소의 단위·자산·배포 검사 | 2026-10-04 macOS / Python 3.12 / PySide6 6.11.2에서 Python **325개**, Node **195개** 통과. 실제 작업대 **76개**, 독립 MTF/Spot 창 **33개** 통과. 배포 검사에는 한글·공백 경로로 실제 ZIP 압축 해제 후 native 모듈 import가 포함됩니다. JavaScript 오류·외부 WebEngine 요청 0건. |
+| 이번 공개 저장소의 단위·자산·배포 검사 | 2026-10-04 macOS / Python 3.12 / PySide6 6.11.2에서 Python **326개**, Node **195개** 통과. 실제 작업대 **76개**, 독립 MTF/Spot 창 **33개** 통과. 배포 검사에는 한글·공백 경로로 실제 ZIP 압축 해제 후 native 모듈 import가 포함됩니다. JavaScript 오류·외부 WebEngine 요청 0건. |
 | 이번 공개 커밋의 Windows CI | 실행 결과 확인 전. [Windows workflow](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 커밋별 결과를 확인합니다. |
 | 실제 Windows 11 PC | GPU·DPI·OS 파일 대화상자·드래그 검증은 TBU입니다. |
 
-초기 Windows CI에서 테스트 fixture의 SQLite 연결 종료 누락, 플랫폼 줄바꿈 가정, 작은 화면에서 렌즈 선택 행이 창의 최소 너비를 강제하는 문제를 확인했습니다. 연결의 명시적 종료와 CRLF 보존 검사를 적용하고 렌즈 선택 행에 가로 스크롤을 추가했습니다. 테스트를 skip하거나 화면 크기 검사를 완화하지 않았습니다. 이어 실제 앱 검사에서 Git 자동 줄바꿈으로 opaque 데모 모델의 checksum이 바뀌는 문제를 재현하고, 공개 저장소의 binary/LF 속성과 실제 Windows식 Git checkout 회귀 검사를 복원했습니다.
+초기 Windows CI에서 테스트 fixture의 SQLite 연결 종료 누락, 플랫폼 줄바꿈 가정, 작은 화면에서 렌즈 선택 행이 창의 최소 너비를 강제하는 문제를 확인했습니다. 연결의 명시적 종료와 CRLF 보존 검사를 적용하고 렌즈 선택 행에 가로 스크롤을 추가했습니다. 테스트를 skip하거나 화면 크기 검사를 완화하지 않았습니다. 이어 실제 앱 검사에서 Git 자동 줄바꿈으로 opaque 데모 모델의 checksum이 바뀌는 문제를 재현하고, 공개 저장소의 binary/LF 속성과 실제 Windows식 Git checkout 회귀 검사를 복원했습니다. 분석창 복원 검사는 저장 위치가 작은 화면 안으로 보정되는 실제 규칙을 적용해 정확한 좌표·크기·최대화 상태를 비교합니다.
 
 표준 CPython 3.10–3.14 x64를 대상으로 하고 3.12를 권장합니다. 런처와 패키지 정책은 이 범위를 사용하지만 지원 정책 자체가 모든 기기의 실행 성공을 보증하지는 않습니다.
 

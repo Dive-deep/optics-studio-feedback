@@ -298,11 +298,20 @@ class AnalysisWindowsRunner(QObject):
                 screens.append({"x": rect.x(), "y": rect.y(), "width": rect.width(), "height": rect.height()})
             expected_window = fit_window_rect(before_save["layout"]["window"], screens,
                                                minimum=(w.minimumWidth(), w.minimumHeight()))
+            # Charts, like the main window, must fit the current work area.
+            # A normal chart moved near the bottom before maximization can
+            # legitimately restore a few pixels higher on a 720px CI desktop.
+            expected_charts = {
+                kind: {"open": saved["open"],
+                       "window": fit_window_rect(saved["window"], screens, minimum=(420, 300))}
+                for kind, saved in before_save["layout"]["charts"].items()
+            }
             self.check("session_restores_native_geometry", restored_layout["window"] == expected_window and
-                       restored_layout["charts"] == before_save["layout"]["charts"] and
+                       restored_layout["charts"] == expected_charts and
                        restored_layout["llm_width"] == before_save["layout"]["llm_width"] and
                        restored_layout["explorer_split"][0] == before_save["layout"]["explorer_split"][0],
-                       {"before": before_save["layout"], "expected_main_window": expected_window, "after": restored_layout,
+                       {"before": before_save["layout"], "expected_main_window": expected_window,
+                        "expected_chart_windows": expected_charts, "after": restored_layout,
                         "explorer_right_pane": "automatic remaining width, not a persisted fixed width"})
             self.check("session_restores_maximized_chart", w.chart_manager.window("mtf").isMaximized())
             restored_mtf = w.chart_manager.window("mtf")
@@ -310,7 +319,7 @@ class AnalysisWindowsRunner(QObject):
             QTest.qWait(120)
             self.check("restored_maximized_chart_returns_to_saved_normal_size",
                        [restored_mtf.width(), restored_mtf.height()] ==
-                       [layout["charts"]["mtf"]["window"]["width"], layout["charts"]["mtf"]["window"]["height"]])
+                       [expected_charts["mtf"]["window"]["width"], expected_charts["mtf"]["window"]["height"]])
             restored_mtf.showMaximized()
             QTest.qWait(120)
             current = self.command("get_session_snapshot")
