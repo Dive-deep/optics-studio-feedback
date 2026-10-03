@@ -3,11 +3,11 @@ from copy import deepcopy
 import math
 import sys
 
-from PySide6.QtCore import QLocale, Qt
+from PySide6.QtCore import QLocale, QSize, Qt
 from PySide6.QtGui import QDoubleValidator
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDialog, QDialogButtonBox, QGridLayout, QHeaderView, QHBoxLayout,
-    QLabel, QLineEdit, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
+    QLabel, QLineEdit, QScrollArea, QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
 )
 
 from optics_ui.services.parameter_draft import ParameterDraft, ParameterDraftError
@@ -17,6 +17,23 @@ def _number_text(value):
     # Python's shortest round-trip representation preserves all stored precision
     # without expanding 1e-5 into visually noisy 1.0000000000000001e-05.
     return "" if value is None else str(value)
+
+
+class _LensControlsScroll(QScrollArea):
+    """Preserve legible lens selectors without imposing their combined width.
+
+    Reserve one horizontal scrollbar row so showing it does not clip controls
+    or change the parameter table height on narrow/DPI-scaled displays.
+    """
+
+    def sizeHint(self):
+        content = self.widget()
+        height = content.minimumSizeHint().height() if content is not None else 0
+        height += self.horizontalScrollBar().sizeHint().height() + 2 * self.frameWidth()
+        return QSize(480, height)
+
+    def minimumSizeHint(self):
+        return QSize(120, self.sizeHint().height())
 
 
 class ParameterDialog(QDialog):
@@ -53,7 +70,9 @@ class ParameterDialog(QDialog):
         description.setWordWrap(True)
         layout.addWidget(description)
 
-        lens_grid = QGridLayout()
+        lens_content = QWidget()
+        lens_grid = QGridLayout(lens_content)
+        lens_grid.setContentsMargins(0, 0, 0, 0)
         lens_grid.setHorizontalSpacing(12)
         snapshot = self._draft.snapshot()
         for column, lens in enumerate(snapshot["lenses"]):
@@ -79,7 +98,16 @@ class ParameterDialog(QDialog):
             surface_type.setCurrentIndex(surface_type.findData(lens["surface_type"]))
             surface_type.currentIndexChanged.connect(lambda _, c=surface_type, i=index: self._type_changed(i, c.currentData()))
             lens_grid.addWidget(surface_type, 1, column * 2 + 1)
-        layout.addLayout(lens_grid)
+        lens_scroll = _LensControlsScroll()
+        lens_scroll.setObjectName("lens-controls-scroll")
+        lens_scroll.setAccessibleName("Lens material and surface type controls")
+        lens_scroll.setFrameShape(QScrollArea.NoFrame)
+        lens_scroll.setWidgetResizable(True)
+        lens_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        lens_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        lens_scroll.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        lens_scroll.setWidget(lens_content)
+        layout.addWidget(lens_scroll)
 
         filters = QHBoxLayout()
         self.search = QLineEdit()

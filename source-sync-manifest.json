@@ -145,6 +145,8 @@
   "note": "Tracked app source snapshot before portable-public adjustments. Copilot corporate kit and internal test instructions excluded at user request. No environments, private research or runtime logs copied.",
   "public_adjustments": {
     "optics_ui/services/source_files.py": "Remove author-specific absolute workspace exclusion; maintain general source boundaries.",
-    "scripts/create_demo_project.py": "Require explicit source DB instead of a private development path."
+    "scripts/create_demo_project.py": "Require explicit source DB instead of a private development path.",
+    "optics_ui/workbench/parameters.py": "Keep lens selectors accessible through horizontal scrolling on narrow Windows viewports.",
+    "tests": "Restore explicit SQLite fixture cleanup and platform-independent UTF-8/CRLF tests; add narrow-viewport regression."
   }
 }

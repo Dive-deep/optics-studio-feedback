@@ -3,9 +3,9 @@ from copy import deepcopy
 import unittest
 
 from tests.qt_support import QT_APP
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QPoint, QRect, Qt
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QCheckBox, QComboBox, QDialog, QLineEdit, QPushButton
+from PySide6.QtWidgets import QCheckBox, QComboBox, QDialog, QLineEdit, QPushButton, QScrollArea
 
 from optics_ui.workbench.parameters import ParameterDialog
 from tests.test_parameter_draft import make_payload
@@ -57,6 +57,38 @@ class ParameterDialogTests(unittest.TestCase):
         finally:
             dialog.close()
             dialog.deleteLater()
+
+    def test_wide_lens_controls_fit_small_viewport_and_remain_reachable(self):
+        # Emulate wider platform font/style metrics without relying on Windows.
+        # The three lens groups must scroll instead of growing the native window.
+        controls = [self.dialog.findChild(QComboBox, f"lens-type-{index}")
+                    for index in range(3)]
+        for combo in controls:
+            combo.setMinimumWidth(280)
+        available = self.dialog.screen().availableGeometry()
+        requested_width = min(768, available.width() - 32)
+        self.dialog.resize(requested_width, min(568, available.height() - 32))
+        QT_APP.processEvents()
+        self.assertLessEqual(self.dialog.width(), requested_width)
+        self.assertLessEqual(self.dialog.height(), available.height())
+        self.assertTrue(self.dialog.apply_button.isVisible())
+        self.assertTrue(self.dialog.rect().contains(
+            self.dialog.apply_button.mapTo(self.dialog, QPoint(0, 0))))
+        area = self.dialog.findChild(QScrollArea, "lens-controls-scroll")
+        self.assertIsNotNone(area)
+        self.assertGreater(area.horizontalScrollBar().maximum(), 0)
+        for combo in controls:
+            area.ensureWidgetVisible(combo, 4, 0)
+            QT_APP.processEvents()
+            visible_rect = QRect(combo.mapTo(area.viewport(), QPoint(0, 0)), combo.size())
+            self.assertTrue(area.viewport().rect().contains(visible_rect))
+            combo.setFocus()
+            QTest.keyClick(combo, Qt.Key_Home)
+            self.assertEqual(combo.currentData(), "STANDARD")
+        self.apply()
+        self.assertEqual(self.dialog.result(), QDialog.Accepted)
+        self.assertEqual([lens["surface_type"] for lens in self.dialog.result_payload()["lenses"]],
+                         ["STANDARD"] * 3)
 
     def test_bounds_change_clamps_current_only(self):
         self.edit("parameter-min-p0", "8")

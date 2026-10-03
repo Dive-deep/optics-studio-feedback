@@ -27,3 +27,8 @@
 - 로컬 파일·DB·파라미터·3D/2D·DB Pareto·세션 저장 흐름을 공개했습니다.
 
 각 버전의 검증 범위는 [VALIDATION.md](VALIDATION.md)를 참고하세요.
+
+### Windows 배포 점검 중 보완
+
+- 작은 화면·배율에서 렌즈 설정 행을 가로로 스크롤하여 파라미터 창이 화면 폭 안에 유지되도록 했습니다.
+- Windows CI의 SQLite fixture 연결을 명시적으로 종료하고 CRLF 원문 보존을 검증합니다.

@@ -1,5 +1,6 @@
 """File/data service acceptance tests written before implementation."""
 
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -23,11 +24,11 @@ class FileDataTests(unittest.TestCase):
         self.folder = Path(self.temp.name).resolve() / "원본 files"
         self.folder.mkdir()
         self.db = self.folder / "cases.sqlite"
-        with sqlite3.connect(self.db) as connection:
+        with closing(sqlite3.connect(self.db)) as connection, connection:
             connection.executescript(SQL)
         catalog = self.folder / "materials/catalog.sqlite"
         catalog.parent.mkdir()
-        with sqlite3.connect(catalog) as connection:
+        with closing(sqlite3.connect(catalog)) as connection, connection:
             connection.execute("CREATE TABLE materials (id TEXT)")
             connection.execute("INSERT INTO materials VALUES ('BK7')")
         self.model = self.folder / "model.pth"
@@ -122,7 +123,7 @@ class FileDataTests(unittest.TestCase):
     def test_normal_database_append_is_not_a_file_hash_mismatch(self):
         self.report_data["database"]["sha256"] = self.digest(self.db)
         self.write_report()
-        with sqlite3.connect(self.db) as connection:
+        with closing(sqlite3.connect(self.db)) as connection, connection:
             connection.execute("INSERT INTO designs VALUES ('D3','F3',1,1,1,'SUCCESS','SYNTHETIC_MATH_PROXY',0)")
         result = self.service.load_report(self.report)
         self.assertEqual(result["status"], "valid")
@@ -154,7 +155,7 @@ class FileDataTests(unittest.TestCase):
         self.report_data.pop("trained_cases")
         self.report_data["training"] = {"cases": [{"case_id": "D1", "prescription_hash": "old-hash"}]}
         self.write_report()
-        with sqlite3.connect(self.db) as connection:
+        with closing(sqlite3.connect(self.db)) as connection, connection:
             connection.execute("ALTER TABLE designs ADD COLUMN prescription_hash TEXT")
             connection.execute("UPDATE designs SET prescription_hash='new-hash' WHERE design_id='D1'")
         summary = self.service.load_report(self.report)["training_summary"]
@@ -199,7 +200,7 @@ class FileDataTests(unittest.TestCase):
         self.assertFalse(any("best" in row for row in rows))
 
     def test_case_material_options_are_from_whole_database_and_coefficients_are_preserved(self):
-        with sqlite3.connect(self.db) as connection:
+        with closing(sqlite3.connect(self.db)) as connection, connection:
             connection.execute("INSERT INTO lens_elements VALUES ('D2',1,'PMMA',2,1,2)")
         result = self.service.load_case(self.db, "D1")
         self.assertEqual(result["materials"], ["BK7", "PMMA", "SF6"])
@@ -208,7 +209,7 @@ class FileDataTests(unittest.TestCase):
     def test_case_compatibility_flags_do_not_convert_unsupported_surfaces(self):
         self.assertTrue(self.service.list_cases(self.db)[0]["ui_compatible"])
         self.assertFalse(self.service.list_cases(self.db)[1]["ui_compatible"])
-        with sqlite3.connect(self.db) as connection:
+        with closing(sqlite3.connect(self.db)) as connection, connection:
             connection.execute("UPDATE surfaces SET surface_type='ODD_ASPHERE' WHERE design_id='D1' AND surface_index=3")
         self.assertFalse(self.service.list_cases(self.db)[0]["ui_compatible"])
         self.assertEqual(self.service.load_case(self.db, "D1")["surfaces"][2]["surface_type"], "ODD_ASPHERE")

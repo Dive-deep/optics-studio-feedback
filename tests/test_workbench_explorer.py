@@ -25,11 +25,21 @@ class SourceFilesTests(unittest.TestCase):
 
     def test_real_utf8_source_and_canonical_path(self):
         path = self.root / "안내.py"
-        path.write_text("# 실제 파일\nvalue = 42\n", encoding="utf-8")
+        path.write_bytes("# 실제 파일\nvalue = 42\n".encode("utf-8"))
         result = self.service.read_file("./안내.py")
         self.assertEqual(result.path, path)
         self.assertEqual(result.text, "# 실제 파일\nvalue = 42\n")
         self.assertEqual(result.language, "python")
+
+    def test_source_preserves_windows_crlf_bytes_without_rewriting_file(self):
+        path = self.root / "windows.py"
+        text = "# Windows source\r\nvalue = 42\r\n"
+        raw = text.encode("utf-8")
+        path.write_bytes(raw)
+        result = self.service.read_file(path)
+        self.assertEqual(result.text, text)
+        self.assertEqual(result.size_bytes, len(raw))
+        self.assertEqual(path.read_bytes(), raw)
 
     def test_outside_root_and_symlink_escape_are_rejected(self):
         with tempfile.TemporaryDirectory(prefix="outside-source-") as other:
