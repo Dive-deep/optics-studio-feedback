@@ -32,3 +32,7 @@
 피드백은 Issues의 사용성/실행 오류 양식으로 수집합니다. 백그라운드 telemetry는 추가하지 않습니다. 사용자 캡처·로그를 공개할 때 토큰·개인정보·업무 데이터가 없는지 확인합니다.
 
 기존 외부 자산의 라이선스는 유지하며 프로젝트 라이선스를 임의로 새로 선언하지 않습니다. 자세한 내용은 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참고하세요.
+
+## 소스 갱신 시 유지할 배포 설정
+
+개발 원본에서 파일을 가져올 때 공개 저장소의 `.gitattributes`, Windows CI, 배포 빌더와 Windows 전용 fixture 정리 코드를 통째로 덮어쓰지 않습니다. 모델 `.pth`·SQLite·이미지의 binary 속성은 체크아웃 중 바이트 변경을 막습니다. Git `core.autocrlf=true` 체크아웃 후 모델·목표 파일의 checksum도 배포 회귀 검사에 포함됩니다.

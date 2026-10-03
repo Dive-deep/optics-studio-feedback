@@ -1,2 +1,17 @@
-# CMD launchers retain Windows line endings in source ZIPs.
+# Keep source and hash-referenced JSON stable across Windows and macOS checkouts.
+* text=auto eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+# Model artifacts are opaque bytes even when the demo fixture happens to be text.
+*.pth binary
+*.sqlite binary
+*.png binary
+# Preserve the source launcher bytes; the ZIP builder guarantees Windows CRLF.
 *.cmd -text whitespace=cr-at-eol

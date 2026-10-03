@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path, PurePosixPath
@@ -140,7 +141,6 @@ class FeedbackReleaseTests(unittest.TestCase):
             build_release(self.root)
 
     def test_windows_separator_filename_is_rejected(self):
-        import os
         if os.name == "nt":
             self.skipTest("Backslash is already a directory separator on Windows")
         self.write("guide/dist/bad\\name.txt")
@@ -165,6 +165,39 @@ class FeedbackReleaseTests(unittest.TestCase):
         with zipfile.ZipFile(second["archive"]) as archive:
             self.assertEqual(archive.read(PREFIX + "/run_windows.cmd"), crlf)
         self.assertEqual(first["sha256"], second["sha256"])
+
+
+class GitCheckoutArtifactTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("git"), "Git is needed to reproduce Windows checkout filters")
+    def test_windows_checkout_keeps_report_artifact_hashes_valid(self):
+        source = Path(__file__).resolve().parents[1]
+        selected = [".gitattributes", "examples/local-demo/training-report.json",
+                    "examples/local-demo/demo-model.pth", "examples/local-demo/target.json"]
+        with tempfile.TemporaryDirectory(prefix="optics git 한글 ") as temporary:
+            repository = Path(temporary) / "repository"
+            checkout = Path(temporary) / "windows checkout"
+            repository.mkdir()
+            checkout.mkdir()
+            for name in selected:
+                target = repository / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source / name, target)
+            def git(*arguments):
+                result = subprocess.run(["git", *arguments], cwd=repository,
+                                        capture_output=True, text=True, timeout=30)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            git("init", "--quiet")
+            # Exercise actual Git checkout filters on every host; Windows
+            # commonly enables this setting, unlike the development Mac.
+            git("config", "core.autocrlf", "true")
+            git("add", "--", *selected)
+            git("checkout-index", "--all", "--force", "--prefix=" + checkout.as_posix() + "/")
+            fixture = checkout / "examples/local-demo"
+            report = json.loads((fixture / "training-report.json").read_text(encoding="utf-8"))
+            for field in ("model", "target_profile"):
+                artifact = fixture / report[field]["filename"]
+                self.assertEqual(hashlib.sha256(artifact.read_bytes()).hexdigest(), report[field]["sha256"],
+                                 field + " was changed by Git checkout newline conversion")
 
 
 class ExtractedApplicationReleaseTests(unittest.TestCase):
