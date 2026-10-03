@@ -20,7 +20,7 @@
 3. GUI 세션에서 `scripts/smoke_workbench.py`, `scripts/smoke_analysis_windows.py`를 실행합니다. 파일 대화상자 대역과 실제 OS 검증을 구분합니다.
 4. `python scripts/build_feedback_release.py`로 사용자 ZIP을 생성합니다. 새 폴더에 압축 해제해 필수 파일, 실행 진입점, 상대 링크와 checksum을 확인합니다.
 5. 공개 브랜치에 커밋을 올리고 [Windows CI](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 **해당 커밋**의 결과를 확인합니다. 실패·미실행을 통과로 기록하지 않습니다.
-6. 동일 커밋을 tag/Release 대상으로 사용하고 ZIP·checksum을 첨부합니다. [VALIDATION.md](VALIDATION.md)에 실행 URL과 환경·한계를 기록합니다.
+6. 검증한 실행 코드를 tag/Release 대상으로 사용하고 ZIP·checksum을 첨부합니다. 검증 결과를 기록하는 문서 전용 후속 커밋을 tag로 사용할 때는 실행 코드·테스트가 CI 커밋과 동일한지 Git diff로 확인하고 두 커밋의 역할을 구분합니다. [VALIDATION.md](VALIDATION.md)에 실행 URL과 환경·한계를 기록합니다.
 7. [Guide Pages workflow](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/guide-pages.yml)의 게시 결과를 확인하고 공개 가이드 링크·자산을 검사합니다.
 
 실제 Windows 11 기기 검사가 남아 있으면 그 사실을 Release와 검증 문서에 유지합니다. 기존 0.x 자동 검사 결과로 v1.1의 성공을 대신하지 않습니다.

@@ -73,6 +73,6 @@ python scripts/build_feedback_release.py
 
 아래 개발 명령은 저장소 전체를 clone하거나 Code → Download ZIP으로 받은 개발 소스에서 실행합니다. Releases의 사용자용 ZIP에는 테스트·개발 빌더를 넣지 않습니다.
 
-Node.js는 개발 검사용입니다. GUI smoke에는 데스크톱 세션이 필요하며 파일 선택은 명시적인 테스트 경로로 대체합니다. [검증 기록](VALIDATION.md)에서 버전과 실행 환경을 구분하고, [Windows CI](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 해당 커밋의 결과를 확인하세요. 이전 0.x CI 통과는 새 v1.1의 Windows 실행 검증을 대신하지 않습니다. 실제 Windows 11의 DPI·GPU·OS 파일 대화상자 검증은 별도입니다.
+Node.js는 개발 검사용입니다. GUI smoke에는 데스크톱 세션이 필요하며 파일 선택은 명시적인 테스트 경로로 대체합니다. [검증 기록](VALIDATION.md)에서 버전과 실행 환경을 구분하고, [Windows CI](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 해당 커밋의 결과를 확인하세요. 이번 v1.1 실행 코드는 [Windows Python 3.10–3.14 CI](https://github.com/Dive-deep/optics-studio-feedback/actions/runs/37134834927)를 모두 통과했습니다. 실행 코드 커밋과 상세 검사 수는 검증 기록에 있습니다. 실제 Windows 11의 DPI·GPU·OS 파일 대화상자 검증은 별도입니다.
 
 배포 담당자는 [PUBLISHING.md](PUBLISHING.md)를 참고하세요. 별도의 프로젝트 오픈소스 라이선스를 선언하지 않았습니다. 외부 자산의 라이선스와 데이터 출처는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 있습니다.
