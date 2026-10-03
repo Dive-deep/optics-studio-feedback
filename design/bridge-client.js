@@ -10,6 +10,7 @@
   const ready = new Promise(resolve => { readyResolve = resolve; });
   const api = {
     available: false,
+    workbench: null,
     ready,
     onReportLoaded(listener) {
       reportListeners.add(listener);
@@ -53,6 +54,8 @@
     return;
   }
   new QWebChannel(qt.webChannelTransport, channel => {
+    // The shell transport must be visible to subscribers before ready resolves.
+    api.workbench = channel.objects.workbench || null;
     desktop = channel.objects.desktop;
     if (!desktop) { readyResolve(false); return; }
     desktop.responseReady.connect(settle);

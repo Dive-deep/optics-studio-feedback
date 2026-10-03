@@ -55,6 +55,18 @@ class UIAssetTests(unittest.TestCase):
         self.assertNotIn('id="o-ray-paraxial"', html)
         self.assertNotIn('id="o-ray-reference-legend"', html)
 
+    def test_independent_charts_share_renderer_without_generic_file_bridge(self):
+        main = (self.output / "index.html").read_text(encoding="utf-8")
+        chart = (self.output / "chart-window.html").read_text(encoding="utf-8")
+        self.assertIn('src="optics-chart.js"', main)
+        self.assertIn('src="optics-chart.js"', chart)
+        self.assertIn('src="chart-window.js"', chart)
+        self.assertNotIn('bridge-client.js', chart)
+        self.assertNotIn('file-controller.js', chart)
+        self.assertNotIn('https://', chart)
+        for filename in ("optics-chart.js", "chart-window.js"):
+            self.assertTrue((self.output / filename).is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

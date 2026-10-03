@@ -1,4 +1,4 @@
-"""Validate Python before importing the Qt desktop dependencies."""
+"""Check Python policy before importing native Qt desktop dependencies."""
 import sys
 
 from .runtime import dependency_install_hint, python_runtime_errors

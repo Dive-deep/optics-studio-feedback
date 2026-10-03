@@ -140,11 +140,15 @@
       },
       save: () => guarded(async () => {
         const current = revision, savedContext = context;
-        const result = await call("choose_session_save", {state: snapshot(), references: clone(context.references)});
+        const savedState = snapshot(), savedReferences = clone(context.references);
+        const savedFingerprint = typeof hooks.fingerprintSnapshot === "function"
+          ? hooks.fingerprintSnapshot(savedState, savedReferences) : null;
+        const result = await call("choose_session_save", {state: savedState, references: savedReferences});
         if (result?.status === "cancelled") return null;
         if (current === revision && context === savedContext) context.sessionPath = result.path;
         hooks.notice("Workspace 설정을 저장했습니다: " + result.path);
-        return result;
+        return savedFingerprint !== null && result?.status === "saved"
+          ? {...result, session_fingerprint:savedFingerprint} : result;
       }),
       exportBundle: () => guarded(async () => {
         const result = await call("export_bundle", {state: snapshot(), references: clone(context.references)});

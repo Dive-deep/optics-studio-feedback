@@ -21,6 +21,7 @@ def build(output_dir=None):
         raise ValueError("Unexpected review UI source structure")
     body = re.sub(r"<style>.*?</style>", "", source, flags=re.S)
     body = re.sub(r"<script[^>]*>.*?</script>", "", body, flags=re.S)
+    body = re.sub(r"(?m)^[ \t]+$", "", body)
     style = "html,body{margin:0;padding:0;background:#f3f5f8;color-scheme:light dark}body{min-width:320px}\n"
     style += styles[0] + "\n#optics-review{border-radius:0;border:0;min-height:100vh}\n"
     (dest / "style.css").write_text(style, encoding="utf-8")
@@ -28,7 +29,7 @@ def build(output_dir=None):
     scene = scripts[1].replace("https://esm.sh/three@0.180.0/examples/jsm/controls/OrbitControls.js", "./vendor/three/OrbitControls.js")
     scene = scene.replace("https://esm.sh/three@0.180.0", "./vendor/three/three.module.js")
     (dest / "scene.js").write_text(scene, encoding="utf-8")
-    for name in ("bridge-client.js", "file-controller.js", "session-validation.js", "ray-tracing.js", "pareto.js", "pareto-view.js"):
+    for name in ("bridge-client.js", "file-controller.js", "workbench-contract.js", "workbench-adapter.js", "session-validation.js", "ray-tracing.js", "pareto.js", "pareto-view.js", "optics-chart.js", "chart-window.js", "chart-window.html"):
         shutil.copyfile(ROOT / "design" / name, dest / name)
     vendor = ROOT / "optics_ui" / "vendor"
     if not (vendor / "manifest.json").is_file():
@@ -41,7 +42,7 @@ def build(output_dir=None):
         shutil.copyfile(vendor / name / "LICENSE", dest / "vendor" / (name + "-LICENSE"))
     html = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Optics Studio</title><link rel="stylesheet" href="style.css"></head><body>'
     html += body
-    html += '\n<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>'
+    html += '\n<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="workbench-contract.js"></script><script src="workbench-adapter.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="optics-chart.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>'
     (dest / "index.html").write_text(html, encoding="utf-8")
     return dest
 

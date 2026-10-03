@@ -11,15 +11,31 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = "Optics-Studio-Feedback-0.1.0-feedback.2"
+PREFIX = "Optics-Studio-v1.1.0"
 REQUIRED_FILES = (
     "launch.py", "run_windows.cmd", "requirements.txt", "README.md", "THIRD_PARTY_NOTICES.md", "VALIDATION.md",
+    "CHANGELOG.md", "KNOWN_LIMITATIONS.md", "PUBLISHING.md", "docs/user-guide.md",
+    "docs/development/pareto.md", "docs/development/sensitivity.md",
     "optics_ui/__init__.py", "optics_ui/__main__.py", "optics_ui/runtime.py", "optics_ui/desktop.py", "optics_ui/bridge.py",
     "optics_ui/services/__init__.py", "optics_ui/services/files.py", "optics_ui/services/materials.py",
     "optics_ui/services/candidates.py", "optics_ui/services/compute.py",
+    "optics_ui/services/chart_data.py", "optics_ui/services/parameter_draft.py",
+    "optics_ui/services/sensitivity.py", "optics_ui/services/source_files.py",
+    "optics_ui/services/workbench_state.py",
+    "optics_ui/workbench/__init__.py", "optics_ui/workbench/window.py",
+    "optics_ui/workbench/charts.py", "optics_ui/workbench/explorer.py",
+    "optics_ui/workbench/layout.py", "optics_ui/workbench/parameters.py",
+    "optics_ui/workbench/quit_guard.py", "optics_ui/workbench/sensitivity.py",
+    "optics_ui/workbench/transport.py", "optics_ui/workbench/unsaved.py",
+    "optics_ui/workbench/icons/auto.svg", "optics_ui/workbench/icons/explorer.svg",
+    "optics_ui/workbench/icons/sim.svg", "optics_ui/workbench/icons/tailoring.svg",
+    "optics_ui/workbench/icons/update.svg", "optics_ui/workbench/icons/workspace.svg",
     "optics_ui/assets/index.html", "optics_ui/assets/style.css", "optics_ui/assets/workspace.js",
     "optics_ui/assets/scene.js", "optics_ui/assets/bridge-client.js", "optics_ui/assets/file-controller.js",
     "optics_ui/assets/session-validation.js", "optics_ui/assets/ray-tracing.js",
+    "optics_ui/assets/chart-window.html", "optics_ui/assets/chart-window.js",
+    "optics_ui/assets/optics-chart.js", "optics_ui/assets/workbench-adapter.js",
+    "optics_ui/assets/workbench-contract.js",
     "optics_ui/assets/pareto.js", "optics_ui/assets/pareto-view.js",
     "optics_ui/assets/vendor/d3.min.js", "optics_ui/assets/vendor/d3-LICENSE",
     "optics_ui/assets/vendor/lucide.js", "optics_ui/assets/vendor/lucide-LICENSE",
@@ -32,7 +48,7 @@ REQUIRED_FILES = (
 )
 EXCLUDED_COMPONENTS = {
     "__pycache__", "node_modules", "venv", ".venv", "site-packages", "dist-packages",
-    ".git", "artifacts", "tests", "research",
+    ".git", "artifacts", "tests", "research", "validation", "lab-runs", "internal",
 }
 RUNTIME_SUFFIXES = {".pyc", ".pyo", ".whl", ".exe", ".dll", ".pyd", ".dylib", ".so", ".lib", ".a"}
 
@@ -66,9 +82,13 @@ def collect_files(root: Path) -> list[Path]:
         _safe_file(root, relative)
     for path in (root / "optics_ui").glob("*.py"):
         selected.add(path.relative_to(root))
-    for folder, python_only in (
-        ("optics_ui/services", True), ("optics_ui/assets", False),
-        ("examples/local-demo/materials", False), ("guide/dist", False),
+    # Only the production modules, workbench icons, bundled static web assets,
+    # sample data and public guide are distributable. Other docs and validation
+    # kits are intentionally outside this allowlist, even when present locally.
+    for folder, allowed_suffixes in (
+        ("optics_ui/services", {".py"}), ("optics_ui/workbench", {".py"}),
+        ("optics_ui/workbench/icons", {".svg"}), ("optics_ui/assets", None),
+        ("examples/local-demo/materials", None), ("guide/dist", None),
     ):
         base = root / folder
         if base.is_symlink():
@@ -79,7 +99,7 @@ def collect_files(root: Path) -> list[Path]:
                 continue
             if path.is_symlink():
                 raise ValueError(f"Symlink is not allowed in the release: {relative.as_posix()}")
-            if path.is_file() and (not python_only or path.suffix == ".py"):
+            if path.is_file() and (allowed_suffixes is None or path.suffix.casefold() in allowed_suffixes):
                 selected.add(relative)
     for relative in selected:
         _safe_file(root, relative)
@@ -110,7 +130,7 @@ def build_release(root: Path = ROOT, output_dir: Path | None = None) -> dict:
         with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
             for relative in files:
                 path = _safe_file(root, relative)
-                member = zipfile.ZipInfo(PREFIX + "/" + relative.as_posix(), date_time=(2026, 9, 23, 0, 0, 0))
+                member = zipfile.ZipInfo(PREFIX + "/" + relative.as_posix(), date_time=(2026, 10, 4, 0, 0, 0))
                 member.create_system = 3
                 member.external_attr = 0o100644 << 16
                 member.compress_type = zipfile.ZIP_DEFLATED

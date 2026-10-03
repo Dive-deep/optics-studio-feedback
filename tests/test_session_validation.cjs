@@ -3,8 +3,42 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const sandbox={window:{}};
+vm.runInNewContext(fs.readFileSync('design/workbench-contract.js','utf8'),sandbox);
 vm.runInNewContext(fs.readFileSync('design/session-validation.js','utf8'),sandbox);
 const validate=sandbox.window.validateOpticsWorkspaceSnapshot;
+function workbenchFixture(){return {version:1,page:'explorer',llm_visible:true,analysis_visible:false,
+ workspace_split:[820,300],explorer:{workspace_root:'/workspace',files:['main.py'],current_file:'main.py',wrap_lines:true},
+ sensitivity:{format:'optics-sensitivity-panel',schema_version:1,metric:'ST',output_id:null,report_path:null,report:null,stale:false}};}
+test('new shell settings round trip independently of optical settings',()=>{
+ const x=fixture();x.workbench=workbenchFixture();const before=JSON.stringify(x);
+ const r=validate(x);assert.equal(JSON.stringify(r.workbench),JSON.stringify(x.workbench));
+ r.workbench.explorer.files.push('other.py');assert.equal(JSON.stringify(x),before);
+});
+test('old sessions omit workbench without introducing new defaults',()=>{
+ const r=validate(fixture());assert.equal(Object.hasOwn(r,'workbench'),false);
+});
+test('malformed shell is rejected atomically without changing optical state',()=>{
+ const x=fixture();x.workbench=workbenchFixture();x.workbench.explorer.files=['../outside.py'];
+ const before=JSON.stringify(x);assert.throws(()=>validate(x));assert.equal(JSON.stringify(x),before);
+});
+test('restored simulation page returns to workspace without discarding shell preferences',()=>{
+ const x=fixture();x.workbench=workbenchFixture();x.workbench.page='sim';
+ const r=validate(x);assert.equal(r.workbench.page,'workspace');assert.equal(r.workbench.llm_visible,true);
+});
+test('v2 native layout survives whole-session validation detached from input',()=>{
+ const x=fixture();x.workbench=workbenchFixture();x.workbench.version=2;
+ x.workbench.layout={window:{x:-1280,y:50,width:1280,height:720,maximized:false},llm_width:320,
+  explorer_split:[220,800],charts:{mtf:{open:true,window:null},spot:{open:false,window:null}}};
+ const before=JSON.stringify(x),r=validate(x);assert.equal(JSON.stringify(r.workbench),JSON.stringify(x.workbench));
+ r.workbench.layout.charts.mtf.open=false;r.workbench.layout.window.x=0;
+ assert.equal(JSON.stringify(x),before);
+});
+test('invalid v2 native geometry rejects whole session before optical mutation',()=>{
+ const x=fixture();x.workbench=workbenchFixture();x.workbench.version=2;
+ x.workbench.layout={window:{x:0,y:0,width:-1,height:720,maximized:false},llm_width:320,
+  explorer_split:[220,800],charts:{mtf:{open:false,window:null},spot:{open:false,window:null}}};
+ const before=JSON.stringify(x);assert.throws(()=>validate(x));assert.equal(JSON.stringify(x),before);
+});
 test('Pareto view preferences survive without cached results or execution state',()=>{
  const x=fixture();x.pareto_view={cohort_key:'cohort-a',source_kind:'synthetic',mode:'exploratory',
    dimensions:['mtf','spot'],projection:'full',show_line:false,selected_id:'C2'};

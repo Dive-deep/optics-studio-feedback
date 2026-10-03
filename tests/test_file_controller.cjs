@@ -50,6 +50,7 @@ function harness(overrides = {}) {
     error: error => errors.push(error),
     snapshot: () => overrides.snapshot ? overrides.snapshot()
       : {tag: displayed, reference_data: {id: displayed}},
+    fingerprintSnapshot: overrides.fingerprintSnapshot,
     restore: state => { if (state.invalid) throw new Error("Invalid snapshot"); displayed = state.tag; },
     applyCase: data => { displayed = data.id; applies.push(data.id); }
   });
@@ -59,6 +60,25 @@ function harness(overrides = {}) {
     emitReport: (record, id) => reportListener({id, ok: true, data: record}),
     emitReportError: (id, code) => reportListener({id, ok: false, error: {code, message: "Drop failed"}})};
 }
+
+test("save receipt fingerprints the dispatched snapshot despite edits while the dialog is open", async () => {
+  const pending=deferred();let tag="before";
+  const h=harness({snapshot:()=>({tag}),choose_session_save:()=>pending.promise,
+    fingerprintSnapshot:(state,references)=>JSON.stringify({state,references})});
+  await h.controller.loadReport("A.json");
+  const save=h.controller.save();await tick();
+  const dispatched=copy(h.calls.find(c=>c.method==="choose_session_save").params);
+  tag="after";await h.controller.loadReport("B.json");
+  pending.resolve({status:"saved",path:"session.json"});
+  const result=await save;
+  assert.equal(result.session_fingerprint,JSON.stringify({state:dispatched.state,references:dispatched.references}));
+  assert.equal(h.controller.getContext().references.report_path,"B.json");
+});
+
+test("cancelled save does not produce a clean-state receipt", async () => {
+  const h=harness({choose_session_save:()=>({status:"cancelled"}),fingerprintSnapshot:()=>"fingerprint"});
+  assert.equal(await h.controller.save(),null);
+});
 
 test("a slower earlier loadReport cannot replace a newer report", async () => {
   const old = deferred();

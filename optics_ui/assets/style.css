@@ -134,5 +134,47 @@ html,body{margin:0;padding:0;background:#f3f5f8;color-scheme:light dark}body{min
     #optics-review #o-pareto-detail {padding:10px 0;border-top:1px solid var(--o-line)}
     #optics-review #o-pareto-detail .o-target-table {table-layout:fixed}
     @media(max-width:650px){#optics-review .o-pareto-controls{grid-template-columns:1fr}#optics-review #o-pareto-detail .o-target-table{font-size:11px}}
+    html.optics-native-workbench,body.optics-native-workbench {color-scheme:light;background:#f5f7fa}
+    .optics-native-workbench #optics-review {color-scheme:light;border:0;border-radius:0}
+    .optics-native-workbench #optics-review .o-top,.optics-native-workbench #optics-review .o-toolbar,.optics-native-workbench #optics-review .o-footer {display:none}
+    .optics-native-workbench #optics-review .o-workspace,.optics-native-workbench #optics-review.o-analysis .o-workspace {display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+    .optics-native-workbench #optics-review .o-native-quick {width:100%;grid-column:1/-1}
+    .optics-native-workbench #optics-review .o-native-quick .o-head {padding:5px 12px 3px}
+    .optics-native-workbench #optics-review .o-native-quick .o-head strong {font-size:13px}
+    .optics-native-workbench #optics-review .o-native-quick .o-head button {min-height:26px;padding:2px 8px;font-size:12px}
+    .optics-native-workbench #optics-review .o-native-quick .o-inner {padding:0 12px 6px}
+    .optics-native-workbench #optics-review .o-native-quick #o-system-overview,.optics-native-workbench #optics-review .o-native-quick .o-inner>p {display:none}
+    .optics-native-workbench #optics-review .o-native-quick #o-parameter-rows {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 16px;max-height:158px;overflow-y:auto}
+    .optics-native-workbench #optics-review .o-native-quick .o-workbench-labels {margin:0;font-size:10px}
+    .optics-native-workbench #optics-review .o-native-quick .o-legend {margin-top:2px;font-size:10px}
+    .optics-native-workbench #optics-review .o-native-quick .o-param {padding:2px 0 6px}
+    .optics-native-workbench #optics-review .o-native-quick .o-param-title>label:first-child {min-width:0}
+    .optics-native-workbench #optics-review .o-native-quick .o-param-title>label:first-child>span {overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .optics-native-workbench #optics-review .o-native-quick .o-current-wrap input {min-height:22px;padding:1px 5px}
+    .optics-native-workbench #optics-review .o-native-quick input[type=number]::-webkit-inner-spin-button {appearance:none}
+    .optics-native-workbench #optics-review .o-native-quick .o-slider-row {display:block;margin-top:3px;padding:0 6px}
+    .optics-native-workbench #optics-review .o-native-quick .o-slider-row .o-min,.optics-native-workbench #optics-review .o-native-quick .o-slider-row .o-max {display:none}
+    .optics-native-workbench #optics-review .o-main,.optics-native-workbench #optics-review.o-analysis .o-main {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start;gap:10px}
+    .optics-native-workbench #optics-review .o-main>.o-charts {display:grid;grid-template-columns:minmax(0,1fr);gap:8px;order:0}
+    .optics-native-workbench #optics-review .o-view {height:260px}
+    .optics-native-workbench #optics-review .o-metrics {padding:8px 12px;gap:8px;margin-top:6px;grid-template-columns:repeat(4,minmax(0,1fr))}
+    .optics-native-workbench #optics-review .o-metric strong {font-size:13px}
+    .optics-native-workbench #optics-review .o-charts .o-head {padding:6px 10px 3px}
+    .optics-native-workbench #optics-review .o-charts .o-head button {min-height:25px;font-size:12px;padding:1px 6px}
+    .optics-native-workbench #optics-review .o-charts .o-chart-legend {padding:0 10px;font-size:11px;min-height:16px}
+    .optics-native-workbench #optics-review .o-charts .o-chart {height:150px}
+    .optics-native-workbench #optics-review .o-charts .o-chart-caption {padding:0 10px 4px;font-size:10px;line-height:14px}
+    .optics-native-workbench #optics-review .o-side {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-column:1/-1}
+    .optics-native-workbench #optics-review .o-side .o-confidence {padding:10px 12px}
+    .optics-native-workbench #optics-review .o-side .o-status-row {margin:6px 0}
+    .optics-native-workbench #optics-review .o-context {padding:6px 12px;gap:4px 10px}
+    .optics-native-workbench #optics-review .o-notice {padding:4px 12px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .optics-native-workbench #optics-review #o-result-source {flex-basis:100%;font-size:11px;color:var(--o-muted)}
+    .optics-native-workbench #optics-review .o-modal {max-width:none}
+    #optics-review .o-webgl-status {margin:0 14px 8px;color:var(--o-muted);font-size:12px}
+    @media(min-height:850px){.optics-native-workbench #optics-review .o-view{height:360px}.optics-native-workbench #optics-review .o-charts .o-chart{height:185px}}
+    @media(min-width:1550px){.optics-native-workbench #optics-review .o-native-quick #o-parameter-rows{grid-template-columns:repeat(6,minmax(0,1fr))}}
+    @media(max-width:900px){.optics-native-workbench #optics-review .o-main,.optics-native-workbench #optics-review.o-analysis .o-main{grid-template-columns:minmax(0,1fr)}.optics-native-workbench #optics-review .o-main>.o-charts{grid-template-columns:1fr 1fr}.optics-native-workbench #optics-review .o-native-quick #o-parameter-rows{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:650px){.optics-native-workbench #optics-review .o-side,.optics-native-workbench #optics-review .o-main>.o-charts{grid-template-columns:1fr}.optics-native-workbench #optics-review .o-native-quick #o-parameter-rows{grid-template-columns:minmax(0,1fr)}.optics-native-workbench #optics-review .o-metrics{grid-template-columns:1fr 1fr}}
   
 #optics-review{border-radius:0;border:0;min-height:100vh}

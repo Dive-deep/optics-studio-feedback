@@ -12,6 +12,20 @@ from optics_ui import desktop, runtime
 
 
 class RuntimePolicyTests(unittest.TestCase):
+    def test_non_cpython_build_is_rejected_before_qt(self):
+        errors = runtime.python_runtime_errors((3, 12), free_threaded=False, implementation="pypy")
+        self.assertTrue(any("CPython" in error for error in errors))
+
+    def test_runtime_info_and_source_version_are_explicit(self):
+        from optics_ui import __version__
+        info = runtime.runtime_info()
+        self.assertEqual(info["implementation"], "cpython")
+        self.assertIn("free_threaded", info)
+        self.assertEqual(__version__, "1.1.0")
+        project = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn(f'version = "{__version__}"', project)
+        self.assertIn('requires-python = ">=3.10,<3.15"', project)
+
     def test_supported_python_range_including_313_and_314(self):
         for minor in range(10, 15):
             with self.subTest(minor=minor):

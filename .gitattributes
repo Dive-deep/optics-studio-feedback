@@ -1,14 +1,2 @@
-* text=auto eol=lf
-*.py text eol=lf
-*.js text eol=lf
-*.cjs text eol=lf
-*.html text eol=lf
-*.css text eol=lf
-*.md text eol=lf
-*.json text eol=lf
-*.txt text eol=lf
-*.yml text eol=lf
-*.cmd text eol=crlf
-*.sqlite binary
-*.png binary
-*.pth binary
+# CMD launchers retain Windows line endings in source ZIPs.
+*.cmd -text whitespace=cr-at-eol

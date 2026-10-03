@@ -120,8 +120,13 @@
         ...(p.focus_front===undefined?{}:{focus_front:bool(p.focus_front,"Pareto 확대")}),
         selected_id:optional(p.selected_id,"선택 후보")};
     }
+    let workbench;
+    if(s.workbench!==undefined){
+      if(typeof window.OpticsWorkbenchContract?.validateShellState!=="function")fail("작업대 검증 모듈");
+      workbench=window.OpticsWorkbenchContract.validateShellState(s.workbench);
+    }
     return {ui_version:1,optics,parameters,training,automation,chart_views,camera,section_zoom,
       view:["sim","project"].includes(s.view)?"workspace":s.view,llm_draft:text(s.llm_draft||"","LLM 초안"),reference_data,
-      ...(pareto_view?{pareto_view}: {})};
+      ...(pareto_view?{pareto_view}: {}),...(workbench?{workbench}: {})};
   };
 })();

@@ -1,4 +1,37 @@
-# Feedback snapshot validation
+# 공개 배포 검증 기록
+
+## v1.1.0 — 2026-10-04
+
+이번 버전은 네이티브 작업 메뉴·Explorer·파라미터 편집창·Sensitivity·독립 MTF/Spot 창·세션 배치 복원·종료 안내를 포함합니다. 이전 0.x 테스트 수와 v1.1 결과를 혼합하지 않습니다.
+
+| 환경/검사 | 현재 기록 |
+| --- | --- |
+| 원본 v1.1 개발 검증 | 2026-10-03 macOS / CPython 3.12.14 / PySide6·Qt 6.11.2. Python 311개, Node 195개 통과. 실제 workbench 통합 76개, 독립 분석창 33개 통과. |
+| 이번 공개 저장소의 단위·자산·배포 검사 | 2026-10-04 macOS / Python 3.12 / PySide6 6.11.2에서 Python **322개**, Node **195개** 통과. 실제 작업대 **76개**, 독립 MTF/Spot 창 **33개** 통과. 배포 검사에는 한글·공백 경로로 실제 ZIP 압축 해제 후 native 모듈 import가 포함됩니다. JavaScript 오류·외부 WebEngine 요청 0건. |
+| 이번 공개 커밋의 Windows CI | 실행 결과 확인 전. [Windows workflow](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 커밋별 결과를 확인합니다. |
+| 실제 Windows 11 PC | GPU·DPI·OS 파일 대화상자·드래그 검증은 TBU입니다. |
+
+표준 CPython 3.10–3.14 x64를 대상으로 하고 3.12를 권장합니다. 런처와 패키지 정책은 이 범위를 사용하지만 지원 정책 자체가 모든 기기의 실행 성공을 보증하지는 않습니다.
+
+GUI 자동 검사는 파일 대화상자를 명시적인 테스트 경로로 대체합니다. offscreen 위젯 검사, 실제 Qt 앱 검사, Windows Server CI, 물리 Windows 11 기기 검사를 구분합니다. surrogate/Zemax/학습/자동 반복/LLM 실행과 광학 정확도는 이번 검증의 대상이 아닙니다.
+
+재현 명령:
+
+```powershell
+python -m pip install -r requirements.txt
+python scripts/build_ui.py
+python -m unittest discover -s tests -v
+node --test tests/*.cjs
+python scripts/smoke_workbench.py
+python scripts/smoke_analysis_windows.py
+python scripts/build_feedback_release.py
+```
+
+GUI smoke에는 데스크톱 세션이 필요합니다. 일반 실행기에는 CI 전용 그래픽 설정을 강제로 넣지 않으며 Chromium sandbox를 끄지 않습니다.
+
+---
+
+# 이전 0.x 피드백 배포 검증 기록
 
 ## Python compatibility update — 0.1.0-feedback.2 / 2026-09-23
 

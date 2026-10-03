@@ -12,7 +12,8 @@ import time
 import uuid
 
 import PySide6
-from PySide6.QtCore import QByteArray, QBuffer, QEvent, QFile, QIODevice, QObject, QTimer, QUrl, qVersion
+from PySide6.QtCore import QByteArray, QBuffer, QEvent, QFile, QIODevice, QObject, QTimer, QUrl, Qt, qVersion
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineProfile, QWebEngineUrlRequestInterceptor, QWebEngineUrlRequestJob, QWebEngineUrlScheme, QWebEngineUrlSchemeHandler
@@ -20,9 +21,34 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from .bridge import BridgeError, DesktopBridge, encode, failure
 from .runtime import python_runtime_errors
+from . import __version__
 
 ASSETS = Path(__file__).resolve().parent / "assets"
 ALLOWED_SUFFIXES = {".html", ".js", ".css", ".json", ".svg", ".png", ".jpg", ".jpeg", ".webp", ".woff", ".woff2", ".ttf", ".ico", ".wasm", ".map"}
+
+
+def apply_desktop_theme(app):
+    """One explicit light palette for native controls, child dialogs and canvas.
+
+    A per-window palette is insufficient on a host using OS dark mode: native
+    child dialogs/menus otherwise inherit dark colors beside the light renderer.
+    """
+    app.setStyle('Fusion')
+    app.styleHints().setColorScheme(Qt.ColorScheme.Light)
+    palette = QPalette()
+    colors = {
+        'Window': '#f7f8fa', 'WindowText': '#202733', 'Base': '#ffffff',
+        'AlternateBase': '#f3f5f8', 'Text': '#202733', 'Button': '#f3f5f8',
+        'ButtonText': '#202733', 'BrightText': '#ffffff', 'Highlight': '#2268cb',
+        'HighlightedText': '#ffffff', 'ToolTipBase': '#ffffff', 'ToolTipText': '#202733',
+        'PlaceholderText': '#7b8796', 'Link': '#2268cb', 'Light': '#ffffff',
+        'Midlight': '#eef1f5', 'Mid': '#cbd3de', 'Dark': '#9aa6b5', 'Shadow': '#687585',
+    }
+    for name, color in colors.items():
+        palette.setColor(getattr(QPalette.ColorRole, name), QColor(color))
+    for role in ('WindowText', 'Text', 'ButtonText'):
+        palette.setColor(QPalette.ColorGroup.Disabled, getattr(QPalette.ColorRole, role), QColor('#8591a1'))
+    app.setPalette(palette)
 
 
 class AssetHandler(QWebEngineUrlSchemeHandler):
@@ -180,14 +206,10 @@ class SmokeRunner(QObject):
       catch {rejected=true;}
       checks.push({name:'no_job_execution_method',pass:rejected});
       const frontend = typeof window.__OPTICS_SMOKE__ === 'function' ? await window.__OPTICS_SMOKE__() : null;
-      const graphics={status:document.querySelector('#optics-review')?.dataset.webgl||'uninitialized'};
-      if(graphics.status==='ready'){
-        const gl=document.querySelector('#o-canvas')?.getContext('webgl2');
-        const info=gl?.getExtension('WEBGL_debug_renderer_info');
-        graphics.renderer=info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null;
-      }
-      checks.push({name:'three_dimensional_view_ready',pass:graphics.status==='ready'});
-      window.__DESKTOP_SMOKE_RESULT__={checks,frontend,graphics,canvasCount:document.querySelectorAll('canvas').length};
+      const workbench = typeof window.__OPTICS_WORKBENCH_SMOKE__ === 'function' ? await window.__OPTICS_WORKBENCH_SMOKE__() : null;
+      checks.push({name:'native_workbench_adapter',pass:workbench?.available===true&&workbench?.native===true});
+      if(workbench?.checks)checks.push(...workbench.checks);
+      window.__DESKTOP_SMOKE_RESULT__={checks,frontend,canvasCount:document.querySelectorAll('canvas').length};
     })().catch(()=>{window.__DESKTOP_SMOKE_RESULT__={checks:[{name:'frontend_smoke_completed',pass:false}],error:'Smoke could not complete.'};});
     """
 
@@ -242,19 +264,30 @@ class SmokeRunner(QObject):
             return
         width, height = sizes[index]
         # A fixed Qt content size proves layout rendering, not OS usable desktop area.
-        self.window.centralWidget().setFixedSize(width, height)
-        self.window.adjustSize()
+        self.set_capture_size(width, height)
         def shot():
             view = self.window.centralWidget()
             name = f"app-{width}x{height}.png"
             saved = view.grab().save(str(self.output_dir / name))
+            full_name = f"workbench-{width}x{height}.png"
+            full_saved = self.window.grab().save(str(self.output_dir / full_name))
             def snapshot(raw):
                 self.evidence["captures"].append({"requested_content_size": [width, height], "actual_content_size": [view.width(), view.height()],
                                                  "kind": "fixed-size-layout-capture", "file": name, "saved": saved,
+                                                 "window_file": full_name, "window_saved": full_saved,
                                                  "viewport": json.loads(raw) if raw else None})
                 self.capture(index + 1)
             self.page.runJavaScript("JSON.stringify({width:innerWidth,height:innerHeight,dpr:devicePixelRatio,scrollWidth:document.documentElement.scrollWidth})", snapshot)
         QTimer.singleShot(700, shot)
+
+    def set_capture_size(self, width, height):
+        content = self.window.centralWidget()
+        chrome_width = max(0, self.window.width() - content.width())
+        chrome_height = max(0, self.window.height() - content.height())
+        content.setFixedSize(width, height)
+        # adjustSize() caps windows against screen dimensions and can clip fixed
+        # test content. Explicit sizing includes the native toolbar/status bar.
+        self.window.resize(width + chrome_width, height + chrome_height)
 
     def capture_compute_panel(self):
         def available(value):
@@ -262,8 +295,7 @@ class SmokeRunner(QObject):
                 self.evidence["compute_panel_capture"] = {"status": "hook_unavailable", "saved": False}
                 self.finish()
                 return
-            self.window.centralWidget().setFixedSize(1440, 900)
-            self.window.adjustSize()
+            self.set_capture_size(1440, 900)
             self.page.runJavaScript("""
               (async()=>{
                 try {const data=await window.__OPTICS_CAPTURE_COMPUTE__();window.__DESKTOP_COMPUTE_CAPTURE_READY__={ok:true,data:data??null};}
@@ -318,6 +350,7 @@ class SmokeRunner(QObject):
         self.exit_code = 0 if passed else 1
         (self.output_dir / "desktop-app.json").write_text(json.dumps(self.evidence, ensure_ascii=False, indent=2), encoding="utf-8")
         print("Desktop smoke:", "PASS" if passed else "FAIL", str(self.output_dir / "desktop-app.json"), flush=True)
+        self.window.close_for_shutdown()  # Explicit opt-in test teardown, not a user close decision.
         QTimer.singleShot(0, self.app.quit)
 
 
@@ -330,28 +363,32 @@ def main(argv=None) -> int:
     options = parser.parse_args(argv)
     if (options.smoke_report is not None or options.smoke_target is not None) and not options.smoke:
         parser.error("--smoke-report and --smoke-target require --smoke")
-    runtime_errors = python_runtime_errors()
-    if runtime_errors:
-        print("\n".join(runtime_errors), file=sys.stderr)
+    errors = python_runtime_errors()
+    if errors:
+        print("\n".join(errors), file=sys.stderr)
         return 2
     if not (ASSETS / "index.html").is_file():
         print("Local UI assets are missing. Build or restore optics_ui/assets first.", file=sys.stderr)
         return 2
     from .services.files import FileDataService
     from .services.compute import GpuReadinessService
+    from .workbench.transport import WorkbenchBridge, RendererController
+    from .workbench.window import WorkbenchWindow
+    from .workbench.charts import ChartWindowManager
+    from .workbench.layout import apply_window_layout
+    from .workbench.quit_guard import WorkbenchApplication
 
     scheme = QWebEngineUrlScheme(b"optics-app")
     scheme.setSyntax(QWebEngineUrlScheme.Syntax.Host)
     scheme.setFlags(QWebEngineUrlScheme.Flag.SecureScheme | QWebEngineUrlScheme.Flag.CorsEnabled | QWebEngineUrlScheme.Flag.FetchApiAllowed)
     QWebEngineUrlScheme.registerScheme(scheme)
-    app = QApplication(sys.argv[:1])
+    app = WorkbenchApplication(sys.argv[:1])
+    apply_desktop_theme(app)
     app.setApplicationName("AI Imaging Optics")
     app.setOrganizationName("Optics UI Research")
-    window = QMainWindow()
-    window.setWindowTitle("AI Imaging Optics — Local Workspace")
-    view = DesktopView(window)
+    app.setApplicationVersion(__version__)
+    view = DesktopView()
     view.setAcceptDrops(True)
-    window.setCentralWidget(view)
     stats = {"local_asset_requests": 0, "blocked_external_requests": 0, "javascript_errors": 0}
     profile = QWebEngineProfile(app)  # Off-the-record; sessions persist through FileDataService.
     assets = AssetHandler(profile)
@@ -360,19 +397,36 @@ def main(argv=None) -> int:
     profile.setUrlRequestInterceptor(policy)
     page = LocalPage(profile, stats, view, capture_error_locations=options.smoke)
     view.setPage(page)
+    workbench_bridge = WorkbenchBridge(app)
+    controller = RendererController(page, workbench_bridge, app)
+    view.loadFinished.connect(lambda ok: None if ok else controller.unavailable('로컬 광학 화면을 불러오지 못했습니다. 앱을 다시 실행해 주세요.'))
+    page.renderProcessTerminated.connect(lambda *_: controller.unavailable('광학 화면 프로세스가 종료되었습니다. 앱을 다시 실행해 주세요.'))
+    window = WorkbenchWindow(view, controller)
+    chart_manager = ChartWindowManager(profile, window, page_factory=lambda chart_view:
+                                      LocalPage(profile, stats, chart_view, capture_error_locations=options.smoke))
+    window.attach_chart_manager(chart_manager)
+    app.bind_workspace(window)
+    workbench_bridge.setParent(window)
     native = NativeDialogs(window)
     stub_callbacks, smoke_config = smoke_dialog_configuration(options.output_dir, options.smoke_report, options.smoke_target)
     bridge = DesktopBridge(FileDataService(), GpuReadinessService(), dialogs=stub_callbacks or native.callbacks(), parent=window)
     view.desktop_bridge = bridge
     channel = QWebChannel(page)
     channel.registerObject("desktop", bridge)
+    channel.registerObject("workbench", workbench_bridge)
     page.setWebChannel(channel)
-    window.resize(1440, 900)
+    available = window.screen().availableGeometry()
+    width, height = min(1440, available.width() - 32), min(900, available.height() - 40)
+    apply_window_layout(window, {'x': available.x() + (available.width() - width) // 2,
+                                 'y': available.y() + (available.height() - height) // 2,
+                                 'width': max(1, width), 'height': max(1, height), 'maximized': False})
     view.load(QUrl("optics-app://ui/index.html"))
     window.show()
     smoke = SmokeRunner(app, window, page, bridge, stats, options.output_dir.resolve(), smoke_config) if options.smoke else None
     exit_code = app.exec()
     bridge.shutdown()
+    controller.shutdown()
+    chart_manager.shutdown()
     window.deleteLater()
     app.sendPostedEvents(None, QEvent.Type.DeferredDelete)
     profile.deleteLater()

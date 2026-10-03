@@ -8,6 +8,10 @@
     /* END RAY INDEX SNAPSHOT */
     const state={ray_visibility:{chief:true,marginal:true},lens:0,side:0,section:false,layout:'studio',coverageExample:true,stop:{position_mode:'surface',surface_index:6,z_mm:null}, gaps:{gap12:data.surfaces[2].vertex_z_mm-data.surfaces[1].vertex_z_mm,gap23:data.surfaces[4].vertex_z_mm-data.surfaces[3].vertex_z_mm}, source:data.design[0].source_distance_mm,
       lenses:data.lenses.map(function(l,i){return {material:l.material_id.replace('SCHOTT_','').replaceAll('_','-'),type:'STANDARD',thickness:l.center_thickness_mm,surfaces:data.surfaces.slice(i*2,i*2+2).map(function(s){return {radius:s.radius_mm,conic:s.conic,aperture:s.clear_semi_diameter_mm,a4:0,a6:0,a8:0,a10:0,a12:null}})}})};
+    let workbenchAdapter=null,workbenchShell=null,parameterRevision=0,parameterSignature=null;
+    let chartSignature=null,chartCounter=0,cameraStateTimer=0;
+    const chartScope=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);
+    root.__cameraViewChanged=function(){clearTimeout(cameraStateTimer);cameraStateTimer=setTimeout(function(){workbenchAdapter?.changed()},80)};
     // TODO(backend): Resolve conditions for live model predictions when that adapter is connected.
     // Fallbacks affect display conditions only; they do not recalculate stored results.
     function resolveConditions(metadata){
@@ -62,6 +66,7 @@
     function activeDescriptors(){return allDescriptors().filter(function(d){return d.available&&config(d).active})}
     const coverageBaselines={};
     function support(d,c){
+      if(workbenchAdapter?.native)return [];
       if(!state.coverageExample||!d.available)return [];
       // UI fixture only. TODO(backend): Connect the conditional-support provider.
       // Choosing a lens never changes this condition; only other physical values do.
@@ -96,8 +101,9 @@
       });
     }
     function refreshCoverage(){activeDescriptors().forEach(function(d){const el=root.querySelector('[data-key="'+d.key+'"] .o-range');if(el)el.style.background=rangeFill(d,config(d))})}
-    function updated(){root.dispatchEvent(new CustomEvent('optics-update'));if(state.section)drawSection();updateReadouts()}
+    function updated(){root.dispatchEvent(new CustomEvent('optics-update'));if(state.section)drawSection();updateReadouts();workbenchAdapter?.changed()}
     function configure(initialGroup){
+      if(workbenchAdapter?.requestParameters())return;
       let group=initialGroup==='system'?'system':state.lens;
       show('Configure parameters','<div class="o-small">전체 값을 확인하고, 작업대에서 조절할 변수에 체크하세요.</div><div class="o-tabs" id="o-inspect-tabs"><button data-group="system">System</button><button data-group="0">Lens 1</button><button data-group="1">Lens 2</button><button data-group="2">Lens 3</button></div><div id="o-inspector-content"></div><div class="o-callout" id="o-inspector-count"></div>');
       function cell(d){
@@ -215,7 +221,9 @@
     let sectionZoom=1;
     let sectionFrame=null,stopDrag=null;
     function drawSection(){
-      const svg=byId('o-section'),w=svg.clientWidth||500,h=svg.clientHeight||290;svg.setAttribute('viewBox','0 0 '+w+' '+h);
+      // Fractional grid widths must remain fractional: clientWidth rounds to
+      // integers and would make SVG geometry differ from pointer/mm mapping.
+      const svg=byId('o-section'),rect=svg.getBoundingClientRect(),w=rect.width||500,h=rect.height||290;svg.setAttribute('viewBox','0 0 '+w+' '+h);
       const pos=zPositions(),stop=resolveStop(state),end=Math.max(pos[2][1],stop.z_mm),scale=stopDrag?stopDrag.scale:Math.min((w-96)/(end+7),(h-94)/Math.max(38,2*stop.semi_diameter_mm+6))*sectionZoom,ox=48,oy=h/2+7;
       sectionFrame={scale:scale,ox:ox,oy:oy,width:w,height:h};
       svg.dataset.pixelsPerMm=scale;
@@ -233,7 +241,7 @@
       byId('o-view-note').textContent=valid?'Stop CSD '+fmt(stop.semi_diameter_mm)+' mm · '+stop.surface_label+(stop.position_mode==='surface'?' · Follows surface':' · Custom position'):'형상을 만들 수 없는 파라미터';
       svg.onpointermove=function(e){const r=svg.getBoundingClientRect();byId('o-coordinates').textContent='('+((e.clientX-r.left-ox)/scale).toFixed(2)+', '+((oy-e.clientY+r.top)/scale).toFixed(2)+') mm'};
       svg.onclick=svg.onpointermove;
-      svg.onwheel=function(e){e.preventDefault();if(stopDrag)return;sectionZoom=Math.min(3,Math.max(.5,sectionZoom*(e.deltaY>0?.92:1.08)));drawSection()};
+      svg.onwheel=function(e){e.preventDefault();if(stopDrag)return;sectionZoom=Math.min(3,Math.max(.5,sectionZoom*(e.deltaY>0?.92:1.08)));drawSection();workbenchAdapter?.changed()};
     }
     const stopHandle=byId('o-stop-handle'),sectionElement=byId('o-section');
     ['chief','marginal'].forEach(function(kind){byId('o-ray-'+kind).onchange=function(e){state.ray_visibility[kind]=e.target.checked;drawSection()}});
@@ -254,34 +262,23 @@
       if(e.type==='pointercancel')state.stop=stopDrag.original;
       stopDrag=null;stopHandle.removeAttribute('data-dragging');
       if(stopHandle.hasPointerCapture(e.pointerId))stopHandle.releasePointerCapture(e.pointerId);
-      drawSection();
+      drawSection();workbenchAdapter?.changed();
     }
     stopHandle.onpointerup=endStopDrag;stopHandle.onpointercancel=endStopDrag;stopHandle.onlostpointercapture=endStopDrag;
     stopHandle.onkeydown=function(e){
       if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();
-      state.stop=moveStop(Math.max(0,resolveStop(state).z_mm+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1)),state.stop.surface_index);drawSection();
+      state.stop=moveStop(Math.max(0,resolveStop(state).z_mm+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1)),state.stop.surface_index);drawSection();workbenchAdapter?.changed();
     };
     function syncViewerMode(){
-      const failed=root.dataset.webgl==='failed';
-      if(failed)state.section=true;
-      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);
-      stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
-      const toggle=byId('o-view-toggle');toggle.disabled=failed;
-      toggle.textContent=failed?'3D unavailable':state.section?'3D viewer':'2D section view';
+      const unavailable=root.dataset.webgl==='failed';if(unavailable)state.section=true;
+      byId('o-canvas').hidden=state.section;byId('o-section').toggleAttribute('hidden',!state.section);stopHandle.hidden=!state.section;byId('o-ray-tools').hidden=!state.section;
+      byId('o-view-toggle').textContent=unavailable?'3D unavailable':state.section?'3D viewer':'2D section view';byId('o-view-toggle').disabled=unavailable;
+      byId('o-webgl-status').hidden=!unavailable;
       byId('o-view-help').textContent=state.section?'Drag Stop · Scroll to zoom · Hover for coordinates':'Drag to rotate · Right-drag to pan';
-      const status=byId('o-webgl-status');status.hidden=!failed;
-      status.textContent=failed?'현재 그래픽 환경에서 3D를 표시할 수 없어 2D 단면으로 전환했습니다.':'';
-    }
-    root.__syncViewerMode=syncViewerMode;
-    root.__setWebGLUnavailable=function(reason){
-      root.dataset.webgl='failed';root.dataset.webglReason=reason;
-      syncViewerMode();drawSection();
-    };
-    byId('o-view-toggle').onclick=function(){
-      if(root.dataset.webgl==='failed'){syncViewerMode();return}
-      state.section=!state.section;syncViewerMode();byId('o-coordinates').textContent='mm';
       if(state.section)drawSection();else root.dispatchEvent(new CustomEvent('optics-update'));
-    };
+    }
+    root.__setWebGLUnavailable=function(reason){root.dataset.webgl='failed';root.dataset.webglReason=reason||'unavailable';byId('o-webgl-status').hidden=false;byId('o-webgl-status').textContent='이 환경에서 3D를 사용할 수 없어 2D 단면을 표시합니다.';syncViewerMode()};
+    byId('o-view-toggle').onclick=function(){if(root.dataset.webgl==='failed')return;state.section=!state.section;syncViewerMode();byId('o-coordinates').textContent='mm';workbenchAdapter?.changed()};
     let activeView='workspace';
     let computeRevision=0;
     let fileController=null;
@@ -295,12 +292,14 @@
       byId('o-workspace-nav').removeAttribute('aria-current');
       byId('o-modal-title').textContent=title;byId('o-modal-body').innerHTML=html;root.querySelector('.o-workspace').hidden=true;byId('o-modal-host').classList.add('o-open');
       if(globalThis.lucide)lucide.createIcons();requestAnimationFrame(renderCharts);
+      workbenchAdapter?.changed();
     }
     function workspace(){
       computeRevision++;activeView='workspace';byId('o-workspace-nav').setAttribute('aria-current','page');
       syncViewerMode();
       byId('o-modal-host').classList.remove('o-open');root.querySelector('.o-workspace').hidden=false;byId('o-modal-body').innerHTML='';
       requestAnimationFrame(function(){renderCharts();if(state.section)drawSection();root.dispatchEvent(new CustomEvent('optics-update'))});
+      workbenchAdapter?.changed();
     }
     function targets(){const target=fileContext().target;if(target){show('Targets · Read only','<button id="o-target-browse">Load target JSON</button><div class="o-callout">'+escapeText(basename(fileContext().references.target_path)||'Saved target snapshot')+' · Read only</div><pre class="o-request" id="o-target-json"></pre>');byId('o-target-json').textContent=JSON.stringify(target.profile,null,2);byId('o-target-browse').onclick=function(){fileAction('openTarget')};return}show('Targets · Read only','<button id="o-target-browse">Load target JSON</button><div class="o-callout">target-spec.json · '+conditionLabel()+' · weights 1 : 1 : 1</div><table class="o-target-table"><tr><th>Metric</th><th>Target</th><th>5% candidate allowance</th></tr><tr><td>MTF · 6 lp/mm · 0F · S/T</td><td>≥40%</td><td>≥38%</td></tr><tr><td>MTF · 6 lp/mm · 0.8F · S/T</td><td>≥30%</td><td>≥28.5%</td></tr><tr><td>Spot · RMS diameter · 1.0F</td><td>Closest to 1.60 μm</td><td>1.52–1.68 μm</td></tr><tr><td>FOV · Horizontal, full</td><td>Closest to 24°</td><td>22.8–25.2°</td></tr></table><p>목표는 JSON에서 불러오며 화면에서는 변경하지 않습니다. 온도·파장은 DB 조건을 우선하며, 명시되지 않은 항목에는 지정한 기본 표시값을 사용합니다.</p>');byId('o-target-browse').onclick=function(){fileAction('openTarget')}}
     function candidates(){paretoPanel?.open()}
@@ -368,14 +367,14 @@
       for(const key of Object.keys(settings))delete settings[key];
       for(const key of Object.keys(coverageBaselines))delete coverageBaselines[key];
       for(const key of Object.keys(chartViews))delete chartViews[key];
-      sectionZoom=1;renderParams();updateReadouts();workspace();
+      parameterSignature=null;sectionZoom=1;renderParams();updateReadouts();workspace();
     }
     function snapshotSession(){
       const reference=clone(data);delete reference.database_path;
       return {ui_version:1,optics:clone(state),parameters:clone(settings),reference_data:reference,
         view:activeView==='sim'?'workspace':activeView,training:clone(trainingSettings),automation:clone(autoSettings),
         llm_draft:llmDraft,section_zoom:sectionZoom,chart_views:clone(chartViews),camera:root.__getCameraSnapshot?.()||null,
-        ...(paretoPanel?{pareto_view:paretoPanel.snapshot()}: {})};
+        ...(paretoPanel?{pareto_view:paretoPanel.snapshot()}: {}),...(workbenchShell?{workbench:clone(workbenchShell)}:{})};
     }
     function validateSnapshot(snapshot){
       if(!window.validateOpticsWorkspaceSnapshot)throw new Error('설정 파일은 데스크톱 앱에서 열어주세요.');
@@ -383,13 +382,16 @@
       clean.reference_data=normalizeCase(clean.reference_data).data;
       return clean;
     }
-    function restoreSession(snapshot){
+    function restoreSession(snapshot,options={}){
       const clean=validateSnapshot(snapshot);
+      const preserveNativeWorkbench=options.preserveNativeWorkbench===true;
+      if(!preserveNativeWorkbench)workbenchShell=clean.workbench?clone(clean.workbench):null;
+      parameterSignature=null;
       data=clean.reference_data;Object.assign(state,clean.optics);Object.assign(conditions,resolveConditions(data.analysis_conditions||{}));
       for(const key of Object.keys(settings))delete settings[key];Object.assign(settings,clean.parameters);
       for(const key of Object.keys(coverageBaselines))delete coverageBaselines[key];
       Object.assign(trainingSettings,clean.training);Object.assign(autoSettings,clean.automation);
-      llmDraft=clean.llm_draft;sectionZoom=clean.section_zoom;
+      if(!preserveNativeWorkbench)llmDraft=clean.llm_draft;sectionZoom=clean.section_zoom;
       paretoPanel?.restore(clean.pareto_view);
       for(const key of Object.keys(chartViews))delete chartViews[key];Object.assign(chartViews,clean.chart_views);
       root.classList.toggle('o-analysis',state.layout==='analysis');
@@ -397,14 +399,17 @@
       renderParams();updateReadouts();workspace();
       if(clean.camera){root.__pendingCamera=clean.camera;root.__restoreCamera?.(clean.camera)}
       const allowed=['configure','conditions','targets','candidates','model','update','auto','llm','mtf','spot'];
-      if(allowed.includes(clean.view))actions[clean.view]();
+      if(allowed.includes(clean.view)&&!(workbenchAdapter?.native&&['configure','llm'].includes(clean.view)))actions[clean.view]();
+      if(preserveNativeWorkbench)workbenchAdapter?.changed();else workbenchAdapter?.sessionRestored(workbenchShell);
     }
-    function notice(message){const el=byId('o-file-notice');el.textContent=message;el.hidden=false}
+    function notice(message){const el=byId('o-file-notice');el.textContent=message;el.title=message;el.hidden=false}
     function fileError(error){show('File / data message','<div class="o-error" role="alert">'+escapeText(error.message||error)+'</div>')}
     function fileAction(method){
+      if(['save','exportBundle','open'].includes(method))commitPendingInput();
       if(!fileController){show('Local desktop feature','<div class="o-callout">실제 파일 선택·저장·내보내기는 로컬 데스크톱 앱에서 사용할 수 있습니다.</div>');return Promise.resolve(null)}
       return fileController[method]();
     }
+    function commitPendingInput(){const active=document.activeElement;if(active&&root.contains(active)&&['INPUT','TEXTAREA','SELECT'].includes(active.tagName))active.blur()}
     function fileContext(){return fileController?.getContext()||{report:null,target:null,cases:[],references:{}}}
     function contextChanged(context){
       const button=root.querySelector('[data-action="model"]');
@@ -413,6 +418,7 @@
       if(activeView==='model'||activeView==='update')model(activeView==='update');
       if(activeView==='targets')targets();
       paretoPanel?.refresh();
+      workbenchAdapter?.changed();
     }
     async function testCompute(){
       const select=byId('o-compute'),button=byId('o-compute-test'),status=byId('o-compute-status');
@@ -448,6 +454,7 @@
     }
     let llmDraft='';
     function llmExtension(){
+      if(workbenchAdapter?.toggleLlm())return;
       // TODO(claude-extension): Connect natural-language requests to the future
       // Claude via GitHub Copilot Bearer adapter and registered Python workflows.
       // Authentication and provider connectivity are intentionally on hold; no token is read or stored.
@@ -457,10 +464,11 @@
       byId('o-llm-prompt').oninput=function(e){llmDraft=e.target.value};
     }
     function sim(){
-      const popupLensIndex=state.lens;
       const baseline={ray_context:{object_conjugate:'far_field',field_norm:0,direction:'negative_z',image_z_mm:0},aperture_stop:resolveStop(state),parameters:Object.fromEntries(allDescriptors().filter(function(d){return d.available&&Number.isFinite(d.obj[d.prop])}).map(function(d){return [d.key,d.obj[d.prop]]})),lenses:state.lenses.map(function(l,i){return {lens:i+1,material:l.material,type:l.type}})};
       const original=activeDescriptors().map(function(d){const c=config(d);return {name:d.path+' · '+d.label,key:d.key,current:d.obj[d.prop],min:c.min,max:c.max,count:0,checked:false,trained:support(d,c)}});
-      show('Add Zemax Sim','<div class="o-small">팝업의 변경은 메인 설계에 영향을 주지 않습니다.</div><div class="o-tabs"><button id="o-manual" aria-pressed="true">Manual</button><button id="o-auto-sample" aria-pressed="false">Auto</button></div><div id="o-manual-fields"><div class="o-row2" id="o-sim-params"></div><div class="o-row2"><label class="o-field"><span>Combination</span><select id="o-combination"><option value="cartesian">All combinations</option><option value="ofat">One parameter at a time</option></select></label><label class="o-field"><span>Material · Lens '+(popupLensIndex+1)+'</span><select id="o-sim-material">'+materialOptions(selected().material)+'</select></label></div><label class="o-small"><input type="checkbox" id="o-exclude"> 기 구간 불포함</label></div><div id="o-auto-fields" hidden><div class="o-row2"><label class="o-field"><span>Additional cases</span><input id="o-auto-count" type="number" value="64" min="1"></label><label class="o-field"><span>Algorithm · proposal</span><select id="o-algorithm"><option>Space-filling / maximin</option><option>Sobol</option><option>Latin hypercube</option></select></label></div></div><div id="o-sim-summary" class="o-callout"></div><div class="o-demo-list"><button class="o-primary" id="o-prepare">추가 데이터 생성</button><button id="o-zemax-error">백엔드 오류 예시</button></div><div id="o-request-result"></div>');
+      const materialFields=baseline.lenses.map(function(lens,index){return '<label class="o-field"><span>Material · Lens '+lens.lens+'</span><select id="o-sim-material-'+index+'" data-sim-material="'+index+'">'+materialOptions(lens.material)+'</select></label>'}).join('');
+      show('Add Zemax Sim','<div class="o-small">시뮬레이션 설정의 변경은 메인 설계에 영향을 주지 않습니다.</div><div class="o-tabs"><button id="o-manual" aria-pressed="true">Manual</button><button id="o-auto-sample" aria-pressed="false">Auto</button></div><div id="o-manual-fields"><div class="o-row2" id="o-sim-params"></div><div class="o-row2"><label class="o-field"><span>Combination</span><select id="o-combination"><option value="cartesian">All combinations</option><option value="ofat">One parameter at a time</option></select></label>'+materialFields+'</div><label class="o-small"><input type="checkbox" id="o-exclude"> 기 구간 불포함</label></div><div id="o-auto-fields" hidden><div class="o-row2"><label class="o-field"><span>Additional cases</span><input id="o-auto-count" type="number" value="64" min="1"></label><label class="o-field"><span>Algorithm · proposal</span><select id="o-algorithm"><option>Space-filling / maximin</option><option>Sobol</option><option>Latin hypercube</option></select></label></div></div><div id="o-sim-summary" class="o-callout"></div><div class="o-demo-list"><button class="o-primary" id="o-prepare">추가 데이터 생성</button><button id="o-zemax-error">백엔드 오류 예시</button></div><div id="o-request-result"></div>');
+      baseline.lenses.forEach(function(lens,index){byId('o-sim-material-'+index).value=lens.material});
       byId('o-sim-params').innerHTML=original.map(function(d,i){return '<div class="o-param" data-sim="'+i+'"><div class="o-param-title">'+d.name+'</div><input type="range" class="o-range s-range" min="'+d.min+'" max="'+d.max+'" step="any" value="'+d.current+'" aria-label="'+d.name+' draft slider"><div class="o-bounds">'+field('Min',fmt(d.min),'s-min')+field('Current',fmt(d.current),'s-current')+field('Max',fmt(d.max),'s-max')+'</div><label class="o-field"><span><input type="checkbox" class="s-check"> 추가 학습</span><input type="number" class="s-count" min="1" step="1" placeholder="추가 학습 데이터 수" disabled></label></div>'}).join('');
       let isAuto=false;
       function setMode(v){isAuto=v;byId('o-manual-fields').hidden=v;byId('o-auto-fields').hidden=!v;byId('o-manual').setAttribute('aria-pressed',!v);byId('o-auto-sample').setAttribute('aria-pressed',v);summary()}
@@ -473,47 +481,43 @@
         let zero=false;
         const samples=active.map(function(d){let pts=Array.from({length:d.count},function(_,i){return d.count===1?(d.min+d.max)/2:d.min+(d.max-d.min)*i/(d.count-1)});const both=d.trained.length&&d.min<d.trained[0][0]&&d.max>d.trained[d.trained.length-1][1],excluded=byId('o-exclude').checked&&both;const before=pts.length;if(excluded)pts=pts.filter(function(x){return !d.trained.some(function(seg){return x>=seg[0]&&x<=seg[1]})});if(!pts.length)zero=true;return {parameter:d.key,points:pts,removed:before-pts.length,exclusion_applied:!!excluded}});
         const cart=byId('o-combination').value==='cartesian',total=!active.length||(cart&&zero)?0:cart?samples.reduce(function(n,s){return n*s.points.length},1):samples.reduce(function(n,s){return n+s.points.length},0);
-        baseline.lenses[popupLensIndex].material=byId('o-sim-material').value;
+        const chosenLenses=baseline.lenses.map(function(lens,index){return {...lens,material:byId('o-sim-material-'+index).value}});
+        if(chosenLenses.some(function(lens){return !lens.material}))return {error:'각 렌즈의 시뮬레이션 재질을 선택하세요.'};
         const fixed={...baseline.parameters};original.forEach(function(d){fixed[d.key]=d.current});
-        return {mode:'manual',combination:cart?'cartesian':'ofat',baseline:{ray_context:baseline.ray_context,aperture_stop:baseline.aperture_stop,parameters:fixed,lenses:baseline.lenses},samples:samples,estimated_cases_before_deduplication:total};
+        return {mode:'manual',combination:cart?'cartesian':'ofat',baseline:{ray_context:baseline.ray_context,aperture_stop:baseline.aperture_stop,parameters:fixed,lenses:chosenLenses},samples:samples,estimated_cases_before_deduplication:total};
       }
-      function summary(){byId('o-request-result').innerHTML='';if(isAuto){byId('o-sim-summary').textContent='Auto 샘플링 설정 · 실행은 연결 전 상태';return}const p=collect();byId('o-sim-summary').textContent=p.error||('조합 수: '+p.estimated_cases_before_deduplication+' · 중복 제거 전 · 학습 구간은 동작 예시')}
+      function summary(){byId('o-request-result').innerHTML='';if(isAuto){byId('o-sim-summary').textContent='Auto 샘플링 설정 · 실행은 연결 전 상태';return}const p=collect();byId('o-sim-summary').textContent=p.error||('조합 수: '+p.estimated_cases_before_deduplication+' · 중복 제거 전 · '+(workbenchAdapter?.native?'학습영역 미연결':'학습 구간은 동작 예시'))}
       byId('o-manual-fields').oninput=function(e){if(e.target.classList.contains('s-range'))e.target.closest('[data-sim]').querySelector('.s-current').value=e.target.value;summary()};byId('o-manual-fields').onchange=summary;byId('o-auto-fields').oninput=summary;byId('o-auto-fields').onchange=summary;
       byId('o-prepare').onclick=function(){const p=isAuto?{mode:'auto',baseline:baseline,count:Number(byId('o-auto-count').value),algorithm:byId('o-algorithm').value}:collect();if(p.error||(!isAuto&&p.estimated_cases_before_deduplication===0)||(isAuto&&(!Number.isInteger(p.count)||p.count<1))){byId('o-request-result').innerHTML='<p class="o-error" role="alert">'+(p.error||'생성할 데이터가 없습니다. 파라미터와 데이터 수를 확인하세요.')+'</p>';return}byId('o-request-result').innerHTML='<div class="o-callout">연결 전 · 요청값 미리보기 · 실행하지 않음</div><pre class="o-request"></pre>';byId('o-request-result').querySelector('pre').textContent=JSON.stringify({type:'prepare_zemax_request',example_only:true,...p},null,2)};
       byId('o-zemax-error').onclick=function(){byId('o-request-result').innerHTML='<div class="o-callout o-error" role="alert">오류 화면 예시<br>Zemax license is unavailable.<br>백엔드가 제공한 메시지를 표시합니다. 실제 요청은 전송되지 않았습니다.</div>'};summary();
     }
-    const actions={workspace:workspace,open:function(){fileAction('open')},save:function(){fileAction('save')},export:function(){fileAction('exportBundle')},conditions:function(){show('Analysis conditions','<table class="o-target-table"><tr><th>Temperature</th><td>'+conditions.temperature+'°C</td></tr><tr><th>Wavelengths</th><td>'+conditions.wavelengths.join(', ')+' nm</td></tr></table>')},configure:configure,targets:targets,candidates:candidates,model:function(){model(false)},update:function(){model(true)},auto:auto,llm:llmExtension,sim:sim,mtf:function(){show('MTF · Full curve','<div class="o-small">'+sourceLabel()+' · '+conditionLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-legend"><span><span class="o-swatch"></span>0F</span><span><span class="o-swatch" style="background:var(--o-purple)"></span>0.8F</span><span>S — &nbsp; T - -</span></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="mtf" data-popup="true" role="img" aria-label="Expanded MTF curves"></svg></div>')},spot:function(){show('Spot · 1.0F','<div class="o-small">RMS diameter '+numberText(rmsDiameter(),2)+' μm · '+sourceLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="spot" data-popup="true" role="img" aria-label="Expanded Spot diagram"></svg></div>')}};
+    const actions={workspace:workspace,open:function(){return fileAction('open')},save:function(){return fileAction('save')},export:function(){return fileAction('exportBundle')},conditions:function(){show('Analysis conditions','<table class="o-target-table"><tr><th>Temperature</th><td>'+conditions.temperature+'°C</td></tr><tr><th>Wavelengths</th><td>'+conditions.wavelengths.join(', ')+' nm</td></tr></table>')},configure:configure,targets:targets,candidates:candidates,model:function(){model(false)},update:function(){model(true)},auto:auto,llm:llmExtension,sim:sim,mtf:function(){if(workbenchAdapter?.requestChart('mtf'))return;show('MTF · Full curve','<div class="o-small">'+sourceLabel()+' · '+conditionLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-legend"><span><span class="o-swatch"></span>0F</span><span><span class="o-swatch" style="background:var(--o-purple)"></span>0.8F</span><span>S — &nbsp; T - -</span></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="mtf" data-popup="true" role="img" aria-label="Expanded MTF curves"></svg></div>')},spot:function(){if(workbenchAdapter?.requestChart('spot'))return;show('Spot · 1.0F','<div class="o-small">RMS diameter '+numberText(rmsDiameter(),2)+' μm · '+sourceLabel()+' · 휠/드래그로 확대·이동</div><div class="o-demo-list"><button data-zoom="in">Zoom in</button><button data-zoom="out">Zoom out</button><button data-zoom="reset">Reset</button></div><div class="o-chart-wrap"><svg class="o-chart" data-chart="spot" data-popup="true" role="img" aria-label="Expanded Spot diagram"></svg></div>')}};
     root.querySelectorAll('[data-action]').forEach(function(b){b.onclick=actions[b.dataset.action]});
-    let chartId=0;
+    function storedChartRevision(){
+      const signature=JSON.stringify({reference_id:data.id,origin:data.origin||null,conditions:data.analysis_conditions||{},
+        database_path:fileContext().references?.database_path||null,mtf:data.mtf,spot:data.spot,spot_summary:data.spot_summary});
+      if(signature!==chartSignature){chartSignature=signature;chartCounter++}
+      return chartScope+'-'+chartCounter;
+    }
+    function storedChartData(kind){
+      if(!['mtf','spot'].includes(kind))throw new Error('지원하지 않는 그래프입니다.');
+      return {schema_version:1,kind:kind,revision:storedChartRevision(),reference_id:data.id,source_label:sourceLabel(),
+        conditions_label:conditionLabel(),condition_metadata:{analysis:clone(data.analysis_conditions||{}),display:clone(conditions)},
+        units:{x:kind==='mtf'?'lp/mm':'µm',y:kind==='mtf'?'fraction':'µm'},
+        rms_diameter_um:kind==='spot'?rmsDiameter():null,view:chartViews[kind]?clone(chartViews[kind]):null,
+        [kind]:clone(kind==='mtf'?data.mtf:data.spot)};
+    }
     function drawChart(node){
-      if(!globalThis.d3||!node.clientWidth)return;
-      const type=node.dataset.chart,popup=node.dataset.popup==='true',w=node.clientWidth,h=(popup&&type==='spot'?Math.max(210,Math.min(340,w-7)):node.clientHeight),margin={left:48,right:14,top:12,bottom:43},svg=d3.select(node);if(popup&&type==='spot')node.style.height=h+'px';if(type==='spot'){const side=Math.min(w-62,h-55);margin.left=(w-side)/2;margin.right=(w-side)/2;margin.bottom=h-margin.top-side}svg.selectAll('*').remove();svg.attr('viewBox','0 0 '+w+' '+h);
-      let points=type==='spot'?data.spot:data.scatter||[];
-      if(type==='mtf'?!data.mtf.length:!points.length){svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle').text('데이터 미제공');return}
-      const x0=d3.scaleLinear().range([margin.left,w-margin.right]),y0=d3.scaleLinear().range([h-margin.bottom,margin.top]);
-      if(type==='mtf'){x0.domain([0,d3.max(data.mtf,function(d){return d.frequency_lp_per_mm})]);y0.domain([0,100])}
-      else if(type==='spot'){const bound=d3.max(points,function(d){return Math.max(Math.abs(d.x),Math.abs(d.y))})*1.15;x0.domain([-bound,bound]);y0.domain([-bound,bound])}
-      else{x0.domain(d3.extent(points,function(d){return d.x})).nice();y0.domain(d3.extent(points,function(d){return d.y})).nice()}
-      let x=x0,y=y0;
-      const clip='o-chart-clip-'+(++chartId);svg.append('defs').append('clipPath').attr('id',clip).append('rect').attr('x',margin.left).attr('y',margin.top).attr('width',Math.max(1,w-margin.left-margin.right)).attr('height',h-margin.top-margin.bottom);
-      const gx=svg.append('g').attr('transform','translate(0,'+(h-margin.bottom)+')'),gy=svg.append('g').attr('transform','translate('+margin.left+',0)');
-      svg.append('text').attr('x',(margin.left+w-margin.right)/2).attr('y',h-7).attr('text-anchor','middle').text(type==='mtf'?'Spatial frequency · lp/mm':type==='spot'?'x · μm':'FOV H · °');
-      svg.append('text').attr('transform','rotate(-90)').attr('x',-(margin.top+h-margin.bottom)/2).attr('y',12).attr('text-anchor','middle').text(type==='mtf'?'MTF · %':type==='spot'?'y · μm':'RMS Ø · μm');
-      const marks=svg.append('g').attr('clip-path','url(#'+clip+')'),guide=svg.append('line').attr('stroke','var(--o-muted)').attr('stroke-dasharray','3 3').attr('y1',margin.top).attr('y2',h-margin.bottom).style('display','none');
-      const series=type==='mtf'?Array.from(d3.group(data.mtf,function(d){return d.field_norm+' '+d.orientation}),function(pair){return {key:pair[0],values:pair[1]}}):[];
-      function paint(){gx.call(d3.axisBottom(x).ticks(w<350?3:5));gy.call(d3.axisLeft(y).ticks(4));marks.selectAll('*').remove();
-        if(type==='mtf')series.forEach(function(s){marks.append('path').datum(s.values).attr('fill','none').attr('stroke',s.key.startsWith('0 ')?'var(--o-blue)':'var(--o-purple)').attr('stroke-width',1.7).attr('stroke-dasharray',s.key.includes('TANGENTIAL')?'5 3':null).attr('d',d3.line().x(function(d){return x(d.frequency_lp_per_mm)}).y(function(d){return y(d.mtf*100)}))});
-        else{marks.selectAll('circle').data(points).join('circle').attr('cx',function(d){return x(d.x)}).attr('cy',function(d){return y(d.y)}).attr('r',type==='spot'?2.6:2.1).attr('fill',type==='spot'?'var(--o-blue)':'var(--o-teal)').attr('opacity',.6);if(type==='scatter'&&data.metrics[0]&&data.spot_summary[0])marks.append('path').attr('d',d3.symbol().type(d3.symbolDiamond).size(50)()).attr('transform','translate('+x(data.metrics[0].horizontal_fov_deg)+','+y(data.spot_summary[0].rms_radius_mm_proxy*2000)+')').attr('fill','var(--o-purple)')}
-      }
-      paint();
-      let tip=node.parentElement.querySelector('.o-chart-tip');if(!tip){tip=document.createElement('div');tip.className='o-chart-tip';node.parentElement.appendChild(tip)}
-      const hit=svg.append('rect').attr('x',margin.left).attr('y',margin.top).attr('width',Math.max(1,w-margin.left-margin.right)).attr('height',h-margin.top-margin.bottom).attr('fill','transparent');
-      hit.on('pointermove click',function(e){const p=d3.pointer(e,node);let text='';
-        if(type==='mtf'){const value=x.invert(p[0]);if(value<x0.domain()[0]||value>x0.domain()[1]){guide.style('display','none');tip.style.display='none';return}guide.style('display',null).attr('x1',p[0]).attr('x2',p[0]);text=value.toFixed(2)+' lp/mm';series.forEach(function(s){const list=s.values,i=Math.max(1,Math.min(list.length-1,d3.bisector(function(d){return d.frequency_lp_per_mm}).left(list,value))),a=list[i-1],b=list[i],t=(value-a.frequency_lp_per_mm)/(b.frequency_lp_per_mm-a.frequency_lp_per_mm),v=(a.mtf+t*(b.mtf-a.mtf))*100;text+='\n'+s.key.replace('SAGITTAL','S').replace('TANGENTIAL','T')+': '+v.toFixed(1)+'%'})}
-        else{const d=d3.least(points,function(q){return (x(q.x)-p[0])**2+(y(q.y)-p[1])**2});if(!d)return;text=(d.id?d.id+'\n':'')+(type==='spot'?'x / y: ':'FOV / RMS Ø: ')+d.x.toFixed(2)+' / '+d.y.toFixed(2)+(type==='spot'?' μm':' ° / μm')}
-        tip.textContent=text;tip.style.display='block';tip.style.left=Math.max(4,Math.min(p[0]+12,w-tip.offsetWidth-5))+'px';tip.style.top=Math.max(0,p[1]-tip.offsetHeight-8)+'px';
-      }).on('pointerleave',function(){tip.style.display='none';guide.style('display','none')});
-      if(popup){const zoom=d3.zoom().scaleExtent([1,12]).extent([[margin.left,margin.top],[w-margin.right,h-margin.bottom]]).on('zoom',function(e){x=e.transform.rescaleX(x0);y=type==='mtf'?y0:e.transform.rescaleY(y0);chartViews[type]={k:e.transform.k,x:e.transform.x,y:e.transform.y};paint();tip.style.display='none'});const saved=chartViews[type];svg.call(zoom);if(saved&&Number.isFinite(saved.k)&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))svg.call(zoom.transform,d3.zoomIdentity.translate(saved.x,saved.y).scale(Math.max(1,Math.min(12,saved.k))));byId('o-modal-body').querySelectorAll('[data-zoom]').forEach(function(b){b.onclick=function(){if(b.dataset.zoom==='reset')svg.call(zoom.transform,d3.zoomIdentity);else svg.call(zoom.scaleBy,b.dataset.zoom==='in'?1.4:1/1.4)}})}
+      if(!globalThis.d3||!window.OpticsChart||!node.clientWidth)return;
+      const kind=node.dataset.chart,popup=node.dataset.popup==='true';
+      if(popup&&kind==='spot')node.style.height=Math.max(210,Math.min(340,node.clientWidth-7))+'px';
+      node.__chartRenderer?.destroy();
+      node.__chartRenderer=window.OpticsChart.render(node,storedChartData(kind),{interactive:popup,view:chartViews[kind]||null,
+        onViewChange:function(view){chartViews[kind]=view;workbenchAdapter?.changed()}});
+      if(popup)byId('o-modal-body').querySelectorAll('[data-zoom]').forEach(function(button){button.onclick=function(){
+        const renderer=node.__chartRenderer;if(!renderer)return;
+        if(button.dataset.zoom==='reset')renderer.reset();else if(button.dataset.zoom==='in')renderer.zoomIn();else renderer.zoomOut();
+      }});
     }
     function renderCharts(){root.querySelectorAll('svg[data-chart]').forEach(drawChart);paretoPanel?.draw()}
     window.__OPTICS_SMOKE__=async function(){
@@ -590,7 +594,22 @@
       candidates();byId('o-pareto-case').value=fixture.second;byId('o-pareto-case').dispatchEvent(new Event('change'));
       byId('o-pareto-apply-selected').click();await wait(()=>data.id===fixture.second);await paint();
       check('candidate_applies_actual_db_case',data.id===fixture.second&&activeView==='workspace');
-      byId('o-pareto-undo').click();await paint();
+      const undoDraft=llmDraft,undoShell=workbenchShell,announceRestore=workbenchAdapter?.sessionRestored;
+      let undoRestoreEvents=0;
+      llmDraft='New draft after candidate application';
+      const newerShell=workbenchShell?clone(workbenchShell):null;
+      if(newerShell)newerShell.explorer.wrap_lines=!newerShell.explorer.wrap_lines;
+      workbenchShell=newerShell;
+      if(workbenchAdapter)workbenchAdapter.sessionRestored=function(value){undoRestoreEvents++;return announceRestore(value)};
+      try{
+        byId('o-pareto-undo').click();await paint();
+        check('candidate_undo_preserves_current_native_shell_and_draft',llmDraft==='New draft after candidate application'&&workbenchShell===newerShell);
+        check('candidate_undo_does_not_restore_native_session',undoRestoreEvents===0);
+      }finally{
+        llmDraft=undoDraft;workbenchShell=undoShell;
+        if(workbenchAdapter)workbenchAdapter.sessionRestored=announceRestore;
+        workbenchAdapter?.changed();
+      }
       check('candidate_undo_restores_preexisting_edits',data.id===beforeId&&state.lenses[0].thickness===beforeThickness);
       candidates();byId('o-pareto-case').value=fixture.best;byId('o-pareto-case').dispatchEvent(new Event('change'));
       byId('o-pareto-apply-selected').click();workspace();
@@ -613,16 +632,141 @@
       await testCompute();return {status:byId('o-compute-status').dataset.result};
     };
     if(window.createOpticsFileController&&window.opticsBridge){
-      fileController=window.createOpticsFileController({enableCandidates:true,snapshot:snapshotSession,restore:restoreSession,applyCase:applyCase,contextChanged:contextChanged,notice:notice,error:fileError});
+      fileController=window.createOpticsFileController({enableCandidates:true,snapshot:snapshotSession,restore:restoreSession,applyCase:applyCase,contextChanged:contextChanged,notice:notice,error:fileError,
+        fingerprintSnapshot:function(snapshot,references){return window.opticsSessionFingerprint?window.opticsSessionFingerprint(snapshot,references):JSON.stringify({snapshot:snapshot,references:references})}});
       window.opticsBridge.ready.then(function(ready){if(ready){byId('o-data-kind').textContent='Local app · Reference data';notice('로컬 파일 기능 연결됨 · 광학 backend 및 LLM 연결은 보류')}});
     }
     // Explicit user-provided provisional targets, never substituted for an invalid loaded JSON.
     const paretoFallbackProfile={"profile_id":"local-ui-demo-targets-v1","profile_version":1,"read_only":true,"is_ui_example":true,"category_weights":{"mtf":1,"spot":1,"horizontal_fov":1},"relative_tolerance":0.05,"conditions_policy":{"prefer":"current_database_analysis_metadata","display_defaults":{"temperature_c":25,"wavelength_nm":560},"fallback_does_not_recalculate_results":true},"targets":[{"id":"mtf-0-sagittal","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.0,"orientation":"SAGITTAL","comparator":">=","value":0.4,"unit":"fraction","required":true},{"id":"mtf-0-tangential","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.0,"orientation":"TANGENTIAL","comparator":">=","value":0.4,"unit":"fraction","required":true},{"id":"mtf-0.8-sagittal","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.8,"orientation":"SAGITTAL","comparator":">=","value":0.3,"unit":"fraction","required":true},{"id":"mtf-0.8-tangential","category":"mtf","metric":"mtf","frequency_lp_per_mm":6,"field_norm":0.8,"orientation":"TANGENTIAL","comparator":">=","value":0.3,"unit":"fraction","required":true},{"id":"spot-1f-rms-diameter","category":"spot","metric":"spot_rms_diameter","field_norm":1.0,"comparator":"close_to","value":1.6,"unit":"um","required":true},{"id":"horizontal-full-fov","category":"horizontal_fov","metric":"horizontal_fov_full","comparator":"close_to","value":24,"unit":"deg","required":true}],"notes":["UI example JSON only; not a finalized backend target schema.","MTF conditions share one category weight; four conditions do not make MTF four times heavier.","Spot is RMS diameter near 1.6 um at normalized field 1.0.","Horizontal FOV is the full 24 degree angle (plus/minus 12 degrees).","Reference case D057_2 is not declared to pass these targets or be the current best candidate."]};
     paretoPanel=window.createOpticsParetoView({root:root,show:show,getContext:fileContext,getCurrentId:function(){return data.id},
       fallbackProfile:paretoFallbackProfile,isActive:function(){return activeView==='candidates'},snapshot:snapshotSession,
-      restore:restoreSession,notice:notice,editKey:function(){return JSON.stringify({lenses:state.lenses,source:state.source,gaps:state.gaps,stop:state.stop,parameters:allDescriptors().map(function(d){const c=config(d);return [d.key,c.active,c.min,c.max]})})},refreshCandidates:function(){return fileController?.refreshCandidates()},
+      restore:function(saved){restoreSession(saved,{preserveNativeWorkbench:true})},notice:notice,editKey:function(){return JSON.stringify({lenses:state.lenses,source:state.source,gaps:state.gaps,stop:state.stop,parameters:allDescriptors().map(function(d){const c=config(d);return [d.key,c.active,c.min,c.max]})})},refreshCandidates:function(){return fileController?.refreshCandidates()},
       selectCase:function(id,isCurrent){return fileController?fileController.selectCase(id,{isCurrent:isCurrent}):Promise.resolve(null)}});
     applyCase(data);renderCharts();paretoPanel.refresh();
+    function nativeParameterPayload(){
+      const parameters=allDescriptors().map(function(d){const c=config(d);return {id:d.key,label:d.label,group:d.path,unit:d.unit,
+        kind:'number',min:c.min,max:c.max,value:d.obj[d.prop],active:!!c.active,available:!!d.available,
+        ...(d.lens===null?{}:{lens_index:d.lens}),coefficient:['a4','a6','a8','a10','a12'].includes(d.prop)}});
+      const lenses=state.lenses.map(function(l,index){return {index:index,material:l.material,surface_type:l.type}});
+      const materials=Array.from(new Set([...(data.materials||[]),...state.lenses.map(function(l){return l.material})]));
+      const context=fileContext();
+      const signature=JSON.stringify({parameters:parameters,lenses:lenses,materials:materials,stop:state.stop,
+        reference_id:data.id,references:context.references,conditions:data.analysis_conditions||{},
+        model:{id:context.report?.model_id||null,definition:context.report?.report?.model||{}},
+        target:context.target?.profile||null});
+      if(signature!==parameterSignature){parameterSignature=signature;parameterRevision++}
+      return {revision:'parameters-'+parameterRevision,parameters:parameters,lenses:lenses,materials:materials};
+    }
+    function nativeAnalysisContext(payload){
+      const context=fileContext(),report=context.report,model=report?.report?.model||{};
+      return {parameters:clone(payload.parameters),
+        optics:{source:state.source,gaps:clone(state.gaps),lenses:clone(state.lenses),stop:clone(state.stop),
+          resolved_stop:resolveStop(state),ray_context:{object_conjugate:'far_field',field_norm:0,direction:'negative_z',image_z_mm:0},
+          ray_indices:clone(data.ray_indices||{})},
+        conditions:{analysis:clone(data.analysis_conditions||{}),display:clone(conditions)},
+        model:{id:report?.model_id||model.id||null,version:model.version||null,sha256:model.sha256||null,
+          model_path:report?.model_path||null,report_path:report?.report_path||null,connected:false},
+        reference_id:data.id,reference:{origin:data.origin||null,database_id:report?.database_id||null,
+          database_path:context.references?.database_path||null,database_metadata:clone(data.database_metadata||{})},
+        targets:context.target?{profile:clone(context.target.profile),sha256:context.target.sha256||null,
+          path:context.references?.target_path||null}:{profile:clone(paretoFallbackProfile),provisional:true}};
+    }
+    function nativeState(){
+      const payload=nativeParameterPayload();
+      return {view:activeView,parameter_payload:payload,analysis_context:nativeAnalysisContext(payload),llm_draft:llmDraft,
+        model_label:root.querySelector('[data-action="model"]').textContent,chart_revision:storedChartRevision(),
+        session_fingerprint:nativeSessionSnapshot().session_fingerprint};
+    }
+    function nativeSessionSnapshot(){
+      const context=fileContext(),snapshot={...snapshotSession(),target_snapshot:context.target?clone(context.target.profile):null};
+      const references=clone(context.references);
+      return {snapshot:snapshot,references:references,session_fingerprint:window.opticsSessionFingerprint(snapshot,references)};
+    }
+    function applyNativeParameters(payload){
+      // Stage the full optical snapshot before committing any live value.
+      const nextState=clone(state),nextSettings=clone(settings),descriptors=allDescriptors();
+      payload.lenses.forEach(function(lens){nextState.lenses[lens.index].material=lens.material;nextState.lenses[lens.index].type=lens.surface_type});
+      payload.parameters.forEach(function(p){
+        const d=descriptors.find(function(item){return item.key===p.id});
+        const target=d.lens===null?(d.key==='source'?nextState:nextState.gaps):d.side===null?nextState.lenses[d.lens]:nextState.lenses[d.lens].surfaces[d.side];
+        target[d.prop]=p.value;nextSettings[p.id]={active:p.active,min:p.min,max:p.max};
+      });
+      const staged=snapshotSession();staged.optics=nextState;staged.parameters=nextSettings;
+      const clean=validateSnapshot(staged);
+      Object.assign(state,clean.optics);for(const key of Object.keys(settings))delete settings[key];Object.assign(settings,clean.parameters);
+      parameterSignature=null;renderParams();updated();
+      return {status:'applied',revision:nativeParameterPayload().revision};
+    }
+    if(window.createOpticsWorkbenchAdapter){
+      workbenchAdapter=window.createOpticsWorkbenchAdapter({getState:nativeState,actions:actions,applyParameters:applyNativeParameters,
+        getChartData:storedChartData,getSessionSnapshot:function(){commitPendingInput();return nativeSessionSnapshot()},
+        setChartView:function(payload){chartViews[payload.kind]=clone(payload.view);return {status:'stored'}},
+        setShellState:function(value){workbenchShell=clone(value);return {status:'stored'}},
+        setLlmDraft:function(value){llmDraft=value;const input=byId('o-llm-prompt');if(input)input.value=value;return {status:'stored'}},
+        setNativeMode:function(){
+          document.documentElement.classList.add('optics-native-workbench');document.body.classList.add('optics-native-workbench');
+          const quick=root.querySelector('.o-parameters');quick.classList.remove('o-parameters');quick.classList.add('o-native-quick');
+          quick.querySelector('.o-head strong').textContent='Quick parameters';quick.querySelector('.o-legend').textContent='학습영역 연결 전';
+          quick.querySelector('.o-workbench-labels span:last-child').textContent='Current values · Configure for ranges';
+          root.querySelector('.o-context').appendChild(byId('o-result-source'));
+          renderParams();requestAnimationFrame(function(){renderCharts();syncViewerMode()});
+        }});
+      root.addEventListener('input',function(){workbenchAdapter.changed()});
+      root.addEventListener('change',function(){workbenchAdapter.changed()});
+    }
+    window.__OPTICS_WORKBENCH_SMOKE__=async function(){
+      if(!workbenchAdapter)return {checks:[],available:false};
+      const checks=[],check=function(name,pass){checks.push({name:name,pass:!!pass})},before=snapshotSession();
+      try{
+        const initial=await window.opticsWorkbench.command('get_state');
+        const sessionEnvelope=await window.opticsWorkbench.command('get_session_snapshot');
+        check('workbench_authoritative_session_snapshot_matches_state',sessionEnvelope.session_fingerprint===initial.session_fingerprint&&
+          Object.hasOwn(sessionEnvelope.snapshot,'target_snapshot')&&Object.hasOwn(sessionEnvelope.references,'database_path'));
+        check('workbench_state_has_full_context',initial.parameter_payload.parameters.length===54&&
+          ['parameters','conditions','optics','model','reference_id','targets'].every(function(key){return key in initial.analysis_context}));
+        const request=clone(initial.parameter_payload),p=request.parameters.find(function(p){return p.id==='L0thickness'}),old=p.value;
+        p.value=old+(p.max-old>.01?.01:-.01);
+        await window.opticsWorkbench.command('apply_parameters',request);
+        check('workbench_parameter_applies',Math.abs(state.lenses[0].thickness-p.value)<1e-12);
+        const others=initial.parameter_payload.parameters.filter(function(p){return p.id!=='L0thickness'});
+        const after=await window.opticsWorkbench.command('get_state');
+        check('workbench_parameter_edit_keeps_stored_chart_revision',after.chart_revision===initial.chart_revision);
+        check('workbench_parameter_edit_changes_session_fingerprint',after.session_fingerprint!==initial.session_fingerprint);
+        const mtfPayload=await window.opticsWorkbench.command('get_chart_data',{kind:'mtf'});
+        await window.opticsWorkbench.command('set_chart_view',{kind:'mtf',revision:mtfPayload.revision,view:{k:2,x:5,y:0}});
+        check('workbench_chart_view_is_saved_without_new_analysis',snapshotSession().chart_views.mtf.k===2&&storedChartRevision()===mtfPayload.revision);
+        let staleChart=false;try{await window.opticsWorkbench.command('set_chart_view',{kind:'mtf',revision:'obsolete-chart',view:{k:3,x:0,y:0}})}catch{staleChart=true}
+        check('workbench_stale_chart_view_rejected',staleChart&&snapshotSession().chart_views.mtf.k===2);
+        check('workbench_preserves_other_numbers',JSON.stringify(after.parameter_payload.parameters.filter(function(p){return p.id!=='L0thickness'}))===JSON.stringify(others));
+        let stale=false;try{await window.opticsWorkbench.command('apply_parameters',request)}catch(e){stale=e.code==='STALE_REVISION'}
+        check('workbench_stale_request_rejected',stale&&state.lenses[0].thickness===p.value);
+        await window.opticsWorkbench.command('set_llm_draft',{draft:'workbench smoke draft'});
+        check('workbench_llm_draft_saved',snapshotSession().llm_draft==='workbench smoke draft');
+        await window.opticsWorkbench.command('navigate',{page:'update'});
+        check('workbench_update_page_connected',activeView==='update'&&!!byId('o-compute-test'));
+        const mainMaterials=state.lenses.map(function(lens){return lens.material});
+        await window.opticsWorkbench.command('navigate',{page:'sim'});
+        const materialSelectors=Array.from(root.querySelectorAll('[data-sim-material]'));
+        check('workbench_sim_has_material_selector_for_every_lens',materialSelectors.length===state.lenses.length);
+        const selectedMaterials=materialSelectors.map(function(select){
+          const other=Array.from(select.options).find(function(option){return option.value!==select.value});
+          if(other)select.value=other.value;select.dispatchEvent(new Event('change',{bubbles:true}));return select.value;
+        });
+        const simulationRow=byId('o-sim-params').children[0];
+        simulationRow.querySelector('.s-check').checked=true;simulationRow.querySelector('.s-count').value='2';
+        simulationRow.querySelector('.s-count').dispatchEvent(new Event('change',{bubbles:true}));byId('o-prepare').click();
+        const manualRequest=JSON.parse(byId('o-request-result').querySelector('pre').textContent);
+        check('workbench_sim_request_carries_each_lens_material',manualRequest.baseline.lenses.length===state.lenses.length&&
+          manualRequest.baseline.lenses.every(function(lens,index){return lens.material===selectedMaterials[index]}));
+        check('workbench_sim_materials_do_not_change_main_design',JSON.stringify(state.lenses.map(function(lens){return lens.material}))===JSON.stringify(mainMaterials));
+        byId('o-auto-sample').click();byId('o-prepare').click();
+        const autoRequest=JSON.parse(byId('o-request-result').querySelector('pre').textContent);
+        check('workbench_auto_sim_keeps_original_material_baseline',JSON.stringify(autoRequest.baseline.lenses.map(function(lens){return lens.material}))===JSON.stringify(mainMaterials));
+        await window.opticsWorkbench.command('navigate',{page:'workspace'});
+        check('workbench_quick_sliders_visible',!!root.querySelector('[data-key="L0thickness"] .o-range')&&!root.querySelector('.o-workspace').hidden);
+      }finally{restoreSession(before)}
+      return {checks:checks,available:true,native:workbenchAdapter.native};
+    };
     let layoutFrame=0,layoutWidth=null;
     function scheduleLayout(){if(layoutFrame)return;layoutFrame=requestAnimationFrame(function(){layoutFrame=0;renderCharts();if(state.section)drawSection()})}
     new ResizeObserver(function(entries){const width=entries[0]?.contentRect.width;if(width===layoutWidth)return;layoutWidth=width;scheduleLayout()}).observe(root);

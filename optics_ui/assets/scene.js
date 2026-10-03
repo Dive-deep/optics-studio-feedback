@@ -18,10 +18,10 @@
         const outline=new THREE.LineSegments(new THREE.EdgesGeometry(plane.geometry),new THREE.LineBasicMaterial({color:color('--o-teal'),transparent:true,opacity:.5}));outline.rotation.y=Math.PI/2;group.add(outline);
         if(!state.section)root.querySelector('#o-view-note').textContent=valid?'Image plane · reference at (0,0)':'형상을 만들 수 없는 파라미터';render();
       }
-      function render(){if(root.dataset.webgl==='failed'||state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
+      function render(){if(state.section||!host.clientWidth)return;renderer.setSize(host.clientWidth,host.clientHeight,false);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.render(scene,camera)}
       root.__getCameraSnapshot=function(){return {position:camera.position.toArray(),target:controls.target.toArray(),zoom:camera.zoom,fov:camera.fov}};root.__restoreCamera=function(saved){if(!saved||!Array.isArray(saved.position)||saved.position.length!==3||!saved.position.every(Number.isFinite)||!Array.isArray(saved.target)||saved.target.length!==3||!saved.target.every(Number.isFinite))return;camera.position.fromArray(saved.position);controls.target.fromArray(saved.target);if(Number.isFinite(saved.zoom)&&saved.zoom>0)camera.zoom=saved.zoom;if(Number.isFinite(saved.fov)&&saved.fov>1&&saved.fov<179)camera.fov=saved.fov;controls.update();render()};if(root.__pendingCamera)root.__restoreCamera(root.__pendingCamera);
-      controls.addEventListener('change',render);root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);rebuild();root.dataset.webgl='ready';root.__syncViewerMode();
-      canvas.addEventListener('webglcontextlost',function(event){event.preventDefault();root.__setWebGLUnavailable('context-lost')});
+      controls.addEventListener('change',function(){render();root.__cameraViewChanged?.()});root.addEventListener('optics-update',rebuild);new ResizeObserver(render).observe(host);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);
+      canvas.addEventListener('webglcontextlost',function(event){event.preventDefault();root.__setWebGLUnavailable('context-lost')});rebuild();if(root.dataset.webgl!=='failed')root.dataset.webgl='ready';
       }
     }catch(e){root.__setWebGLUnavailable('renderer-error');console.error('3D viewer initialization failed',e)}
   

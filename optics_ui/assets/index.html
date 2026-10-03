@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Optics Studio</title><link rel="stylesheet" href="style.css"></head><body><div id="optics-review" aria-label="Optics Studio 화면 구성안">
-  
+
   <div class="o-top">
     <span class="o-brand"><i data-lucide="aperture" aria-hidden="true"></i> Optics Studio</span>
     <span class="o-small">Triplet exploration</span><span class="o-spacer"></span>
@@ -39,7 +39,7 @@
     <main class="o-stack o-main">
       <section class="o-panel" aria-label="Optical geometry">
         <div class="o-head"><strong>Optical layout</strong><button id="o-view-toggle">2D section view</button></div>
-        <div class="o-notice" id="o-webgl-status" role="status" hidden></div>
+        <div id="o-webgl-status" class="o-webgl-status" role="status" hidden></div>
         <div class="o-view" id="o-view">
           <canvas id="o-canvas" aria-label="Three lens 3D model. Drag to rotate, right-drag to pan, scroll to zoom."></canvas>
           <svg class="o-section" id="o-section" aria-label="Optical system 2D section" hidden></svg>
@@ -102,12 +102,13 @@
     </section>
   </div>
   <div class="o-footer"><span><span class="o-dot"></span>Backend not connected</span><span id="o-result-source">결과: 합성 DB · 20°C · 다중 파장 · 편집값 예측 아님</span></div>
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 </div>
 
-<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>
+<script src="/qwebchannel.js"></script><script src="vendor/lucide.js"></script><script src="vendor/d3.min.js"></script><script src="bridge-client.js"></script><script src="file-controller.js"></script><script src="workbench-contract.js"></script><script src="workbench-adapter.js"></script><script src="session-validation.js"></script><script src="ray-tracing.js"></script><script src="pareto.js"></script><script src="pareto-view.js"></script><script src="optics-chart.js"></script><script src="workspace.js"></script><script type="module" src="scene.js"></script><script>if(window.lucide)lucide.createIcons();</script></body></html>

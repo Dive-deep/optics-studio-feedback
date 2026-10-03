@@ -5,7 +5,7 @@ body:
     id: version
     attributes:
       label: 사용 버전
-      value: 0.1.0-feedback.2
+      value: 1.1.0
     validations:
       required: true
   - type: textarea
@@ -31,4 +31,4 @@ body:
     id: error
     attributes:
       label: 오류 메시지 / 캡처 / --check 결과
-      description: py -3.12 launch.py --check 결과가 있다면 함께 적어주세요.
+      description: py -3 launch.py --check 결과가 있다면 함께 적어주세요. 공개 게시물이므로 토큰·개인정보·업무 데이터는 제외해주세요.

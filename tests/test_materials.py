@@ -1,6 +1,5 @@
 """Exact catalog lookup tests written before ray-index metadata implementation."""
 
-from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -33,7 +32,7 @@ class MaterialIndicesTests(unittest.TestCase):
         self.database = self.folder / "cases.sqlite"
         self.catalog = self.folder / "materials/catalog.sqlite"
         self.catalog.parent.mkdir()
-        with closing(sqlite3.connect(self.catalog)) as connection, connection:
+        with sqlite3.connect(self.catalog) as connection:
             connection.executescript("""
                 CREATE TABLE metadata(key TEXT PRIMARY KEY, value TEXT);
                 INSERT INTO metadata VALUES ('schema_version','fixture-1');
@@ -111,7 +110,7 @@ class MaterialIndicesTests(unittest.TestCase):
                 self.assertTrue(any(w["code"] == "MATERIAL_INDEX_MISSING" for w in result["warnings"]))
 
     def test_partial_catalog_preserves_exact_values_and_reports_missing_material(self):
-        with closing(sqlite3.connect(self.catalog)) as connection, connection:
+        with sqlite3.connect(self.catalog) as connection:
             connection.execute("DELETE FROM refractive_index_samples WHERE material_id=?", (IDS[-1],))
         result = self.lookup()
         self.assertEqual(result["status"], "partial")
@@ -128,7 +127,7 @@ class MaterialIndicesTests(unittest.TestCase):
         self.assertTrue(result["warnings"])
 
     def test_legacy_catalog_without_index_table_does_not_fall_back_to_nd(self):
-        with closing(sqlite3.connect(self.catalog)) as connection, connection:
+        with sqlite3.connect(self.catalog) as connection:
             connection.execute("DROP TABLE refractive_index_samples")
         result = self.lookup()
         self.assertEqual(result["status"], "unavailable")
@@ -136,7 +135,7 @@ class MaterialIndicesTests(unittest.TestCase):
         self.assertTrue(any(w["code"] == "MATERIAL_CATALOG_SCHEMA" for w in result["warnings"]))
 
     def test_invalid_index_is_omitted_instead_of_replaced(self):
-        with closing(sqlite3.connect(self.catalog)) as connection, connection:
+        with sqlite3.connect(self.catalog) as connection:
             connection.execute("UPDATE refractive_index_samples SET refractive_index=0 WHERE material_id=?", (IDS[0],))
         result = self.lookup()
         self.assertEqual(result["status"], "partial")
@@ -150,7 +149,7 @@ class MaterialIndicesTests(unittest.TestCase):
 
     def make_optical_database(self):
         sql = (Path(__file__).parent / "fixtures/file_data_minimal.sql").read_text()
-        with closing(sqlite3.connect(self.database)) as connection, connection:
+        with sqlite3.connect(self.database) as connection:
             connection.executescript(sql)
             connection.execute("UPDATE lens_elements SET material_id=? WHERE material_id='BK7'", (IDS[0],))
             connection.execute("UPDATE lens_elements SET material_id=? WHERE material_id='SF6'", (IDS[1],))

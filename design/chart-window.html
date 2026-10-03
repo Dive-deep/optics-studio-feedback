@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Optical analysis</title>
+  <style>
+    :root {color-scheme:light;--o-blue:#2268cb;--o-purple:#7954b3;--o-muted:#64748b;--o-line:#dce3eb}
+    * {box-sizing:border-box}
+    html,body {margin:0;height:100%;background:#fff;color:#1e2a3b;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body {display:flex;flex-direction:column;padding:16px 18px 12px;min-width:320px}
+    header {display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    h1 {font-size:18px;font-weight:600;margin:0}
+    nav {display:flex;gap:6px}
+    button {font:inherit;background:#fff;color:inherit;border:1px solid #dce3eb;border-radius:6px;padding:5px 10px;cursor:pointer}
+    button:hover {background:#f4f7fb}
+    .metadata {font-size:12px;color:#64748b;margin:6px 0 0;overflow-wrap:anywhere}
+    #chart-legend {font-size:12px;color:#64748b;margin:10px 0 2px}
+    #chart-error {padding:8px 10px;color:#a72a31;background:#fff1f2;border-radius:6px;margin:8px 0}
+    .chart-wrap {position:relative;flex:1;min-height:220px}
+    #chart-plot {display:block;width:100%;height:100%;overflow:visible;touch-action:none}
+    #chart-plot text {fill:var(--o-muted);font-size:11px}
+    #chart-plot .domain,#chart-plot .tick line {stroke:var(--o-line)}
+    .o-chart-tip {display:none;position:absolute;z-index:2;pointer-events:none;white-space:pre-line;background:#fff;border:1px solid #dce3eb;border-radius:6px;padding:7px 9px;font-size:12px;box-shadow:0 4px 16px #0002;max-width:260px}
+    footer {font-size:11px;color:#64748b;border-top:1px solid #e8ecf2;padding-top:8px}
+    details {margin-top:5px} summary {cursor:pointer}
+    pre {white-space:pre-wrap;overflow-wrap:anywhere;max-height:140px;overflow:auto;background:#f5f7fa;padding:8px;border-radius:6px}
+    [hidden] {display:none!important}
+  </style>
+</head>
+<body>
+  <header><h1 id="chart-title">Optical analysis</h1><nav aria-label="Chart zoom"><button id="chart-zoom-in">Zoom in</button><button id="chart-zoom-out">Zoom out</button><button id="chart-reset">Reset</button></nav></header>
+  <p class="metadata" id="chart-source">분석 결과를 기다리고 있습니다.</p>
+  <p class="metadata" id="chart-conditions"></p>
+  <div id="chart-error" role="alert" hidden></div>
+  <div id="chart-legend"></div>
+  <div class="chart-wrap" id="chart-wrap"><svg id="chart-plot" role="img" aria-label="Optical analysis chart"></svg></div>
+  <footer>Scroll to zoom · Drag to pan · Hover for values · 저장된 참조 결과
+    <details><summary>Analysis conditions</summary><pre id="chart-condition-details"></pre></details>
+  </footer>
+  <script src="/qwebchannel.js"></script>
+  <script src="vendor/d3.min.js"></script>
+  <script src="optics-chart.js"></script>
+  <script src="chart-window.js"></script>
+</body>
+</html>

@@ -12,6 +12,7 @@ function workspace(status='ready'){
     CustomEvent:class{constructor(type){this.type=type}},requestAnimationFrame:fn=>fn(),
     settings:{},coverageBaselines:{},conditions:{},trainingSettings:{},autoSettings:{},chartViews:{},
     paretoPanel:null,actions:{},computeRevision:0,activeView:'workspace',resolveConditions:()=>({}),
+    workbenchAdapter:null,workbenchShell:null,parameterSignature:null,clone:x=>JSON.parse(JSON.stringify(x)),
     validateSnapshot:x=>x,
     root:{dataset:{webgl:status},classList:{toggle(){}},dispatchEvent(){scope.events++},querySelector:byId}};
   scope.stopHandle=byId('o-stop-handle');

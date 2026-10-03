@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parent
 PYSIDE_VERSION = "6.11.2"
 REQUIRED_ASSETS = (
     "index.html", "style.css", "workspace.js", "scene.js", "bridge-client.js",
+    "workbench-contract.js", "workbench-adapter.js",
+    "chart-window.html", "chart-window.js", "optics-chart.js",
     "file-controller.js", "session-validation.js", "ray-tracing.js", "pareto.js", "pareto-view.js",
     "vendor/d3.min.js", "vendor/lucide.js", "vendor/three/three.module.js",
     "vendor/three/three.core.js", "vendor/three/OrbitControls.js",
@@ -41,7 +43,7 @@ def preflight(
         windows_build = sys.getwindowsversion().build
     errors = python_runtime_errors(python_version, free_threaded=free_threaded)
     if system != "Windows":
-        errors.append("This feedback-release launcher targets Windows 11 x64. Developer hosts can use python -m optics_ui.")
+        errors.append("This source launcher targets Windows 11 x64. Developer hosts can use python -m optics_ui.")
     if bits != 64 or str(machine).casefold() not in {"amd64", "x86_64", "x64"}:
         errors.append("Use 64-bit x64 Python on Windows x64; 32-bit and ARM64 are not supported by this release.")
     if system == "Windows" and (windows_build is None or windows_build < 22000):

@@ -1,4 +1,4 @@
-"""Python 3.12 local file/data services with explicit, serializable contracts.
+"""Local file/data services with explicit, serializable contracts.
 
 Model artifacts are opaque bytes. SQLite inputs are opened read-only. Session
 state is JSON data, never executable instructions, and restoration never starts
@@ -21,6 +21,7 @@ import time
 import zipfile
 
 from .materials import load_ray_indices
+from .workbench_state import WorkbenchStateError, validate_workbench_state
 
 
 REFERENCE_KEYS = ("report_path", "database_path", "target_path")
@@ -120,6 +121,12 @@ def _json_state(value, *, code="SESSION_STATE", reject_credentials=True):
         visit(value, "state")
     except RecursionError as error:
         raise FileDataError(code, "JSON nesting is too deep.") from error
+    if isinstance(value, dict) and "workbench" in value:
+        try:
+            workbench = validate_workbench_state(value["workbench"])
+        except WorkbenchStateError as error:
+            raise FileDataError("SESSION_WORKBENCH", str(error)) from error
+        value = {**value, "workbench": workbench}
     return deepcopy(value)
 
 

@@ -3,7 +3,6 @@
 The original local demo is opened read-only and never modified. Fixture metric
 values are fabricated solely to test PASS/NEAR/NG and 2D/3D UI behavior, not optics.
 """
-from contextlib import closing
 from pathlib import Path
 import hashlib
 import json
@@ -25,8 +24,8 @@ def make_fixture(output):
     shutil.copyfile(source / "target.json", folder / "target.json")
     shutil.copytree(source / "materials", folder / "materials")
     database = folder / "demo-cases.sqlite"
-    with closing(sqlite3.connect((source / database.name).resolve().as_uri() + "?mode=ro", uri=True)) as reader, reader:
-        with closing(sqlite3.connect(database)) as writer, writer:
+    with sqlite3.connect((source / database.name).resolve().as_uri() + "?mode=ro", uri=True) as reader:
+        with sqlite3.connect(database) as writer:
             reader.backup(writer)
     cases = FileDataService().candidate_data(database)["cases"]
     ready = {row["id"]: row for row in cases if row["comparison_ready"]}
@@ -35,7 +34,7 @@ def make_fixture(output):
     assert len({ready[name]["cohort_key"] for name in ids}) == 1
     values = [(1.616, 24.96, 1.1), (1.648, 24.24, 1.3),
               (1.664, 24.72, 1.8), (1.7, 24, 2.4)]
-    with closing(sqlite3.connect(database)) as connection, connection:
+    with sqlite3.connect(database) as connection:
         for case_id, (diameter, fov, ratio) in zip(ids, values):
             connection.execute("UPDATE spot_summary SET rms_radius_mm_proxy=? WHERE design_id=? AND temperature_c=20 AND field_norm=1",
                                (diameter / 2000, case_id))
@@ -44,9 +43,9 @@ def make_fixture(output):
             for field, threshold in [(0, .4), (.8, .3)]:
                 connection.execute("UPDATE mtf_samples SET mtf=? WHERE design_id=? AND temperature_c=20 AND field_norm=? AND frequency_lp_per_mm=6",
                                    (ratio * threshold, case_id, field))
-    report = json.loads((source / "training-report.json").read_text(encoding="utf-8"))
+    report = json.loads((source / "training-report.json").read_text())
     report["notes"].insert(0, "PARETO UI TEST FIXTURE: modified synthetic metrics, NOT optical performance validation.")
-    (folder / "training-report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (folder / "training-report.json").write_text(json.dumps(report, indent=2))
     return {"first": ids[0], "second": ids[1], "best": ids[2], "ng": ids[3],
             "report_path": str(folder / "training-report.json"),
             "target_path": str(folder / "target.json"),
@@ -59,7 +58,7 @@ def main():
     original = ROOT / "examples/local-demo/demo-cases.sqlite"
     before = hashlib.sha256(original.read_bytes()).hexdigest()
     fixture = make_fixture(output)
-    (output / "fixture.json").write_text(json.dumps(fixture, indent=2), encoding="utf-8")
+    (output / "fixture.json").write_text(json.dumps(fixture, indent=2))
 
     class ParetoRunner(desktop.SmokeRunner):
         SCRIPT = "window.__PARETO_FIXTURE__=" + json.dumps(fixture) + r""";

@@ -64,6 +64,17 @@ class LauncherTests(unittest.TestCase):
         (self.root / "optics_ui/assets/vendor/three/three.core.js").unlink()
         self.assertTrue(any("three.core.js" in item for item in self.check()))
 
+    def test_missing_native_workbench_assets_are_reported(self):
+        assets = self.root / "optics_ui" / "assets"
+        names = ("workbench-contract.js", "workbench-adapter.js", "chart-window.html", "chart-window.js", "optics-chart.js")
+        for name in names:
+            (assets / name).write_text("fixture", encoding="utf-8")
+        for name in names:
+            with self.subTest(name=name):
+                (assets / name).unlink()
+                self.assertTrue(any(name in item for item in self.check()))
+                (assets / name).write_text("fixture", encoding="utf-8")
+
     def test_check_does_not_launch_or_change_working_directory(self):
         runner = mock.Mock()
         with mock.patch.object(launch, "preflight", return_value=[]), mock.patch.object(launch.os, "chdir") as cd:

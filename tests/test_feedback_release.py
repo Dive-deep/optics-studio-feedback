@@ -1,5 +1,10 @@
 """The feedback ZIP includes only portable application, demo and guide files."""
 import hashlib
+import importlib.util
+import json
+import os
+import subprocess
+import sys
 from pathlib import Path, PurePosixPath
 import tempfile
 import unittest
@@ -57,6 +62,11 @@ class FeedbackReleaseTests(unittest.TestCase):
             "guide/dist/node_modules/package.js", "guide/dist/.git/config",
             "guide/dist/__pycache__/build.pyc", "examples/local-demo/demo.optics.json",
             "examples/local-demo/demo-manifest.json", "examples/local-demo/demo-bundle.zip",
+            "validation/copilot-lab/app.py", "validation/copilot-lab/docs/CORPORATE_AGENT_HANDOFF.md",
+            "docs/plan/copilot-agent-integration-plan.md", "docs/internal/company-notes.md",
+            "optics_ui/workbench/__pycache__/window.pyc", "optics_ui/workbench/.env",
+            "optics_ui/workbench/private-report.json", "optics_ui/workbench/icons/private.txt",
+            "optics_ui/workbench/node_modules/private.py", "optics_ui/workbench/lab-runs/run/private.py",
         ]
         for name in excluded:
             self.write(name)
@@ -64,6 +74,40 @@ class FeedbackReleaseTests(unittest.TestCase):
         with zipfile.ZipFile(result["archive"]) as archive:
             names = set(archive.namelist())
         self.assertFalse(any(PREFIX + "/" + name in names for name in excluded))
+
+    def test_native_workbench_modules_icons_and_public_docs_are_complete(self):
+        self.assertEqual(PREFIX, "Optics-Studio-v1.1.0")
+        self.write("optics_ui/workbench/nested/new_panel.py")
+        self.write("optics_ui/workbench/icons/new-action.svg", "<svg/>")
+        result = build_release(self.root)
+        with zipfile.ZipFile(result["archive"]) as archive:
+            names = set(archive.namelist())
+        needed = [
+            "optics_ui/workbench/__init__.py", "optics_ui/workbench/window.py",
+            "optics_ui/workbench/charts.py", "optics_ui/workbench/quit_guard.py",
+            "optics_ui/workbench/nested/new_panel.py", "optics_ui/workbench/icons/workspace.svg",
+            "optics_ui/workbench/icons/new-action.svg", "optics_ui/assets/chart-window.html",
+            "optics_ui/assets/chart-window.js", "optics_ui/assets/optics-chart.js",
+            "optics_ui/assets/workbench-contract.js", "optics_ui/assets/workbench-adapter.js",
+            "docs/user-guide.md", "docs/development/pareto.md", "docs/development/sensitivity.md",
+            "CHANGELOG.md", "KNOWN_LIMITATIONS.md",
+        ]
+        for name in needed:
+            self.assertIn(PREFIX + "/" + name, names)
+
+    def test_missing_native_window_or_icon_prevents_incomplete_release(self):
+        for name in ("optics_ui/workbench/window.py", "optics_ui/workbench/icons/workspace.svg",
+                     "optics_ui/assets/chart-window.html"):
+            self.assertIn(name, REQUIRED_FILES)
+            path = self.root / name
+            original = path.read_bytes()
+            path.unlink()
+            try:
+                with self.assertRaisesRegex(ValueError, name):
+                    build_release(self.root)
+                self.assertFalse((self.root / "release").exists())
+            finally:
+                path.write_bytes(original)
 
     def test_missing_required_file_fails_without_creating_zip(self):
         (self.root / "guide/dist/index.html").unlink()
@@ -121,6 +165,50 @@ class FeedbackReleaseTests(unittest.TestCase):
         with zipfile.ZipFile(second["archive"]) as archive:
             self.assertEqual(archive.read(PREFIX + "/run_windows.cmd"), crlf)
         self.assertEqual(first["sha256"], second["sha256"])
+
+
+class ExtractedApplicationReleaseTests(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec("PySide6"), "Extracted native imports require user dependencies")
+    def test_real_release_imports_from_extracted_unicode_directory_without_source_checkout(self):
+        source = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory(prefix="optics extracted 한글 ") as temporary:
+            temporary = Path(temporary)
+            result = build_release(source, temporary / "archives")
+            with zipfile.ZipFile(result["archive"]) as archive:
+                names = archive.namelist()
+                archive.extractall(temporary / "unpacked")
+            extracted = temporary / "unpacked" / PREFIX
+            expected_python = {
+                path.relative_to(source).as_posix() for path in (source / "optics_ui").rglob("*.py")
+                if "__pycache__" not in path.parts and "vendor" not in path.parts
+            }
+            included = {name.removeprefix(PREFIX + "/") for name in names}
+            self.assertTrue(expected_python <= included, sorted(expected_python - included))
+            for icon in (source / "optics_ui/workbench/icons").glob("*.svg"):
+                self.assertIn(icon.relative_to(source).as_posix(), included)
+            code = """
+import importlib, json
+from pathlib import Path
+import optics_ui
+root = Path.cwd().resolve()
+modules = ['optics_ui.desktop', 'optics_ui.workbench.window', 'optics_ui.workbench.charts',
+           'optics_ui.workbench.quit_guard', 'optics_ui.workbench.parameters',
+           'optics_ui.services.sensitivity', 'optics_ui.services.chart_data',
+           'optics_ui.services.parameter_draft', 'optics_ui.services.source_files']
+for name in modules:
+    module = importlib.import_module(name)
+    assert Path(module.__file__).resolve().is_relative_to(root), module.__file__
+assert optics_ui.__version__ == '1.1.0'
+print(json.dumps({'version': optics_ui.__version__, 'imports': len(modules)}))
+"""
+            environment = os.environ.copy()
+            environment.pop("PYTHONPATH", None)
+            environment["PYTHONDONTWRITEBYTECODE"] = "1"
+            completed = subprocess.run([sys.executable, "-B", "-c", code], cwd=extracted,
+                                       env=environment, capture_output=True, text=True, timeout=45)
+            self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+            self.assertEqual(json.loads(completed.stdout)["version"], "1.1.0")
+            self.assertFalse(any((extracted / name).exists() for name in ("validation", "research", "tests", ".venv")))
 
 
 if __name__ == "__main__":

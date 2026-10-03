@@ -1,85 +1,78 @@
 # Optics Studio — Windows 사용자 피드백 버전
 
-**0.1.0-feedback.2 · 2026-09-23**
+**v1.1.0 · 2026-10-04 · 사전 공개 버전**
 
-결상광학계 설계 UI를 직접 써 보고 화면 구성과 사용 흐름에 대한 의견을 받기 위한 독립 스냅샷입니다. 메인 개발 프로젝트와 분리되어 있으며 `feedback/windows-preview` 브랜치에서 관리합니다.
+결상광학계를 검토하는 **로컬 Python/PySide6 데스크톱 앱**입니다. 왼쪽 작업 메뉴, 실제 파일 Explorer, 넓은 파라미터 편집창, 독립 MTF/Spot 분석창을 제공하며 사용자의 화면 구성과 조작 흐름에 대한 피드백을 받습니다. 서버 호스팅은 필요하지 않습니다.
 
-**현재 동작:** 파일·DB 읽기, 파라미터 편집, 3D/2D·로컬 광선, 저장 결과 확대, DB Pareto, 후보 적용·되돌리기, 세션 저장·복원·ZIP 내보내기.
+**현재 동작:** 로컬 report/DB/목표 파일 읽기, 렌즈 3D/2D와 로컬 기하 광선 표시, 파라미터 편집, 저장된 결과 검토, DB Pareto·후보 적용, 외부 Sobol 보고서 표시, 세션 저장·복원·ZIP 내보내기.
 
-**TBU:** 편집한 설계의 AI 예측·신뢰도, Zemax 실행, 모델 학습, 자동 설계 반복, Claude 연결. 파라미터 편집 후 MTF·Spot·NA·FOV는 기존 참조 결과를 유지합니다.
+**연결 전(TBU):** 새 설계의 AI 예측·신뢰도, Zemax 실행, 모델 학습, 자동 설계 반복, DB tailoring 계산, LLM 서비스 연결. 파라미터를 바꿔도 MTF·Spot 등 저장된 결과가 새 예측으로 바뀌지는 않습니다.
 
-## 다운로드와 시작
+## 다운로드와 설치
 
-1. [GitHub Releases](https://github.com/Dive-deep/optics-studio-feedback/releases)에서 `Optics-Studio-Feedback-0.1.0-feedback.2.zip`을 내려받아 모두 압축 해제합니다. Releases가 아직 없다면 **Code → Download ZIP**으로 `feedback/windows-preview` 브랜치를 내려받습니다.
-2. **Windows 11 x64 + 표준 Python 3.10–3.14 64비트**를 사용합니다. **3.12는 권장 버전이며 필수 조건이 아닙니다. 3.13도 사용할 수 있습니다.** 이 범위는 고정 의존성 PySide6 6.11.2의 지원 범위입니다. Python 3.9 이하·3.15 이상 또는 free-threaded 빌드는 현재 의존성에 맞지 않습니다.
-3. 압축을 푼 폴더에서 터미널을 열고 의존성을 설치합니다.
+1. [v1.1.0 Release](https://github.com/Dive-deep/optics-studio-feedback/releases/tag/v1.1.0)에서 **`Optics-Studio-v1.1.0.zip`**을 내려받아 전체를 압축 해제합니다. 이전 배포도 [Releases](https://github.com/Dive-deep/optics-studio-feedback/releases)에 남아 있습니다. 개발 소스는 **Code → Download ZIP**으로 받을 수 있습니다.
+2. **Windows 11 x64 + 표준 CPython 3.10–3.14 64비트**가 대상입니다. **Python 3.12는 권장이고 필수는 아닙니다. 3.13도 지원 정책에 포함됩니다.** PyPy와 free-threaded 빌드는 지원하지 않습니다.
+3. 압축을 푼 폴더에서 PowerShell을 열고 설치합니다.
 
 ```powershell
 py -3 -m pip install -r requirements.txt
-```
-
-4. **`run_windows.cmd`를 더블클릭**합니다. 또는 같은 터미널에서:
-
-```powershell
+py -3 launch.py --check
 py -3 launch.py
 ```
 
-Python·가상환경·Qt/PySide 라이브러리는 배포 ZIP에 포함하지 않습니다. 자동 설치나 가상환경 생성도 하지 않습니다. 화면에 필요한 로컬 JavaScript·아이콘 자산과 라이선스는 앱 소스에 포함됩니다. 사용자 실행에 Node.js, PyTorch, CUDA, Zemax는 필요하지 않습니다.
+설치 후에는 **`run_windows.cmd`를 더블클릭**해도 됩니다. Python을 여러 개 설치했다면 설치와 실행에 같은 인터프리터를 사용하세요. 예를 들어 3.13은 위 명령의 `py -3`을 모두 `py -3.13`으로 바꿉니다. `py` 명령이 없다면 해당 Python의 `python` 명령을 사용합니다.
 
-## 첫 사용
+Python·가상환경·PySide6는 ZIP에 묶지 않으며 실행기가 자동 설치하지 않습니다. 화면에 필요한 로컬 JavaScript·아이콘과 라이선스는 포함합니다. 사용자 실행에 Node.js, PyTorch, CUDA, Zemax는 필요하지 않습니다.
 
-1. **Select model report… → Browse report** → `examples/local-demo/training-report.json`을 선택합니다.
-2. **Targets · Read only → Load target JSON** → `examples/local-demo/target.json`을 선택합니다.
-3. **Workspace**로 돌아갑니다.
-4. **Configure**에서 변수를 선택하고 슬라이더·숫자·재질을 조절합니다.
-5. **Best candidates → 미달 포함 탐색**에서 DB 후보를 비교합니다.
+## 처음 실행하면
 
-상단 **Open**은 모델이 아닌 Save로 만든 작업 세션을 여는 버튼입니다. `.pth`는 직접 선택하지 않습니다. 데모 파일들의 상대 위치와 이름을 유지하세요.
+1. 모델 선택 영역의 **Browse report**에서 `examples/local-demo/training-report.json`을 선택합니다. `.pth` 자체를 선택하는 방식이 아닙니다.
+2. **Targets · Read only → Load target JSON**에서 `examples/local-demo/target.json`을 선택합니다.
+3. **Workspace → Configure parameters**에서 렌즈·면·System 변수를 함께 검토하고 **Apply**합니다.
+4. MTF와 Spot의 **Pop up**을 눌러 각각 별도 창으로 열고 확대·이동·좌표를 확인합니다.
+5. **Best candidates → 미달 포함 탐색**에서 저장된 DB 후보를 비교합니다.
+6. **Save**로 현재 설계와 창 배치를 저장합니다. 상단 **Open**은 이 작업 세션을 여는 버튼입니다.
 
-웹 가이드: **[온라인 사용자 가이드](https://dive-deep.github.io/optics-studio-feedback/)**에서 바로 읽을 수 있습니다. 오프라인에서는 다운로드한 폴더의 **`guide/dist/index.html`**을 브라우저에서 여세요. 가이드는 설명 페이지이며 설계 작업을 실행하지 않습니다.
+데모 DB는 **합성 데이터**, 모델 파일은 **연결 검사용 dummy**입니다. 실제 학습 모델이나 Zemax 결과가 아닙니다. 파일 이름과 상대 위치를 유지하세요. `demo.optics.json`은 내부 최소 fixture이므로 시작 세션으로 선택하지 마세요. 현재 예시 목표에는 허용 후보가 없을 수 있으며, 이를 오류나 실제 광학 성능의 결론으로 해석하지 않습니다.
 
-## 피드백
+상세 설명은 [사용자 안내](docs/user-guide.md), [온라인 웹 가이드](https://dive-deep.github.io/optics-studio-feedback/)에서 확인하세요. 오프라인 가이드는 `guide/dist/index.html`을 브라우저로 엽니다. 가이드는 설명 페이지이며 설계 작업을 실행하지 않습니다.
 
-저장소 **Issues → New issue**에서 **사용성 피드백** 또는 **실행 오류** 양식을 선택해주세요. 작성에는 GitHub 로그인이 필요합니다. 화면·버튼, 수행 순서, 기대한 동작, 실제 결과와 캡처를 포함하면 도움이 됩니다. 로그인하기 어렵다면 가이드의 양식을 복사해 담당자에게 전달해주세요.
+## v1.1 화면
 
-이번 검토는 조작 흐름·용어·읽기 쉬움·필요한 기능에 초점을 맞춥니다. 동봉된 DB는 **수학적 합성 데이터**, 모델은 **파일 연결 확인용 더미**입니다. Zemax 해석이나 학습 모델의 정확도를 검증하는 버전이 아닙니다.
+- **왼쪽 메뉴:** Workspace, Explorer, Update model, Add Zemax Sim, Auto design, DB tailoring. 작업 페이지가 코드 탭으로 쌓이지 않습니다.
+- **Explorer:** 실제 폴더를 열어 여러 코드 파일을 읽기 전용 탭에서 봅니다. 파일 탭을 이동·닫을 수 있고 설치된 VS Code로 열 수 있습니다.
+- **Configure parameters:** 넓은 별도 창에서 검색·그룹 필터와 Min/Current/Max를 사용합니다. Apply/Cancel로 초안 반영을 결정합니다.
+- **Sensitivity:** Workspace에서 외부 Sobol S1/ST 보고서를 읽습니다. 계산은 TBU이며 없는 값은 `—`로 표시합니다.
+- **MTF/Spot:** 두 nonmodal 창을 함께 열고 Workspace를 계속 조작합니다.
+- **오른쪽 LLM panel:** 버튼 또는 Ctrl+Alt+B로 열고 닫는 초안 영역입니다. 대화 응답·인증·작업 실행은 연결 전입니다.
+- **저장·종료:** 창 배치·분석창·패널 상태를 세션에 저장하며 미저장 변경이 있으면 Save / Discard / Cancel을 제공합니다.
 
-현재 DB 500건 중 148건이 같은 조건에서 비교 가능하고 나머지 352건은 제외됩니다. 현재 목표에서는 148건 모두 NG이므로 기본 모드의 ‘허용 후보 없음’은 정상입니다. ‘미달 포함 탐색’에서 Pareto를 볼 수 있습니다.
+[변경 이력](CHANGELOG.md)과 [현재 제한](KNOWN_LIMITATIONS.md)도 함께 확인하세요.
 
-## 실행 문제 확인
+## 실행 문제와 피드백
 
-```powershell
-py -3 launch.py --check
-```
+`py -3 launch.py --check`는 Python·Qt·필수 화면 파일을 검사하며 GUI나 backend 작업을 시작하지 않습니다. 설치와 실행 Python이 다르면 패키지를 찾지 못할 수 있습니다. CMD는 `OPTICS_PYTHON` → 활성 가상환경 → `py -3` → PATH의 `python` 순으로 선택합니다. 별도 경로를 지정하려면 CMD에서 `set "OPTICS_PYTHON=C:\path\to\python.exe"` 후 실행하세요.
 
-- Python/PySide 버전·x64·필수 화면 파일을 확인하며 창이나 백엔드 작업은 시작하지 않습니다.
-- `py`가 없다면 같은 지원 Python 환경에서 `python -m pip install -r requirements.txt`, `python launch.py`를 사용합니다.
-- 3.13을 명시하려면 설치와 실행 모두 `py -3.13`을 사용하세요: `py -3.13 -m pip install -r requirements.txt`, `py -3.13 launch.py`.
-- CMD는 `OPTICS_PYTHON`으로 지정한 경로, 활성 가상환경, 기본 Python 3(`py -3`), PATH의 `python` 순으로 찾습니다. 설치한 Python과 다른 버전이 선택된다면 해당 버전 명령으로 직접 실행하거나 경로를 지정하세요.
-- 별도 Python 경로를 쓰려면 CMD에서 `set "OPTICS_PYTHON=C:\path\to\python.exe"` 후 `run_windows.cmd`를 실행합니다. 이 값에는 실행 파일 경로만 넣습니다.
-- 실패하면 터미널의 메시지, Windows/Python 버전, 화면 해상도와 배율을 Issues에 남겨주세요. CUDA GPU가 없어도 UI를 사용할 수 있습니다.
-- WebGL2를 사용할 수 없는 그래픽 환경에서는 안내와 함께 2D 단면으로 전환하며 3D 버튼은 비활성화됩니다. 정상 드라이버 환경에서는 기존 3D 회전·이동·확대를 사용할 수 있습니다.
-- 앱 전체가 비어 보이면 ZIP을 전부 압축 해제했는지와 `--check` 결과를 확인합니다. QtWebEngine 보안 설정을 끄지 마세요.
+WebGL2를 사용할 수 없는 환경에서는 설명과 함께 2D 단면으로 전환하고 3D 버튼을 비활성화합니다. 화면이 비어 있으면 전체 압축 해제 여부와 `--check` 결과를 먼저 확인하세요. CUDA GPU가 없어도 UI를 사용할 수 있습니다.
 
-## 검증 범위와 개발자 메모
+[Issues → New issue](https://github.com/Dive-deep/optics-studio-feedback/issues/new/choose)에서 **실행 오류** 또는 **사용성 피드백**을 선택해주세요. 버전, Windows/Python 버전, 화면 해상도·배율, 수행 순서와 기대/실제 결과를 적어주세요. 공개 게시물이므로 업무 데이터·토큰·개인정보는 제외합니다. GitHub 로그인이 어렵다면 웹 가이드의 양식을 복사해 담당자에게 전달하면 됩니다.
 
-이번 버전은 Python 3.10 / 3.11 / 3.12 / 3.13 / 3.14 각각에 동일한 Windows 설치·런처·단위·실제 앱 검사를 적용합니다. [버전별 최신 실행 결과](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 확인할 수 있습니다. 아래 기록은 최초 3.12 기반 배포의 검증 이력입니다.
+## 개발과 검증
 
-[Windows 자동 검증](https://github.com/Dive-deep/optics-studio-feedback/actions/runs/35732824991)을 통과했습니다. Windows Server 2025 x64 / Python 3.12 / PySide6 6.11.2에서 의존성 설치, UTF-8 재빌드, 한글·공백 경로의 CMD 실행, 단위 검사, 실제 3D·파일·세션 23개 및 Pareto 16개 검사를 확인했습니다. Python은 132개 통과·플랫폼 전용 1개 제외, JavaScript는 140개 통과했습니다. **물리 Windows 11 PC의 GPU·DPI·OS 파일 선택/드래그 검증은 TBU**입니다.
-
-Mac 개발 환경에서 단위 검사와 실제 Qt 앱의 합성 데이터 로딩·가이드 캡처를 검증했습니다. 상세 결과는 [`VALIDATION.md`](VALIDATION.md)에 기록합니다. 자동 GUI 검사의 파일 대화상자는 명시적인 테스트 경로로 대체합니다.
-
-- `main`: Windows 배포 작업 전의 소스 스냅샷 기준점.
-- `feedback/windows-preview`: 이번 배포·가이드·런처 작업. 메인 프로젝트로 자동 동기화하지 않습니다.
-- `snapshot-manifest.json`: 분리 시 원본 파일 SHA-256 기록. 이후 배포 수정의 기준점입니다.
-- `scripts/build_feedback_release.py`: 사용자용 ZIP 생성. 런타임·venv·연구 문서·테스트·개인 산출물을 넣지 않습니다.
-- `design/`과 `scripts/build_ui.py`: 개발자용 UI 재생성 소스. 사용자 실행 시 재빌드하지 않습니다.
-- `.github/workflows/windows-check.yml`: Windows CI. `.github/workflows/guide-pages.yml`: 가이드만 Pages로 게시.
+이 저장소의 공개 작업 브랜치는 `feedback/windows-preview`입니다. `main`과 이전 Release는 과거 기준점으로 보존합니다. 배포는 실행 가능한 소스이며 `.exe` 설치 프로그램을 제공하지 않습니다.
 
 ```powershell
+python -m pip install -r requirements.txt
+python scripts/build_ui.py
 python -m unittest discover -s tests -v
 node --test tests/*.cjs
+python scripts/smoke_workbench.py
+python scripts/smoke_analysis_windows.py
 python scripts/build_feedback_release.py
 ```
 
-저장소는 피드백 배포용이며 별도 오픈소스 라이선스를 선언하지 않았습니다. 동봉된 외부 자산의 라이선스와 데이터 출처는 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)를 참고하세요.
+아래 개발 명령은 저장소 전체를 clone하거나 Code → Download ZIP으로 받은 개발 소스에서 실행합니다. Releases의 사용자용 ZIP에는 테스트·개발 빌더를 넣지 않습니다.
+
+Node.js는 개발 검사용입니다. GUI smoke에는 데스크톱 세션이 필요하며 파일 선택은 명시적인 테스트 경로로 대체합니다. [검증 기록](VALIDATION.md)에서 버전과 실행 환경을 구분하고, [Windows CI](https://github.com/Dive-deep/optics-studio-feedback/actions/workflows/windows-check.yml)에서 해당 커밋의 결과를 확인하세요. 이전 0.x CI 통과는 새 v1.1의 Windows 실행 검증을 대신하지 않습니다. 실제 Windows 11의 DPI·GPU·OS 파일 대화상자 검증은 별도입니다.
+
+배포 담당자는 [PUBLISHING.md](PUBLISHING.md)를 참고하세요. 별도의 프로젝트 오픈소스 라이선스를 선언하지 않았습니다. 외부 자산의 라이선스와 데이터 출처는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 있습니다.

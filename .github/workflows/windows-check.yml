@@ -1,4 +1,4 @@
-name: Windows source preview checks
+name: Windows app and source release checks
 
 on:
   push:
@@ -17,7 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
-    timeout-minutes: 15
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
     env:
       PYTHONUTF8: "1"
       # Hosted Windows has no usable hardware GPU. Keep Chromium sandbox enabled.
@@ -56,8 +59,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Build source-only feedback ZIP
         run: python scripts/build_feedback_release.py
-      - name: Real Qt desktop smoke with explicit dialog stubs
-        run: python scripts/smoke_app.py --output-dir artifacts/windows-smoke --smoke-report examples/local-demo/training-report.json --smoke-target examples/local-demo/target.json
+      - name: Native workbench and real Qt desktop smoke
+        run: python scripts/smoke_workbench.py
+      - name: Independent chart windows, layout and unsaved-close acceptance
+        run: python scripts/smoke_analysis_windows.py
       - name: Pareto desktop smoke
         run: python scripts/smoke_pareto.py
       - name: Preserve desktop evidence
@@ -66,9 +71,12 @@ jobs:
         with:
           name: windows-desktop-evidence-py${{ matrix.python-version }}
           path: |
-            artifacts/windows-smoke/*.json
-            artifacts/windows-smoke/*.log
-            artifacts/windows-smoke/*.png
+            artifacts/workbench-smoke/*.json
+            artifacts/workbench-smoke/*.log
+            artifacts/workbench-smoke/*.png
+            artifacts/analysis-windows-smoke/*.json
+            artifacts/analysis-windows-smoke/*.log
+            artifacts/analysis-windows-smoke/*.png
             artifacts/pareto-smoke/desktop-app.json
             artifacts/pareto-smoke/*.png
           if-no-files-found: warn
@@ -76,5 +84,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: optics-feedback-release-py${{ matrix.python-version }}
-          path: release/*
+          path: |
+            release/Optics-Studio-v1.1.0.zip
+            release/Optics-Studio-v1.1.0.zip.sha256
+            release/SHA256SUMS
           if-no-files-found: error

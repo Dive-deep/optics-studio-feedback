@@ -1,6 +1,6 @@
 """Refresh generated module/metadata blocks in the self-contained review UI.
 
-Edit ray-tracing.js, pareto.js, pareto-view.js, and ray-indices-fixture.json
+Edit ray-tracing.js, pareto.js, pareto-view.js, optics-chart.js, and ray-indices-fixture.json
 as their source of truth. This command copies them into the inline preview
 without a network dependency. The desktop build loads the same JS modules
 as separate local assets.
@@ -22,7 +22,7 @@ def sync():
     source, count = re.subn(r'<script data-optics-module="ray-tracing">.*?</script>', lambda _: replacement, source, flags=re.S)
     if count != 1:
         raise ValueError("Expected one ray module block")
-    for name in ("pareto", "pareto-view"):
+    for name in ("pareto", "pareto-view", "optics-chart"):
         module = (ROOT / "design" / (name + ".js")).read_text(encoding="utf-8")
         if "</script" in module.lower():
             raise ValueError("Module cannot contain an inline script terminator")

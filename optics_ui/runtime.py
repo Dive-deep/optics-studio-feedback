@@ -10,9 +10,12 @@ MAX_PYTHON_EXCLUSIVE = (3, 15)
 RECOMMENDED_PYTHON = "3.12"
 
 
-def python_runtime_errors(version_info=None, *, free_threaded=None) -> list[str]:
+def python_runtime_errors(version_info=None, *, free_threaded=None, implementation=None) -> list[str]:
     version = tuple((sys.version_info if version_info is None else version_info)[:2])
     errors = []
+    implementation = sys.implementation.name if implementation is None else implementation
+    if implementation != "cpython":
+        errors.append("This release requires standard CPython; alternate Python implementations are not supported.")
     if not MIN_PYTHON <= version < MAX_PYTHON_EXCLUSIVE:
         errors.append("Python 3.10 through 3.14 is supported by this PySide6 release; Python 3.12 is recommended. "
                       + "This interpreter is " + ".".join(map(str, version)) + ".")
@@ -25,6 +28,7 @@ def python_runtime_errors(version_info=None, *, free_threaded=None) -> list[str]
 
 def runtime_info() -> dict:
     return {"version": list(sys.version_info[:3]), "executable": sys.executable,
+            "implementation": sys.implementation.name,
             "free_threaded": bool(sysconfig.get_config_var("Py_GIL_DISABLED"))}
 
 
